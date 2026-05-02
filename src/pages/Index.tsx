@@ -585,12 +585,52 @@ const Index = () => {
             </div>
             {/* Mobile-only filter chips */}
             <div className="flex justify-center gap-2 md:hidden">
-              <button className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card">
-                Buy <ChevronDown className="h-3.5 w-3.5" />
-              </button>
-              <button className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card">
-                Filters <SlidersHorizontal className="h-3.5 w-3.5" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card outline-none">
+                  Buy <ChevronDown className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-40">
+                  <DropdownMenuLabel>Listing Type</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {[
+                    { k: "buy", l: "Buy" },
+                    { k: "rent", l: "Rent" },
+                    { k: "lease", l: "Lease" },
+                  ].map((o) => (
+                    <DropdownMenuCheckboxItem
+                      key={o.k}
+                      checked={!!buyFilters[o.k]}
+                      onCheckedChange={(v) => setBuyFilters((p) => ({ ...p, [o.k]: !!v }))}
+                    >
+                      {o.l}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card outline-none">
+                  Filters <SlidersHorizontal className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-44">
+                  <DropdownMenuLabel>Bedrooms</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {[
+                    { k: "1bed", l: "1 bed" },
+                    { k: "2bed", l: "2 beds" },
+                    { k: "3bed", l: "3 beds" },
+                    { k: "4bed", l: "4+ beds" },
+                  ].map((o) => (
+                    <DropdownMenuCheckboxItem
+                      key={o.k}
+                      checked={!!bedFilters[o.k]}
+                      onCheckedChange={(v) => setBedFilters((p) => ({ ...p, [o.k]: !!v }))}
+                    >
+                      {o.l}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
@@ -601,6 +641,8 @@ const Index = () => {
               <div className="flex h-10 flex-1 items-center gap-2 rounded-full bg-card px-4 shadow-card">
                 <Search className="h-4 w-4 text-muted-foreground" />
                 <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value.slice(0, 100))}
                   placeholder="Search keywords..."
                   className="h-full w-full bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none"
                 />
