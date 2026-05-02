@@ -150,8 +150,8 @@ const Index = () => {
       </section>
 
       {/* FEATURES */}
-      <section className="px-5 py-16 sm:px-10 sm:py-24">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-5 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             A Smarter Way to Own. A Better Way to Earn.
           </h2>
@@ -251,8 +251,8 @@ const Index = () => {
       </section>
 
       {/* WE MANAGE EVERYTHING */}
-      <section className="px-5 pb-16 sm:px-10 sm:pb-24">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
+        <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             <span className="sm:hidden">We Manage &amp; You Keep the Returns.</span>
             <span className="hidden sm:inline">We Manage Everything. You Keep the Returns.</span>
@@ -266,33 +266,20 @@ const Index = () => {
           </p>
 
           {/* DESKTOP grid */}
-          <div className="mt-8 hidden grid-cols-3 gap-5 md:grid">
-            <div className="flex flex-col gap-5">
-              <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-                <p className="font-display text-2xl font-bold text-foreground">+35%</p>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  Consistent Increase In Rental Occupancy Within The First 90 Days
-                </p>
-                <p className="mt-3 flex items-center gap-1 text-xs font-medium text-emerald-600">
-                  <TrendingUp className="h-3.5 w-3.5" /> +12% from last year
-                </p>
-              </Card>
-              <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-                <p className="text-xs text-muted-foreground">Premium holiday homes managed across key destinations</p>
-                <p className="mt-1 font-display text-xl font-bold text-foreground">150+ Properties</p>
-                <div className="mt-3 flex items-center justify-between">
-                  <p className="text-xs font-medium text-emerald-600">+20 new this quarter</p>
-                  <div className="flex -space-x-2">
-                    <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomMirror})` }} />
-                    <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomTop})` }} />
-                    <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${provenBedroom})` }} />
-                    <span className="flex h-8 items-center rounded-full bg-accent px-2 text-[10px] font-bold text-accent-foreground">+120</span>
-                  </div>
-                </div>
-              </Card>
-            </div>
+          <div className="mt-8 hidden grid-cols-3 grid-rows-2 gap-4 md:grid">
+            {/* Row 1, Col 1 */}
+            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
+              <p className="font-display text-2xl font-bold text-foreground">+35%</p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                Consistent Increase In Rental Occupancy Within The First 90 Days
+              </p>
+              <p className="mt-3 flex items-center gap-1 text-xs font-medium text-emerald-600">
+                <TrendingUp className="h-3.5 w-3.5" /> +12% from last year
+              </p>
+            </Card>
 
-            <Card className="self-start rounded-2xl border-0 bg-card p-5 shadow-card">
+            {/* Row 1, Col 2 */}
+            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
               <p className="font-display text-2xl font-bold text-foreground">92%</p>
               <p className="mt-2 text-xs text-muted-foreground">Managed properties have high guest satisfaction.</p>
               <p className="mt-3 flex items-center gap-1 text-xs font-medium text-emerald-600">
@@ -300,10 +287,11 @@ const Index = () => {
               </p>
             </Card>
 
+            {/* Tall image card spanning 2 rows */}
             <Card className="relative col-start-3 row-span-2 row-start-1 overflow-hidden rounded-2xl border-0 shadow-card">
               <img src={provenBedroom} alt="Proven Performance" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
-              <div className="relative flex h-full min-h-[320px] flex-col justify-end p-6 text-primary-foreground">
+              <div className="relative flex h-full min-h-[280px] flex-col justify-end p-6 text-primary-foreground">
                 <h3 className="font-display text-lg font-bold">Proven Performance</h3>
                 <p className="mt-1.5 text-xs opacity-90">
                   Our managed properties consistently outperform market averages — delivering higher occupancy and stronger returns.
@@ -311,6 +299,23 @@ const Index = () => {
                 <Button className="mt-3 w-fit rounded-full bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
                   View Performance
                 </Button>
+              </div>
+            </Card>
+
+            {/* Row 2: 150+ Properties spans 2 columns */}
+            <Card className="col-span-2 rounded-2xl border-0 bg-card p-5 shadow-card">
+              <p className="text-xs text-muted-foreground">Premium holiday homes managed across key destinations</p>
+              <div className="mt-1 flex items-center justify-between gap-3">
+                <div>
+                  <p className="font-display text-xl font-bold text-foreground">150+ Properties</p>
+                  <p className="mt-2 text-xs font-medium text-emerald-600">+20 new this quarter</p>
+                </div>
+                <div className="flex -space-x-2">
+                  <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomMirror})` }} />
+                  <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomTop})` }} />
+                  <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${provenBedroom})` }} />
+                  <span className="flex h-8 items-center rounded-full bg-accent px-2 text-[10px] font-bold text-accent-foreground">+120</span>
+                </div>
               </div>
             </Card>
           </div>
@@ -378,8 +383,8 @@ const Index = () => {
       </section>
 
       {/* BUILT FOR PREDICTABLE RETURNS */}
-      <section className="px-5 pb-20 sm:px-10 sm:pb-28">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
+        <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             <span className="sm:hidden">Real Numbers. Real Returns.</span>
             <span className="hidden sm:inline">Built for Predictable Returns</span>
