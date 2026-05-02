@@ -457,8 +457,8 @@ const Index = () => {
             </span>
           </p>
 
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-start">
-            <Card className="overflow-hidden rounded-2xl border-0 p-0 shadow-card">
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
+            <Card className="overflow-hidden rounded-2xl border-0 p-0 shadow-card md:h-full">
               <img
                 src={calcBedroom}
                 alt="Furnished bedroom"
