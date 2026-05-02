@@ -684,34 +684,35 @@ const Index = () => {
           </div>
 
           {/* MOBILE: horizontal scroll */}
-          <div className="mt-5 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:hidden">
-            {[
-              { img: property1, title: "Bali Wellness Sanctuary", price: "$250/Night", loc: "Bali - Ubud - Indonesia", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0" },
-              { img: property2, title: "Sandstone Retreat", price: "$180/Night", loc: "Cycladic - Greece", size: "120 m2", beds: "3 beds", baths: "2 baths", rating: "4.8/5.0" },
-            ].map((p) => (
-              <Card key={p.title} className="min-w-[80%] snap-start overflow-hidden rounded-2xl border-0 bg-card shadow-card">
-                <div className="relative">
-                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-48 w-full object-cover" />
-                  <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
-                    <Heart className="h-4 w-4" />
-                  </button>
-                </div>
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
-                    <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
+          <div className="mt-5 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:hidden">
+            {filteredMobileProps.length === 0 ? (
+              <p className="w-full py-8 text-center text-sm text-muted-foreground">No properties match your filters.</p>
+            ) : (
+              filteredMobileProps.map((p) => (
+                <Card key={p.title} className="min-w-[80%] snap-start overflow-hidden rounded-2xl border-0 bg-card shadow-card">
+                  <div className="relative">
+                    <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-48 w-full object-cover" />
+                    <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
+                      <Heart className="h-4 w-4" />
+                    </button>
                   </div>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
-                  <div className="my-3 h-px bg-border" />
-                  <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
-                    <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
-                    <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
-                    <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
-                    <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                  <div className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
+                      <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
+                    <div className="my-3 h-px bg-border" />
+                    <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
+                      <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
+                      <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
+                      <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
+                      <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))
+            )}
           </div>
         </div>
       </section>
