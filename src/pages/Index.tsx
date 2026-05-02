@@ -150,8 +150,8 @@ const Index = () => {
       </section>
 
       {/* FEATURES */}
-      <section className="px-5 py-16 sm:px-10 sm:py-24">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-5 py-16 sm:px-8 sm:py-20">
+        <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             A Smarter Way to Own. A Better Way to Earn.
           </h2>
@@ -251,8 +251,8 @@ const Index = () => {
       </section>
 
       {/* WE MANAGE EVERYTHING */}
-      <section className="px-5 pb-16 sm:px-10 sm:pb-24">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
+        <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             <span className="sm:hidden">We Manage &amp; You Keep the Returns.</span>
             <span className="hidden sm:inline">We Manage Everything. You Keep the Returns.</span>
@@ -383,8 +383,8 @@ const Index = () => {
       </section>
 
       {/* BUILT FOR PREDICTABLE RETURNS */}
-      <section className="px-5 pb-20 sm:px-10 sm:pb-28">
-        <div className="mx-auto max-w-6xl">
+      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
+        <div className="mx-auto max-w-7xl">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             <span className="sm:hidden">Real Numbers. Real Returns.</span>
             <span className="hidden sm:inline">Built for Predictable Returns</span>
