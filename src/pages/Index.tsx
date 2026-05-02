@@ -24,8 +24,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
-      <section className="relative px-3 pt-3 sm:px-6 sm:pt-6">
-        <div className="relative overflow-hidden rounded-3xl">
+      <section className="relative">
+        <div className="relative overflow-hidden sm:mx-6 sm:mt-6 sm:rounded-3xl">
           <img
             src={heroBedroom}
             alt="Luxury managed bedroom"
@@ -56,16 +56,24 @@ const Index = () => {
           </nav>
 
           {/* HERO CONTENT */}
-          <div className="relative z-10 flex flex-col items-center px-5 pb-16 pt-16 text-center text-primary-foreground sm:pb-24 sm:pt-24">
-            <h1 className="max-w-3xl font-display text-3xl font-bold leading-tight sm:text-5xl md:text-6xl animate-fade-in">
-              Turn Your Property Into a
-              <br />
-              <span className="text-gold">High-Yield Asset</span>
-              <span className="text-primary-foreground">, Without Managing It Yourself</span>
+          <div className="relative z-10 flex flex-col items-center px-5 pb-10 pt-10 text-center text-primary-foreground sm:pb-24 sm:pt-24">
+            <h1 className="max-w-3xl font-display text-2xl font-bold leading-tight sm:text-5xl md:text-6xl animate-fade-in">
+              <span className="sm:hidden">
+                Earn More From Your <span className="text-gold">Property</span>
+              </span>
+              <span className="hidden sm:inline">
+                Turn Your Property Into a
+                <br />
+                <span className="text-gold">High-Yield Asset</span>
+                <span className="text-primary-foreground">, Without Managing It Yourself</span>
+              </span>
             </h1>
-            <p className="mt-6 max-w-xl text-sm opacity-90 sm:text-base">
-              AvaronBnB handles everything, from guest management to property optimization.
-              <br className="hidden sm:block" /> So you earn more without lifting a finger.
+            <p className="mt-4 max-w-xl text-sm opacity-90 sm:mt-6 sm:text-base">
+              <span className="sm:hidden">Up to 24% higher returns with full management</span>
+              <span className="hidden sm:inline">
+                AvaronBnB handles everything, from guest management to property optimization.
+                <br className="hidden sm:block" /> So you earn more without lifting a finger.
+              </span>
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
@@ -93,7 +101,7 @@ const Index = () => {
                 </div>
                 <div className="hidden h-8 w-px bg-primary-foreground/30 sm:block" />
                 <Select defaultValue="luxury">
-                  <SelectTrigger className="h-10 border-0 bg-transparent text-sm text-primary-foreground focus:ring-0 sm:w-48">
+                  <SelectTrigger className="hidden h-10 border-0 bg-transparent text-sm text-primary-foreground focus:ring-0 sm:flex sm:w-48">
                     <div className="flex items-center gap-2">
                       <img src={iconHouse} alt="" className="h-4 w-4" />
                       <SelectValue />
@@ -196,7 +204,7 @@ const Index = () => {
 
           {/* Stats / CTA */}
           <Card className="mt-6 grid grid-cols-1 items-center gap-6 rounded-2xl border-0 bg-card p-6 shadow-card md:grid-cols-2">
-            <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
               <div>
                 <p className="font-display text-2xl font-bold text-accent">24%</p>
                 <p className="mt-1 text-xs font-medium text-foreground">Avg. Annual Yield</p>
@@ -210,13 +218,13 @@ const Index = () => {
                 <p className="mt-1 text-xs font-medium text-foreground">Guest Satisfaction</p>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-3 md:items-end">
-              <p className="text-sm text-muted-foreground">Ready to see what your property is truly worth?</p>
-              <div className="flex flex-wrap gap-3">
-                <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
+            <div className="flex flex-col items-stretch gap-3 sm:items-start md:items-end">
+              <p className="text-center text-sm text-muted-foreground md:text-right">Ready to see what your property is truly worth?</p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button className="w-full rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90 sm:w-auto">
                   Book a Consultation
                 </Button>
-                <Button className="rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90">
+                <Button className="w-full rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90 sm:w-auto">
                   See Our Results
                 </Button>
               </div>
