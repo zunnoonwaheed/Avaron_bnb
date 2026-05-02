@@ -30,6 +30,10 @@ import property1 from "@/assets/property-1.jpg";
 import property2 from "@/assets/property-2.jpg";
 import property3 from "@/assets/property-3.jpg";
 import stepsKitchen from "@/assets/steps-kitchen.jpg";
+import testimonial1 from "@/assets/testimonial-1.jpg";
+import testimonial2 from "@/assets/testimonial-2.jpg";
+import testimonial3 from "@/assets/testimonial-3.jpg";
+import ctaBedroom from "@/assets/cta-bedroom.jpg";
 import logo from "@/assets/logo.svg";
 
 const navLinks = ["Home", "About Us", "Calculate ROI", "How Does It Work?"];
