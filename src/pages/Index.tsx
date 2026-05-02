@@ -24,8 +24,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
-      <section className="relative px-3 pt-3 sm:px-6 sm:pt-6">
-        <div className="relative overflow-hidden rounded-3xl">
+      <section className="relative">
+        <div className="relative overflow-hidden sm:mx-6 sm:mt-6 sm:rounded-3xl">
           <img
             src={heroBedroom}
             alt="Luxury managed bedroom"
@@ -56,16 +56,24 @@ const Index = () => {
           </nav>
 
           {/* HERO CONTENT */}
-          <div className="relative z-10 flex flex-col items-center px-5 pb-16 pt-16 text-center text-primary-foreground sm:pb-24 sm:pt-24">
-            <h1 className="max-w-3xl font-display text-3xl font-bold leading-tight sm:text-5xl md:text-6xl animate-fade-in">
-              Turn Your Property Into a
-              <br />
-              <span className="text-gold">High-Yield Asset</span>
-              <span className="text-primary-foreground">, Without Managing It Yourself</span>
+          <div className="relative z-10 flex flex-col items-center px-5 pb-10 pt-10 text-center text-primary-foreground sm:pb-24 sm:pt-24">
+            <h1 className="max-w-3xl font-display text-2xl font-bold leading-tight sm:text-5xl md:text-6xl animate-fade-in">
+              <span className="sm:hidden">
+                Earn More From Your <span className="text-gold">Property</span>
+              </span>
+              <span className="hidden sm:inline">
+                Turn Your Property Into a
+                <br />
+                <span className="text-gold">High-Yield Asset</span>
+                <span className="text-primary-foreground">, Without Managing It Yourself</span>
+              </span>
             </h1>
-            <p className="mt-6 max-w-xl text-sm opacity-90 sm:text-base">
-              AvaronBnB handles everything, from guest management to property optimization.
-              <br className="hidden sm:block" /> So you earn more without lifting a finger.
+            <p className="mt-4 max-w-xl text-sm opacity-90 sm:mt-6 sm:text-base">
+              <span className="sm:hidden">Up to 24% higher returns with full management</span>
+              <span className="hidden sm:inline">
+                AvaronBnB handles everything, from guest management to property optimization.
+                <br className="hidden sm:block" /> So you earn more without lifting a finger.
+              </span>
             </p>
 
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
