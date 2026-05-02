@@ -25,7 +25,7 @@ const Index = () => {
     <div className="min-h-screen bg-background">
       {/* HERO */}
       <section className="relative">
-        <div className="relative overflow-hidden sm:mx-6 sm:mt-6 sm:rounded-3xl">
+        <div className="relative overflow-hidden">
           <img
             src={heroBedroom}
             alt="Luxury managed bedroom"
@@ -144,16 +144,17 @@ const Index = () => {
             consistently high-performing asset. You stay hands-off, we handle the rest.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
-            {/* Premium Property Positioning - large image card */}
-            <Card className="group relative col-span-1 overflow-hidden rounded-2xl border-0 shadow-card md:row-span-2">
-              <div className="relative h-full min-h-[360px]">
+          {/* Mobile: horizontal snap scroll. Desktop: 2-col aligned grid */}
+          <div className="mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-10 sm:px-10 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 [&>*]:snap-start">
+            {/* LEFT: Premium Property Positioning - stretches full height */}
+            <Card className="group relative w-[85%] shrink-0 overflow-hidden rounded-2xl border-0 shadow-card sm:w-[70%] md:w-auto md:shrink md:row-span-2 md:h-full">
+              <div className="relative h-full min-h-[420px] md:min-h-full">
                 <img
                   src={bedroomTop}
                   alt="Premium Property"
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
                 <div className="relative flex h-full flex-col justify-end p-6 text-primary-foreground">
                   <img src={iconMagnify} alt="" className="absolute left-6 top-6 h-10 w-10" />
                   <h3 className="font-display text-xl font-bold">Premium Property Positioning</h3>
@@ -168,8 +169,8 @@ const Index = () => {
               </div>
             </Card>
 
-            {/* Luxury Guest Experience */}
-            <Card className="overflow-hidden rounded-2xl border-0 bg-card p-6 shadow-card">
+            {/* RIGHT COLUMN: stack of 3 cards. On desktop, only the first 2 sit in column 2; End-to-End wraps below */}
+            <Card className="w-[85%] shrink-0 overflow-hidden rounded-2xl border-0 bg-card p-6 shadow-card sm:w-[70%] md:w-auto md:shrink">
               <img src={iconHouse} alt="" className="h-9 w-9" />
               <h3 className="mt-3 font-display text-lg font-bold text-foreground">Luxury Guest Experience</h3>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -183,8 +184,7 @@ const Index = () => {
               />
             </Card>
 
-            {/* Revenue Optimization */}
-            <Card className="rounded-2xl border-0 bg-card p-6 shadow-card">
+            <Card className="w-[85%] shrink-0 rounded-2xl border-0 bg-card p-6 shadow-card sm:w-[70%] md:w-auto md:shrink md:col-start-2">
               <img src={iconChart} alt="" className="h-10 w-10" />
               <h3 className="mt-3 font-display text-lg font-bold text-foreground">Revenue Optimization</h3>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -192,8 +192,7 @@ const Index = () => {
               </p>
             </Card>
 
-            {/* End-to-End */}
-            <Card className="rounded-2xl border-0 bg-card p-6 shadow-card md:col-start-2">
+            <Card className="w-[85%] shrink-0 rounded-2xl border-0 bg-card p-6 shadow-card sm:w-[70%] md:w-auto md:shrink md:col-start-2">
               <img src={iconPerson} alt="" className="h-10 w-10" />
               <h3 className="mt-3 font-display text-lg font-bold text-foreground">End-to-End Property Management</h3>
               <p className="mt-2 text-sm text-muted-foreground">
