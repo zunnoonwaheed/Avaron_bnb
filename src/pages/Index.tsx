@@ -1,6 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Slider } from "@/components/ui/slider";
 import {
   Select,
   SelectContent,
@@ -8,14 +11,21 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Menu } from "lucide-react";
+import { Menu, TrendingUp, ChevronDown } from "lucide-react";
 import heroBedroom from "@/assets/hero-bedroom.png";
 import bedroomTop from "@/assets/bedroom-top.jpg";
 import bedroomMirror from "@/assets/bedroom-mirror.jpg";
+import provenBedroom from "@/assets/proven-bedroom.jpg";
+import calcBedroom from "@/assets/calc-bedroom.jpg";
 import iconMagnify from "@/assets/icon-magnify.png";
 import iconChart from "@/assets/icon-chart.png";
 import iconPerson from "@/assets/icon-person.png";
 import iconHouse from "@/assets/icon-house.svg";
+import iconRocket from "@/assets/icon-rocket.png";
+import iconBuilding from "@/assets/icon-building.png";
+import iconMonitor from "@/assets/icon-monitor.png";
+import iconBulb from "@/assets/icon-bulb.png";
+import iconMoney from "@/assets/icon-moneybag.png";
 import logo from "@/assets/logo.svg";
 
 const navLinks = ["Home", "About Us", "Calculate ROI", "How Does It Work?"];
