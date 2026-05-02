@@ -683,6 +683,146 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* TESTIMONIALS */}
+      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
+            <span className="sm:hidden">What Our Owners Are Saying</span>
+            <span className="hidden sm:inline">See What Our Owners Are Saying</span>
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base text-center sm:text-left">
+            <span className="sm:hidden">500+ property owners trust AvaronBnB to grow their investment.</span>
+            <span className="hidden sm:inline">
+              Join hundreds of property owners across the region who trust AvaronBnB to manage, grow, and protect their real estate investments.
+            </span>
+          </p>
+
+          {/* Cards: horizontal scroll on both, with peek */}
+          <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8">
+            {[
+              { img: testimonial1, quote: "AvaronBnB helped me scale my portfolio from 2 to 15 properties in under a year. The automation is flawless.", name: "Gary Janzen", loc: "Washington" },
+              { img: testimonial2, quote: "There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs.", name: "Michael & Sarah Lee", loc: "Colorado" },
+              { img: testimonial3, quote: "Every moment spent at our lakeside lodge feels like a dream come true, thanks to the exceptional service provided.", name: "Emily Johnson", loc: "Maine" },
+              { img: testimonial1, quote: "Our revenue doubled after joining the AvaronBnB platform. Truly priceless support.", name: "Russ & Anna", loc: "Oregon" },
+            ].map((t, i) => (
+              <div key={i} className="relative min-w-[80%] snap-start overflow-hidden rounded-2xl shadow-card sm:min-w-[calc(33.333%-14px)]">
+                <img src={t.img} alt={t.name} loading="lazy" className="h-[340px] w-full object-cover sm:h-[380px]" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground">
+                  <div className="flex gap-0.5 text-accent">
+                    {Array.from({ length: 5 }).map((_, k) => (
+                      <Star key={k} className="h-3.5 w-3.5 fill-current" />
+                    ))}
+                  </div>
+                  <p className="mt-2 text-xs leading-relaxed opacity-95">"{t.quote}"</p>
+                  <p className="mt-3 text-sm font-bold">{t.name}</p>
+                  <p className="text-[11px] opacity-80">{t.loc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 hidden items-center justify-between gap-4 md:flex">
+            <p className="text-sm text-muted-foreground">Join 500+ property owners earning more with AvaronBnB</p>
+            <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">View All Case Studies</Button>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA — Let's Talk About Your Property */}
+      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
+        <div className="mx-auto max-w-7xl">
+          <Card className="overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card sm:p-8">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-center md:gap-10">
+              <div className="order-2 md:order-1">
+                <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center md:text-left">
+                  Let's Talk About Your Property.
+                </h2>
+                <p className="mt-3 text-sm text-muted-foreground text-center md:text-left">
+                  <span className="md:hidden">Free consultation. No contracts. No pressure. Just clarity on what your property can achieve.</span>
+                  <span className="hidden md:inline">
+                    Book a free, no-obligation consultation with our property management specialists. We'll walk you through everything — no contracts, no pressure, just clarity on what your property can achieve.
+                  </span>
+                </p>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row md:mt-6">
+                  <Button className="h-11 rounded-full bg-primary px-6 text-sm text-primary-foreground hover:bg-primary/90">Get Property Evaluation</Button>
+                  <Button className="h-11 rounded-full bg-accent px-6 text-sm text-accent-foreground hover:bg-accent/90">Speak With an Expert</Button>
+                </div>
+              </div>
+              <div className="relative order-1 md:order-2">
+                <img src={ctaBedroom} alt="Premium bedroom" loading="lazy" className="h-56 w-full rounded-2xl object-cover sm:h-72 md:h-80" />
+                <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-card px-3 py-1.5 shadow-card">
+                  <Star className="h-3.5 w-3.5 fill-accent text-accent" />
+                  <span className="text-xs font-semibold text-foreground">Premium Choice</span>
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="px-5 pb-8 sm:px-8">
+        <div className="mx-auto max-w-7xl">
+          <div className="rounded-2xl bg-card p-6 shadow-card sm:p-10">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+              <div>
+                <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  Elevating short-term rentals through professional management and strategic investment insights.
+                </p>
+                <div className="mt-5 flex gap-2">
+                  <a href="#" aria-label="Website" className="grid h-8 w-8 place-items-center rounded-full border border-border text-muted-foreground hover:text-foreground">
+                    <Globe className="h-4 w-4" />
+                  </a>
+                  <a href="#" aria-label="Chat" className="grid h-8 w-8 place-items-center rounded-full border border-border text-muted-foreground hover:text-foreground">
+                    <MessageSquare className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-foreground">Services</p>
+                <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+                  <li><a href="#" className="hover:text-foreground">Management</a></li>
+                  <li><a href="#" className="hover:text-foreground">Investment</a></li>
+                  <li><a href="#" className="hover:text-foreground">Properties</a></li>
+                  <li><a href="#" className="hover:text-foreground">About</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-foreground">Company</p>
+                <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
+                  <li><a href="#" className="hover:text-foreground">Privacy Policy</a></li>
+                  <li><a href="#" className="hover:text-foreground">Terms of Service</a></li>
+                  <li><a href="#" className="hover:text-foreground">Cookie Policy</a></li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="text-sm font-semibold text-foreground">Newsletter</p>
+                <div className="mt-4 flex flex-col gap-3 md:items-end">
+                  <Input placeholder="Enter your email" className="h-10 rounded-full bg-background" />
+                  <Button className="h-10 w-full rounded-full bg-primary px-6 text-sm text-primary-foreground hover:bg-primary/90 md:w-auto">
+                    Subscribe
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 md:flex-row md:items-center">
+              <p className="text-xs text-muted-foreground">© 2024 AvaronBnB. Luxury Property Management & Investment. All rights reserved.</p>
+              <div className="flex gap-3 text-muted-foreground">
+                <CreditCard className="h-4 w-4" />
+                <Shield className="h-4 w-4" />
+                <ShieldCheck className="h-4 w-4" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };
