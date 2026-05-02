@@ -150,11 +150,11 @@ const Index = () => {
             consistently high-performing asset. You stay hands-off, we handle the rest.
           </p>
 
-          {/* Mobile: horizontal snap scroll. Desktop: 2-col aligned grid */}
+          {/* Top row: image card + luxury guest experience */}
           <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
             {/* LEFT: Premium Property Positioning */}
             <Card className="group relative overflow-hidden rounded-2xl border-0 shadow-card md:h-full">
-              <div className="relative h-[360px] md:h-full md:min-h-full">
+              <div className="relative h-[360px] md:h-full md:min-h-[340px]">
                 <img
                   src={bedroomTop}
                   alt="Premium Property"
@@ -175,38 +175,38 @@ const Index = () => {
               </div>
             </Card>
 
-            {/* RIGHT COL: stacked cards */}
-            <div className="flex flex-col gap-5">
-              {/* Hidden on mobile per figma, shown on desktop */}
-              <Card className="hidden overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card md:block">
-                <img src={iconHouse} alt="" className="h-8 w-8" />
-                <h3 className="mt-2 font-display text-base font-bold text-foreground">Luxury Guest Experience</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  We manage guest interactions, check-ins, concierge services, and issue resolution for exceptional reviews.
-                </p>
-                <img
-                  src={bedroomMirror}
-                  alt="Guest experience"
-                  className="mt-3 h-24 w-full rounded-xl object-cover"
-                />
-              </Card>
+            {/* RIGHT: Luxury Guest Experience */}
+            <Card className="hidden overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card md:block">
+              <img src={iconHouse} alt="" className="h-8 w-8" />
+              <h3 className="mt-2 font-display text-base font-bold text-foreground">Luxury Guest Experience</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                We manage guest interactions, check-ins, concierge services, and issue resolution for exceptional reviews.
+              </p>
+              <img
+                src={bedroomMirror}
+                alt="Guest experience"
+                className="mt-3 h-40 w-full rounded-xl object-cover"
+              />
+            </Card>
+          </div>
 
-              <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-                <img src={iconChart} alt="" className="h-9 w-9" />
-                <h3 className="mt-2 font-display text-base font-bold text-foreground">Revenue Optimization</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  Smart pricing strategies that adapt in real-time to maximize occupancy and nightly rates.
-                </p>
-              </Card>
+          {/* Bottom row: two cards side by side */}
+          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
+            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
+              <img src={iconChart} alt="" className="h-9 w-9" />
+              <h3 className="mt-2 font-display text-base font-bold text-foreground">Revenue Optimization</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                Smart pricing strategies that adapt in real-time to maximize occupancy and nightly rates.
+              </p>
+            </Card>
 
-              <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-                <img src={iconPerson} alt="" className="h-9 w-9" />
-                <h3 className="mt-2 font-display text-base font-bold text-foreground">End-to-End Property Management</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
-                </p>
-              </Card>
-            </div>
+            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
+              <img src={iconPerson} alt="" className="h-9 w-9" />
+              <h3 className="mt-2 font-display text-base font-bold text-foreground">End-to-End Property Management</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
+              </p>
+            </Card>
           </div>
 
           {/* Stats / CTA */}
