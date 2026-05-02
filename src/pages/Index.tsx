@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Menu, TrendingUp, ChevronDown } from "lucide-react";
+import { Menu, TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, BadgeCheck } from "lucide-react";
 import heroBedroom from "@/assets/hero-bedroom.png";
 import bedroomTop from "@/assets/bedroom-top.jpg";
 import bedroomMirror from "@/assets/bedroom-mirror.jpg";
@@ -26,6 +26,10 @@ import iconBuilding from "@/assets/icon-building.png";
 import iconMonitor from "@/assets/icon-monitor.png";
 import iconBulb from "@/assets/icon-bulb.png";
 import iconMoney from "@/assets/icon-moneybag.png";
+import property1 from "@/assets/property-1.jpg";
+import property2 from "@/assets/property-2.jpg";
+import property3 from "@/assets/property-3.jpg";
+import stepsKitchen from "@/assets/steps-kitchen.jpg";
 import logo from "@/assets/logo.svg";
 
 const navLinks = ["Home", "About Us", "Calculate ROI", "How Does It Work?"];
@@ -499,6 +503,180 @@ const Index = () => {
           <p className="mt-6 text-center text-sm italic text-muted-foreground">
             Not sure where to start? <a href="#" className="font-semibold not-italic text-primary underline">Talk to an Advisor</a>
           </p>
+        </div>
+      </section>
+
+      {/* LUXURY MANAGED — Property cards */}
+      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
+                <span className="sm:hidden">Luxury Managed. Consistently Performing.</span>
+                <span className="hidden sm:inline">Luxury Managed. Consistently Performing.</span>
+              </h2>
+              <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base text-center sm:text-left">
+                <span className="sm:hidden">Every property curated for premium guest experience and strong returns.</span>
+                <span className="hidden sm:inline">
+                  Every property in our portfolio is curated for premium guest experience and strong investor returns. Browse our managed homes and see what's possible.
+                </span>
+              </p>
+            </div>
+            {/* Mobile-only filter chips */}
+            <div className="flex justify-center gap-2 md:hidden">
+              <button className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card">
+                Buy <ChevronDown className="h-3.5 w-3.5" />
+              </button>
+              <button className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card">
+                Filters <SlidersHorizontal className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Mobile-only search bar */}
+          <div className="mt-4 md:hidden">
+            <p className="text-sm font-semibold text-foreground">Search</p>
+            <div className="mt-2 flex items-center gap-2">
+              <div className="flex h-10 flex-1 items-center gap-2 rounded-full bg-card px-4 shadow-card">
+                <Search className="h-4 w-4 text-muted-foreground" />
+                <input
+                  placeholder="Search keywords..."
+                  className="h-full w-full bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none"
+                />
+              </div>
+              <Button className="h-10 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90">Show</Button>
+            </div>
+          </div>
+
+          {/* DESKTOP: 3-up grid */}
+          <div className="mt-8 hidden grid-cols-3 gap-5 md:grid">
+            {[
+              { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0" },
+              { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", baths: "2 baths", rating: "5.0/5.0" },
+              { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", baths: "1 bath", rating: "5.0/5.0" },
+            ].map((p) => (
+              <Card key={p.title} className="overflow-hidden rounded-2xl border-0 bg-card shadow-card">
+                <div className="relative">
+                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-44 w-full object-cover" />
+                  <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
+                    <Heart className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
+                    <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
+                  </div>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
+                  <div className="my-3 h-px bg-border" />
+                  <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
+                    <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
+                    <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
+                    <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
+                    <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* MOBILE: horizontal scroll */}
+          <div className="mt-5 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:hidden">
+            {[
+              { img: property1, title: "Bali Wellness Sanctuary", price: "$250/Night", loc: "Bali - Ubud - Indonesia", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0" },
+              { img: property2, title: "Sandstone Retreat", price: "$180/Night", loc: "Cycladic - Greece", size: "120 m2", beds: "3 beds", baths: "2 baths", rating: "4.8/5.0" },
+            ].map((p) => (
+              <Card key={p.title} className="min-w-[80%] snap-start overflow-hidden rounded-2xl border-0 bg-card shadow-card">
+                <div className="relative">
+                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-48 w-full object-cover" />
+                  <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
+                    <Heart className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
+                    <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
+                  </div>
+                  <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
+                  <div className="my-3 h-px bg-border" />
+                  <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
+                    <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
+                    <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
+                    <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
+                    <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* THREE SIMPLE STEPS */}
+      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
+        <div className="mx-auto max-w-7xl">
+          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
+            <span className="sm:hidden">3 Steps to Hands-Free Income</span>
+            <span className="hidden sm:inline">Three Simple Steps to Hands-Free Property Income</span>
+          </h2>
+          <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base text-center sm:text-left">
+            <span className="sm:hidden">Simple. Transparent. Stress-free.</span>
+            <span className="hidden sm:inline">
+              From your first inquiry to ongoing monthly earnings — we make the entire process straightforward, transparent, and stress-free.
+            </span>
+          </p>
+
+          {/* MOBILE: image first, then steps */}
+          <div className="mt-6 md:hidden">
+            <img src={stepsKitchen} alt="Managed kitchen" loading="lazy" className="h-56 w-full rounded-2xl object-cover" />
+            <h3 className="mt-6 font-display text-base font-bold text-foreground">Get Started with AvaronBnB</h3>
+            <ul className="mt-4 space-y-3">
+              {["Book a Free Consultation", "We Handle Everything", "Sit Back and Earn", "Ready to Get Started?"].map((s) => (
+                <li key={s} className="flex items-center gap-3">
+                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                    <Check className="h-3.5 w-3.5" />
+                  </span>
+                  <span className="text-sm text-foreground">{s}</span>
+                </li>
+              ))}
+            </ul>
+            <Button className="mt-6 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90">
+              Start With a Free Consultation
+            </Button>
+          </div>
+
+          {/* DESKTOP */}
+          <div className="mt-10 hidden grid-cols-2 gap-10 md:grid md:items-center">
+            <div>
+              <h3 className="font-display text-base font-bold text-foreground">Get Started with AvaronBnB</h3>
+              <ul className="mt-6 space-y-5">
+                {["Book Your Free Consultation", "We Set Everything Up, For You", "Sit Back and Earn", "Ready to Get Started?"].map((s) => (
+                  <li key={s} className="flex items-center gap-3">
+                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                      <Check className="h-3.5 w-3.5" />
+                    </span>
+                    <span className="text-sm text-foreground">{s}</span>
+                  </li>
+                ))}
+              </ul>
+              <Button className="mt-8 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90 sm:max-w-md">
+                Start With a Free Consultation
+              </Button>
+            </div>
+            <div className="relative">
+              <img src={stepsKitchen} alt="Fully managed kitchen" loading="lazy" className="h-[420px] w-full rounded-2xl object-cover" />
+              <div className="absolute left-4 top-1/2 w-64 -translate-y-1/2 rounded-2xl bg-card p-4 shadow-soft">
+                <div className="flex items-center gap-2">
+                  <BadgeCheck className="h-5 w-5 text-primary" />
+                  <p className="font-display text-sm font-bold text-foreground">Fully Managed. Completely Yours.</p>
+                </div>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  You retain ownership and visibility. We manage it, ensuring peak performance daily.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>
