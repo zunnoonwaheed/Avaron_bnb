@@ -136,7 +136,7 @@ const Index = () => {
             consistently high-performing asset. You stay hands-off, we handle the rest.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2">
+          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:auto-rows-fr">
             {/* Premium Property Positioning - large image card */}
             <Card className="group relative col-span-1 overflow-hidden rounded-2xl border-0 shadow-card md:row-span-2">
               <div className="relative h-full min-h-[360px]">
@@ -161,7 +161,7 @@ const Index = () => {
             </Card>
 
             {/* Luxury Guest Experience */}
-            <Card className="overflow-hidden rounded-2xl border-0 bg-card p-6 shadow-card">
+            <Card className="flex flex-col overflow-hidden rounded-2xl border-0 bg-card p-6 shadow-card">
               <img src={iconHouse} alt="" className="h-9 w-9" />
               <h3 className="mt-3 font-display text-lg font-bold text-foreground">Luxury Guest Experience</h3>
               <p className="mt-2 text-sm text-muted-foreground">
@@ -171,28 +171,28 @@ const Index = () => {
               <img
                 src={bedroomMirror}
                 alt="Guest experience"
-                className="mt-4 h-40 w-full rounded-xl object-cover"
+                className="mt-4 h-40 w-full flex-1 rounded-xl object-cover"
               />
             </Card>
 
-            {/* Revenue Optimization */}
-            <Card className="rounded-2xl border-0 bg-card p-6 shadow-card">
+            {/* Revenue Optimization + End-to-End - stacked in right column on desktop */}
+            <Card className="rounded-2xl border-0 bg-card p-6 shadow-card md:col-start-2">
               <img src={iconChart} alt="" className="h-10 w-10" />
               <h3 className="mt-3 font-display text-lg font-bold text-foreground">Revenue Optimization</h3>
               <p className="mt-2 text-sm text-muted-foreground">
                 Smart pricing strategies that adapt in real-time to maximize occupancy and nightly rates.
               </p>
             </Card>
-
-            {/* End-to-End */}
-            <Card className="rounded-2xl border-0 bg-card p-6 shadow-card md:col-start-2">
-              <img src={iconPerson} alt="" className="h-10 w-10" />
-              <h3 className="mt-3 font-display text-lg font-bold text-foreground">End-to-End Property Management</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
-              </p>
-            </Card>
           </div>
+
+          {/* End-to-End - full width below */}
+          <Card className="mt-5 rounded-2xl border-0 bg-card p-6 shadow-card">
+            <img src={iconPerson} alt="" className="h-10 w-10" />
+            <h3 className="mt-3 font-display text-lg font-bold text-foreground">End-to-End Property Management</h3>
+            <p className="mt-2 text-sm text-muted-foreground">
+              We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
+            </p>
+          </Card>
 
           {/* Stats / CTA */}
           <Card className="mt-6 grid grid-cols-1 items-center gap-6 rounded-2xl border-0 bg-card p-6 shadow-card md:grid-cols-2">
