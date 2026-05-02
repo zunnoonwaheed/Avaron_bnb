@@ -458,12 +458,12 @@ const Index = () => {
           </p>
 
           <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
-            <Card className="overflow-hidden rounded-2xl border-0 shadow-card">
+            <Card className="overflow-hidden rounded-2xl border-0 p-0 shadow-card">
               <img
                 src={calcBedroom}
                 alt="Furnished bedroom"
                 loading="lazy"
-                className="h-full max-h-[640px] w-full object-cover"
+                className="block h-full w-full object-cover"
               />
             </Card>
 
@@ -476,8 +476,8 @@ const Index = () => {
               <div className="mt-5 space-y-4">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-foreground">Select Region</Label>
-                  <Select>
-                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm text-muted-foreground">
+                  <Select value={region} onValueChange={setRegion}>
+                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm">
                       <SelectValue placeholder="e.g. Karachi" />
                     </SelectTrigger>
                     <SelectContent>
@@ -490,7 +490,7 @@ const Index = () => {
 
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-foreground">Property Type</Label>
-                  <RadioGroup defaultValue="flat" className="flex flex-wrap gap-2">
+                  <RadioGroup value={propType} onValueChange={setPropType} className="flex flex-wrap gap-2">
                     {["Flat", "Portion", "House"].map((t) => (
                       <label key={t} className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-input bg-background px-4 text-xs font-medium text-foreground">
                         <RadioGroupItem value={t.toLowerCase()} className="h-4 w-4" />
@@ -502,7 +502,7 @@ const Index = () => {
 
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-foreground">Property Size</Label>
-                  <RadioGroup defaultValue="2bhk" className="flex flex-wrap gap-2">
+                  <RadioGroup value={propSize} onValueChange={setPropSize} className="flex flex-wrap gap-2">
                     {["1BHK", "2BHK", "3BHK", "Penthouse"].map((t) => (
                       <label key={t} className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-input bg-background px-4 text-xs font-medium text-foreground">
                         <RadioGroupItem value={t.toLowerCase()} className="h-4 w-4" />
@@ -514,8 +514,8 @@ const Index = () => {
 
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-foreground">Furnishing Level</Label>
-                  <Select>
-                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm text-muted-foreground">
+                  <Select value={furnish} onValueChange={setFurnish}>
+                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm">
                       <SelectValue placeholder="e.g. Fully Furnished" />
                     </SelectTrigger>
                     <SelectContent>
@@ -527,12 +527,14 @@ const Index = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-xs font-semibold text-foreground">Expected Occupancy Level</Label>
-                  <Slider defaultValue={[60]} max={100} step={1} className="py-2" />
+                  <Label className="text-xs font-semibold text-foreground">
+                    Expected Occupancy Level <span className="text-muted-foreground">({occupancy}%)</span>
+                  </Label>
+                  <Slider value={[occupancy]} onValueChange={(v) => setOccupancy(v[0])} max={100} step={1} className="py-2" />
                 </div>
 
                 <div className="flex justify-end">
-                  <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
+                  <Button onClick={handleCalculate} className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
                     Calculate
                   </Button>
                 </div>
@@ -541,12 +543,14 @@ const Index = () => {
                   <div className="rounded-xl bg-muted p-3">
                     <img src={iconMoney} alt="" loading="lazy" className="h-7 w-7" />
                     <p className="mt-2 text-[10px] text-muted-foreground">Est. Monthly Income Range</p>
-                    <p className="mt-0.5 text-sm font-bold text-foreground">$4,500 — $6,200</p>
+                    <p className="mt-0.5 text-sm font-bold text-foreground">
+                      ${calc.low.toLocaleString()} — ${calc.high.toLocaleString()}
+                    </p>
                   </div>
                   <div className="rounded-xl bg-muted p-3">
                     <img src={iconChart} alt="" loading="lazy" className="h-7 w-7" />
                     <p className="mt-2 text-[10px] text-muted-foreground">Est. Annual Yield</p>
-                    <p className="mt-0.5 text-sm font-bold text-foreground">8.5% — 11.2%</p>
+                    <p className="mt-0.5 text-sm font-bold text-foreground">{calc.yLow}% — {calc.yHigh}%</p>
                   </div>
                 </div>
 
