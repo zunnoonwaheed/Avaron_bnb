@@ -204,7 +204,7 @@ const Index = () => {
 
           {/* Stats / CTA */}
           <Card className="mt-6 grid grid-cols-1 items-center gap-6 rounded-2xl border-0 bg-card p-6 shadow-card md:grid-cols-2">
-            <div className="grid grid-cols-3 gap-4 text-center">
+            <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
               <div>
                 <p className="font-display text-2xl font-bold text-accent">24%</p>
                 <p className="mt-1 text-xs font-medium text-foreground">Avg. Annual Yield</p>
@@ -218,13 +218,13 @@ const Index = () => {
                 <p className="mt-1 text-xs font-medium text-foreground">Guest Satisfaction</p>
               </div>
             </div>
-            <div className="flex flex-col items-start gap-3 md:items-end">
-              <p className="text-sm text-muted-foreground">Ready to see what your property is truly worth?</p>
-              <div className="flex flex-wrap gap-3">
-                <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
+            <div className="flex flex-col items-stretch gap-3 sm:items-start md:items-end">
+              <p className="text-center text-sm text-muted-foreground md:text-right">Ready to see what your property is truly worth?</p>
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                <Button className="w-full rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90 sm:w-auto">
                   Book a Consultation
                 </Button>
-                <Button className="rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90">
+                <Button className="w-full rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90 sm:w-auto">
                   See Our Results
                 </Button>
               </div>
