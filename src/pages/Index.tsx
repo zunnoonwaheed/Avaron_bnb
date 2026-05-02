@@ -101,8 +101,7 @@ const Index = () => {
                 </div>
                 <div className="hidden h-8 w-px bg-primary-foreground/30 sm:block" />
                 <Select defaultValue="luxury">
-                  {/* hidden on mobile to match design */}
-                  <SelectTrigger className="h-10 border-0 bg-transparent text-sm text-primary-foreground focus:ring-0 sm:w-48">
+                  <SelectTrigger className="hidden h-10 border-0 bg-transparent text-sm text-primary-foreground focus:ring-0 sm:flex sm:w-48">
                     <div className="flex items-center gap-2">
                       <img src={iconHouse} alt="" className="h-4 w-4" />
                       <SelectValue />
