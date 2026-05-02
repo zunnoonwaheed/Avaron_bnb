@@ -35,7 +35,12 @@ const Index = () => {
 
           {/* NAV */}
           <nav className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10">
-            <a href="#" className="flex items-center gap-2">
+            <div className="flex items-center gap-2 md:hidden">
+              <button className="rounded-full bg-primary/80 p-2.5 text-primary-foreground backdrop-blur" aria-label="Menu">
+                <Menu className="h-5 w-5" />
+              </button>
+            </div>
+            <a href="#" className="hidden items-center gap-2 md:flex">
               <img src={logo} alt="AvaronBnB" className="h-9 w-auto brightness-0 invert" />
             </a>
             <ul className="hidden items-center gap-8 text-sm font-medium text-primary-foreground md:flex">
@@ -47,17 +52,15 @@ const Index = () => {
                 </li>
               ))}
             </ul>
-            <Button className="hidden rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90 md:inline-flex">
-              Contact Us
+            <Button className="rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm">
+              <span className="md:hidden">Book Consultation</span>
+              <span className="hidden md:inline">Contact Us</span>
             </Button>
-            <button className="rounded-full bg-primary p-2 text-primary-foreground md:hidden" aria-label="Menu">
-              <Menu className="h-5 w-5" />
-            </button>
           </nav>
 
           {/* HERO CONTENT */}
-          <div className="relative z-10 flex flex-col items-center px-5 pb-10 pt-10 text-center text-primary-foreground sm:pb-24 sm:pt-24">
-            <h1 className="max-w-3xl font-display text-2xl font-bold leading-tight sm:text-5xl md:text-6xl animate-fade-in">
+          <div className="relative z-10 flex flex-col items-center px-5 pb-12 pt-8 text-center text-primary-foreground sm:pb-24 sm:pt-24">
+            <h1 className="max-w-3xl font-display font-bold leading-tight text-2xl sm:text-5xl md:text-6xl animate-fade-in">
               <span className="sm:hidden">
                 Earn More From Your <span className="text-gold">Property</span>
               </span>
@@ -68,7 +71,7 @@ const Index = () => {
                 <span className="text-primary-foreground">, Without Managing It Yourself</span>
               </span>
             </h1>
-            <p className="mt-4 max-w-xl text-sm opacity-90 sm:mt-6 sm:text-base">
+            <p className="mt-3 max-w-xl text-sm opacity-90 sm:mt-6 sm:text-base">
               <span className="sm:hidden">Up to 24% higher returns with full management</span>
               <span className="hidden sm:inline">
                 AvaronBnB handles everything, from guest management to property optimization.
@@ -76,27 +79,29 @@ const Index = () => {
               </span>
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-              <Button size="lg" className="rounded-full bg-primary px-7 text-primary-foreground hover:bg-primary/90">
-                Book a Free Consultation
+            <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
+              <Button size="lg" className="h-10 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:h-11 sm:px-7 sm:text-sm">
+                <span className="sm:hidden">Book a Free Call</span>
+                <span className="hidden sm:inline">Book a Free Consultation</span>
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="rounded-full border-primary-foreground/40 bg-primary-foreground/10 px-7 text-primary-foreground backdrop-blur hover:bg-primary-foreground/20 hover:text-primary-foreground"
+                className="h-10 rounded-full border-primary-foreground/40 bg-primary-foreground/10 px-5 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/20 hover:text-primary-foreground sm:h-11 sm:px-7 sm:text-sm"
               >
-                Browse Stays
+                <span className="sm:hidden">See How It Works</span>
+                <span className="hidden sm:inline">Browse Stays</span>
               </Button>
             </div>
 
             {/* Estimate bar */}
-            <div className="mt-10 w-full max-w-3xl rounded-full bg-primary-foreground/15 p-1.5 backdrop-blur-md sm:p-2">
-              <div className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
-                <div className="flex flex-1 items-center gap-2 px-4">
-                  <img src={iconHouse} alt="" className="h-5 w-5" />
+            <div className="mt-6 w-full max-w-3xl rounded-full bg-primary-foreground/15 p-1.5 backdrop-blur-md sm:mt-10 sm:p-2">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <div className="flex flex-1 items-center gap-2 px-3 sm:px-4">
+                  <img src={iconHouse} alt="" className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
                   <Input
                     placeholder="Enter property address for estimate..."
-                    className="h-10 border-0 bg-transparent text-sm text-primary-foreground placeholder:text-primary-foreground/70 focus-visible:ring-0"
+                    className="h-9 border-0 bg-transparent p-0 text-xs text-primary-foreground placeholder:text-primary-foreground/70 focus-visible:ring-0 sm:h-10 sm:text-sm"
                   />
                 </div>
                 <div className="hidden h-8 w-px bg-primary-foreground/30 sm:block" />
@@ -113,18 +118,19 @@ const Index = () => {
                     <SelectItem value="condo">Condo</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button className="h-10 rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
-                  Estimate Earnings
+                <Button className="h-9 shrink-0 rounded-full bg-primary px-4 text-xs text-primary-foreground hover:bg-primary/90 sm:h-10 sm:px-6 sm:text-sm">
+                  <span className="sm:hidden">Estimate</span>
+                  <span className="hidden sm:inline">Estimate Earnings</span>
                 </Button>
               </div>
             </div>
-            <p className="mt-4 text-xs text-gold">
+            <p className="mt-3 text-[11px] text-gold sm:mt-4 sm:text-xs">
               <span className="font-semibold">New:</span>{" "}
               <span className="text-primary-foreground/80">Real-time market data integration for 2024 projections.</span>
             </p>
 
             {/* dots */}
-            <div className="mt-10 flex gap-2">
+            <div className="mt-6 flex gap-2 sm:mt-10">
               <span className="h-2 w-2 rounded-full bg-primary" />
               <span className="h-2 w-2 rounded-full bg-primary-foreground/40" />
               <span className="h-2 w-2 rounded-full bg-primary-foreground/40" />
