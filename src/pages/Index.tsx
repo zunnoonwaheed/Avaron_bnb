@@ -35,13 +35,15 @@ const Index = () => {
 
           {/* NAV */}
           <nav className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10">
-            <a href="#" className="flex items-center gap-2 md:order-1">
-              <img src={logo} alt="AvaronBnB" className="h-8 w-auto brightness-0 invert sm:h-9" />
+            <div className="flex items-center gap-2 md:hidden">
+              <button className="rounded-full bg-primary/80 p-2.5 text-primary-foreground backdrop-blur" aria-label="Menu">
+                <Menu className="h-5 w-5" />
+              </button>
+            </div>
+            <a href="#" className="hidden items-center gap-2 md:flex">
+              <img src={logo} alt="AvaronBnB" className="h-9 w-auto brightness-0 invert" />
             </a>
-            <button className="rounded-full bg-primary/80 p-2.5 text-primary-foreground backdrop-blur md:hidden" aria-label="Menu">
-              <Menu className="h-5 w-5" />
-            </button>
-            <ul className="hidden items-center gap-8 text-sm font-medium text-primary-foreground md:order-2 md:flex">
+            <ul className="hidden items-center gap-8 text-sm font-medium text-primary-foreground md:flex">
               {navLinks.map((l) => (
                 <li key={l}>
                   <a href="#" className="opacity-90 transition hover:opacity-100">
@@ -50,7 +52,7 @@ const Index = () => {
                 </li>
               ))}
             </ul>
-            <Button className="absolute right-5 top-5 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm md:static md:order-3">
+            <Button className="rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm">
               <span className="md:hidden">Book Consultation</span>
               <span className="hidden md:inline">Contact Us</span>
             </Button>
