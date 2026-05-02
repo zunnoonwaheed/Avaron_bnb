@@ -158,8 +158,8 @@ const Index = () => {
       </section>
 
       {/* FEATURES */}
-      <section className="px-5 py-16 sm:px-8 sm:py-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 py-16 sm:px-6 sm:py-20">
+        <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             A Smarter Way to Own. A Better Way to Earn.
           </h2>
@@ -259,8 +259,8 @@ const Index = () => {
       </section>
 
       {/* WE MANAGE EVERYTHING */}
-      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 pb-16 sm:px-6 sm:pb-20">
+        <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             <span className="sm:hidden">We Manage &amp; You Keep the Returns.</span>
             <span className="hidden sm:inline">We Manage Everything. You Keep the Returns.</span>
@@ -391,8 +391,8 @@ const Index = () => {
       </section>
 
       {/* BUILT FOR PREDICTABLE RETURNS */}
-      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
+        <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
             <span className="sm:hidden">Real Numbers. Real Returns.</span>
             <span className="hidden sm:inline">Built for Predictable Returns</span>
@@ -511,8 +511,8 @@ const Index = () => {
       </section>
 
       {/* LUXURY MANAGED — Property cards */}
-      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 pb-16 sm:px-6 sm:pb-20">
+        <div className="mx-auto max-w-[1400px]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
@@ -618,8 +618,8 @@ const Index = () => {
       </section>
 
       {/* THREE SIMPLE STEPS */}
-      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
+        <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
             <span className="sm:hidden">3 Steps to Hands-Free Income</span>
             <span className="hidden sm:inline">Three Simple Steps to Hands-Free Property Income</span>
@@ -685,8 +685,8 @@ const Index = () => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="px-5 pb-16 sm:px-8 sm:pb-20">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 pb-16 sm:px-6 sm:pb-20">
+        <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
             <span className="sm:hidden">What Our Owners Are Saying</span>
             <span className="hidden sm:inline">See What Our Owners Are Saying</span>
@@ -699,7 +699,7 @@ const Index = () => {
           </p>
 
           {/* Cards: horizontal scroll on both, with peek */}
-          <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-8">
+          <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-6">
             {[
               { img: testimonial1, quote: "AvaronBnB helped me scale my portfolio from 2 to 15 properties in under a year. The automation is flawless.", name: "Gary Janzen", loc: "Washington" },
               { img: testimonial2, quote: "There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs.", name: "Michael & Sarah Lee", loc: "Colorado" },
@@ -731,8 +731,8 @@ const Index = () => {
       </section>
 
       {/* CTA — Let's Talk About Your Property */}
-      <section className="px-5 pb-20 sm:px-8 sm:pb-24">
-        <div className="mx-auto max-w-7xl">
+      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
+        <div className="mx-auto max-w-[1400px]">
           <Card className="overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card sm:p-8">
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-center md:gap-10">
               <div className="order-2 md:order-1">
@@ -765,7 +765,7 @@ const Index = () => {
       {/* FOOTER */}
       <footer>
         <div className="bg-card p-6 shadow-card sm:p-10">
-          <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-[1400px]">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               <div>
                 <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
