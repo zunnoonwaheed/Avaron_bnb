@@ -35,10 +35,63 @@ import testimonial2 from "@/assets/testimonial-2.jpg";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import ctaBedroom from "@/assets/cta-bedroom.jpg";
 import logo from "@/assets/logo.svg";
+import { useMemo, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = ["Home", "About Us", "Calculate ROI", "How Does It Work?"];
 
+const REGION_RATE: Record<string, number> = { karachi: 1200, lahore: 1100, islamabad: 1400 };
+const TYPE_MULT: Record<string, number> = { flat: 1, portion: 0.85, house: 1.4 };
+const SIZE_MULT: Record<string, number> = { "1bhk": 0.8, "2bhk": 1, "3bhk": 1.35, penthouse: 1.9 };
+const FURNISH_MULT: Record<string, number> = { unfurnished: 0.7, semi: 0.9, full: 1.15 };
+
 const Index = () => {
+  const [region, setRegion] = useState<string>("karachi");
+  const [propType, setPropType] = useState<string>("flat");
+  const [propSize, setPropSize] = useState<string>("2bhk");
+  const [furnish, setFurnish] = useState<string>("full");
+  const [occupancy, setOccupancy] = useState<number>(60);
+  const [calc, setCalc] = useState<{ low: number; high: number; yLow: number; yHigh: number }>({
+    low: 4500, high: 6200, yLow: 8.5, yHigh: 11.2,
+  });
+
+  const handleCalculate = () => {
+    const base = (REGION_RATE[region] ?? 1000) * (TYPE_MULT[propType] ?? 1) * (SIZE_MULT[propSize] ?? 1) * (FURNISH_MULT[furnish] ?? 1);
+    const monthly = base * (occupancy / 60);
+    const low = Math.round((monthly * 0.85) / 50) * 50;
+    const high = Math.round((monthly * 1.15) / 50) * 50;
+    const yLow = Math.max(4, Math.round(((monthly * 12) / 600000) * 8 * 10) / 10);
+    const yHigh = Math.round((yLow + 2.7) * 10) / 10;
+    setCalc({ low, high, yLow, yHigh });
+  };
+
+  const [buyFilters, setBuyFilters] = useState<Record<string, boolean>>({ buy: true, rent: false, lease: false });
+  const [bedFilters, setBedFilters] = useState<Record<string, boolean>>({ "1bed": false, "2bed": true, "3bed": true, "4bed": false });
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const allProperties = useMemo(() => [
+    { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", bedKey: "3bed", baths: "1 bath", rating: "4.9/5.0" },
+    { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", bedKey: "4bed", baths: "2 baths", rating: "5.0/5.0" },
+    { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", bedKey: "2bed", baths: "1 bath", rating: "5.0/5.0" },
+  ], []);
+
+  const filteredMobileProps = useMemo(() => {
+    const anyBed = Object.values(bedFilters).some(Boolean);
+    return allProperties.filter((p) => {
+      const q = searchQuery.trim().toLowerCase();
+      const matchQ = !q || p.title.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q);
+      const matchBed = !anyBed || bedFilters[p.bedKey];
+      return matchQ && matchBed;
+    });
+  }, [allProperties, searchQuery, bedFilters]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
