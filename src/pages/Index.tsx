@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Menu, TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, BadgeCheck } from "lucide-react";
+import { Menu, TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, BadgeCheck, Globe, MessageSquare, CreditCard, Shield, ShieldCheck } from "lucide-react";
 import heroBedroom from "@/assets/hero-bedroom.png";
 import bedroomTop from "@/assets/bedroom-top.jpg";
 import bedroomMirror from "@/assets/bedroom-mirror.jpg";
