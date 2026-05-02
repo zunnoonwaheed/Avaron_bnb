@@ -24,8 +24,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
-      <section className="relative">
-        <div className="relative overflow-hidden">
+      <section className="relative px-3 pt-3 sm:px-6 sm:pt-6">
+        <div className="relative overflow-hidden rounded-3xl">
           <img
             src={heroBedroom}
             alt="Luxury managed bedroom"
@@ -145,9 +145,9 @@ const Index = () => {
           </p>
 
           {/* Mobile: horizontal snap scroll. Desktop: 2-col aligned grid */}
-          <div className="mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-10 sm:px-10 md:mx-0 md:grid md:grid-cols-2 md:items-stretch md:gap-5 md:overflow-visible md:px-0 md:pb-0 [&>*]:snap-start">
-            {/* LEFT: Premium Property Positioning - matches right column height */}
-            <Card className="group relative w-[92%] shrink-0 overflow-hidden rounded-2xl border-0 shadow-card sm:w-[75%] md:w-auto md:shrink md:h-full">
+          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
+            {/* LEFT: Premium Property Positioning */}
+            <Card className="group relative overflow-hidden rounded-2xl border-0 shadow-card md:h-full">
               <div className="relative h-[360px] md:h-full md:min-h-full">
                 <img
                   src={bedroomTop}
@@ -169,9 +169,10 @@ const Index = () => {
               </div>
             </Card>
 
-            {/* RIGHT COL: 3 compact cards stacked, natural heights */}
-            <div className="contents md:flex md:flex-col md:gap-5">
-              <Card className="w-[92%] shrink-0 overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card sm:w-[75%] md:w-auto md:shrink-0">
+            {/* RIGHT COL: stacked cards */}
+            <div className="flex flex-col gap-5">
+              {/* Hidden on mobile per figma, shown on desktop */}
+              <Card className="hidden overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card md:block">
                 <img src={iconHouse} alt="" className="h-8 w-8" />
                 <h3 className="mt-2 font-display text-base font-bold text-foreground">Luxury Guest Experience</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -184,7 +185,7 @@ const Index = () => {
                 />
               </Card>
 
-              <Card className="w-[92%] shrink-0 rounded-2xl border-0 bg-card p-5 shadow-card sm:w-[75%] md:w-auto md:shrink-0">
+              <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
                 <img src={iconChart} alt="" className="h-9 w-9" />
                 <h3 className="mt-2 font-display text-base font-bold text-foreground">Revenue Optimization</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
@@ -192,7 +193,7 @@ const Index = () => {
                 </p>
               </Card>
 
-              <Card className="w-[92%] shrink-0 rounded-2xl border-0 bg-card p-5 shadow-card sm:w-[75%] md:w-auto md:shrink-0">
+              <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
                 <img src={iconPerson} alt="" className="h-9 w-9" />
                 <h3 className="mt-2 font-display text-base font-bold text-foreground">End-to-End Property Management</h3>
                 <p className="mt-1 text-sm text-muted-foreground">
