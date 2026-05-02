@@ -146,9 +146,9 @@ const Index = () => {
 
           {/* Mobile: horizontal snap scroll. Desktop: 2-col aligned grid */}
           <div className="mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-10 sm:px-10 md:mx-0 md:grid md:grid-cols-2 md:grid-rows-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0 [&>*]:snap-start">
-            {/* LEFT: Premium Property Positioning - stretches full height */}
-            <Card className="group relative w-[85%] shrink-0 overflow-hidden rounded-2xl border-0 shadow-card sm:w-[70%] md:w-auto md:shrink md:col-start-1 md:row-span-3 md:h-full">
-              <div className="relative h-full min-h-[420px] md:min-h-full">
+            {/* LEFT: Premium Property Positioning */}
+            <Card className="group relative w-[92%] shrink-0 overflow-hidden rounded-2xl border-0 shadow-card sm:w-[75%] md:w-auto md:shrink md:col-start-1 md:row-span-3 md:h-full">
+              <div className="relative h-[360px] md:h-full">
                 <img
                   src={bedroomTop}
                   alt="Premium Property"
@@ -169,33 +169,32 @@ const Index = () => {
               </div>
             </Card>
 
-            {/* RIGHT COLUMN: stack of 3 cards. On desktop, only the first 2 sit in column 2; End-to-End wraps below */}
-            <Card className="w-[85%] shrink-0 overflow-hidden rounded-2xl border-0 bg-card p-6 shadow-card sm:w-[70%] md:w-auto md:shrink">
-              <img src={iconHouse} alt="" className="h-9 w-9" />
-              <h3 className="mt-3 font-display text-lg font-bold text-foreground">Luxury Guest Experience</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
-                We manage guest interactions, check-ins, concierge services, and issue resolution for exceptional
-                reviews.
+            {/* RIGHT COL: 3 compact cards */}
+            <Card className="w-[92%] shrink-0 overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card sm:w-[75%] md:w-auto md:shrink">
+              <img src={iconHouse} alt="" className="h-8 w-8" />
+              <h3 className="mt-2 font-display text-base font-bold text-foreground">Luxury Guest Experience</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
+                We manage guest interactions, check-ins, concierge services, and issue resolution for exceptional reviews.
               </p>
               <img
                 src={bedroomMirror}
                 alt="Guest experience"
-                className="mt-4 h-40 w-full rounded-xl object-cover"
+                className="mt-3 h-24 w-full rounded-xl object-cover md:h-20"
               />
             </Card>
 
-            <Card className="w-[85%] shrink-0 rounded-2xl border-0 bg-card p-6 shadow-card sm:w-[70%] md:w-auto md:shrink md:col-start-2">
-              <img src={iconChart} alt="" className="h-10 w-10" />
-              <h3 className="mt-3 font-display text-lg font-bold text-foreground">Revenue Optimization</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+            <Card className="w-[92%] shrink-0 rounded-2xl border-0 bg-card p-5 shadow-card sm:w-[75%] md:w-auto md:shrink md:col-start-2">
+              <img src={iconChart} alt="" className="h-9 w-9" />
+              <h3 className="mt-2 font-display text-base font-bold text-foreground">Revenue Optimization</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
                 Smart pricing strategies that adapt in real-time to maximize occupancy and nightly rates.
               </p>
             </Card>
 
-            <Card className="w-[85%] shrink-0 rounded-2xl border-0 bg-card p-6 shadow-card sm:w-[70%] md:w-auto md:shrink md:col-start-2">
-              <img src={iconPerson} alt="" className="h-10 w-10" />
-              <h3 className="mt-3 font-display text-lg font-bold text-foreground">End-to-End Property Management</h3>
-              <p className="mt-2 text-sm text-muted-foreground">
+            <Card className="w-[92%] shrink-0 rounded-2xl border-0 bg-card p-5 shadow-card sm:w-[75%] md:w-auto md:shrink md:col-start-2">
+              <img src={iconPerson} alt="" className="h-9 w-9" />
+              <h3 className="mt-2 font-display text-base font-bold text-foreground">End-to-End Property Management</h3>
+              <p className="mt-1 text-sm text-muted-foreground">
                 We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
               </p>
             </Card>
