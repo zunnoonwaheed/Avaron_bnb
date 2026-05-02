@@ -145,9 +145,9 @@ const Index = () => {
           </p>
 
           {/* Mobile: horizontal snap scroll. Desktop: 2-col aligned grid */}
-          <div className="mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-10 sm:px-10 md:mx-0 md:grid md:grid-cols-2 md:gap-5 md:overflow-visible md:px-0 md:pb-0 [&>*]:snap-start">
+          <div className="mt-10 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-4 sm:-mx-10 sm:px-10 md:mx-0 md:grid md:grid-cols-2 md:grid-rows-3 md:gap-5 md:overflow-visible md:px-0 md:pb-0 [&>*]:snap-start">
             {/* LEFT: Premium Property Positioning - stretches full height */}
-            <Card className="group relative w-[85%] shrink-0 overflow-hidden rounded-2xl border-0 shadow-card sm:w-[70%] md:w-auto md:shrink md:row-span-2 md:h-full">
+            <Card className="group relative w-[85%] shrink-0 overflow-hidden rounded-2xl border-0 shadow-card sm:w-[70%] md:w-auto md:shrink md:col-start-1 md:row-span-3 md:h-full">
               <div className="relative h-full min-h-[420px] md:min-h-full">
                 <img
                   src={bedroomTop}
