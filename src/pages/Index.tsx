@@ -35,10 +35,63 @@ import testimonial2 from "@/assets/testimonial-2.jpg";
 import testimonial3 from "@/assets/testimonial-3.jpg";
 import ctaBedroom from "@/assets/cta-bedroom.jpg";
 import logo from "@/assets/logo.svg";
+import { useMemo, useState } from "react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuCheckboxItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const navLinks = ["Home", "About Us", "Calculate ROI", "How Does It Work?"];
 
+const REGION_RATE: Record<string, number> = { karachi: 1200, lahore: 1100, islamabad: 1400 };
+const TYPE_MULT: Record<string, number> = { flat: 1, portion: 0.85, house: 1.4 };
+const SIZE_MULT: Record<string, number> = { "1bhk": 0.8, "2bhk": 1, "3bhk": 1.35, penthouse: 1.9 };
+const FURNISH_MULT: Record<string, number> = { unfurnished: 0.7, semi: 0.9, full: 1.15 };
+
 const Index = () => {
+  const [region, setRegion] = useState<string>("karachi");
+  const [propType, setPropType] = useState<string>("flat");
+  const [propSize, setPropSize] = useState<string>("2bhk");
+  const [furnish, setFurnish] = useState<string>("full");
+  const [occupancy, setOccupancy] = useState<number>(60);
+  const [calc, setCalc] = useState<{ low: number; high: number; yLow: number; yHigh: number }>({
+    low: 4500, high: 6200, yLow: 8.5, yHigh: 11.2,
+  });
+
+  const handleCalculate = () => {
+    const base = (REGION_RATE[region] ?? 1000) * (TYPE_MULT[propType] ?? 1) * (SIZE_MULT[propSize] ?? 1) * (FURNISH_MULT[furnish] ?? 1);
+    const monthly = base * (occupancy / 60);
+    const low = Math.round((monthly * 0.85) / 50) * 50;
+    const high = Math.round((monthly * 1.15) / 50) * 50;
+    const yLow = Math.max(4, Math.round(((monthly * 12) / 600000) * 8 * 10) / 10);
+    const yHigh = Math.round((yLow + 2.7) * 10) / 10;
+    setCalc({ low, high, yLow, yHigh });
+  };
+
+  const [buyFilters, setBuyFilters] = useState<Record<string, boolean>>({ buy: true, rent: false, lease: false });
+  const [bedFilters, setBedFilters] = useState<Record<string, boolean>>({ "1bed": false, "2bed": true, "3bed": true, "4bed": false });
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const allProperties = useMemo(() => [
+    { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", bedKey: "3bed", baths: "1 bath", rating: "4.9/5.0" },
+    { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", bedKey: "4bed", baths: "2 baths", rating: "5.0/5.0" },
+    { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", bedKey: "2bed", baths: "1 bath", rating: "5.0/5.0" },
+  ], []);
+
+  const filteredMobileProps = useMemo(() => {
+    const anyBed = Object.values(bedFilters).some(Boolean);
+    return allProperties.filter((p) => {
+      const q = searchQuery.trim().toLowerCase();
+      const matchQ = !q || p.title.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q);
+      const matchBed = !anyBed || bedFilters[p.bedKey];
+      return matchQ && matchBed;
+    });
+  }, [allProperties, searchQuery, bedFilters]);
+
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
@@ -405,12 +458,12 @@ const Index = () => {
           </p>
 
           <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
-            <Card className="overflow-hidden rounded-2xl border-0 shadow-card">
+            <Card className="overflow-hidden rounded-2xl border-0 p-0 shadow-card">
               <img
                 src={calcBedroom}
                 alt="Furnished bedroom"
                 loading="lazy"
-                className="h-full max-h-[640px] w-full object-cover"
+                className="block h-full w-full object-cover"
               />
             </Card>
 
@@ -423,8 +476,8 @@ const Index = () => {
               <div className="mt-5 space-y-4">
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-foreground">Select Region</Label>
-                  <Select>
-                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm text-muted-foreground">
+                  <Select value={region} onValueChange={setRegion}>
+                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm">
                       <SelectValue placeholder="e.g. Karachi" />
                     </SelectTrigger>
                     <SelectContent>
@@ -437,7 +490,7 @@ const Index = () => {
 
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-foreground">Property Type</Label>
-                  <RadioGroup defaultValue="flat" className="flex flex-wrap gap-2">
+                  <RadioGroup value={propType} onValueChange={setPropType} className="flex flex-wrap gap-2">
                     {["Flat", "Portion", "House"].map((t) => (
                       <label key={t} className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-input bg-background px-4 text-xs font-medium text-foreground">
                         <RadioGroupItem value={t.toLowerCase()} className="h-4 w-4" />
@@ -449,7 +502,7 @@ const Index = () => {
 
                 <div className="space-y-2">
                   <Label className="text-xs font-semibold text-foreground">Property Size</Label>
-                  <RadioGroup defaultValue="2bhk" className="flex flex-wrap gap-2">
+                  <RadioGroup value={propSize} onValueChange={setPropSize} className="flex flex-wrap gap-2">
                     {["1BHK", "2BHK", "3BHK", "Penthouse"].map((t) => (
                       <label key={t} className="flex h-10 cursor-pointer items-center gap-2 rounded-full border border-input bg-background px-4 text-xs font-medium text-foreground">
                         <RadioGroupItem value={t.toLowerCase()} className="h-4 w-4" />
@@ -461,8 +514,8 @@ const Index = () => {
 
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold text-foreground">Furnishing Level</Label>
-                  <Select>
-                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm text-muted-foreground">
+                  <Select value={furnish} onValueChange={setFurnish}>
+                    <SelectTrigger className="h-11 rounded-lg border-input bg-background text-sm">
                       <SelectValue placeholder="e.g. Fully Furnished" />
                     </SelectTrigger>
                     <SelectContent>
@@ -474,12 +527,14 @@ const Index = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-xs font-semibold text-foreground">Expected Occupancy Level</Label>
-                  <Slider defaultValue={[60]} max={100} step={1} className="py-2" />
+                  <Label className="text-xs font-semibold text-foreground">
+                    Expected Occupancy Level <span className="text-muted-foreground">({occupancy}%)</span>
+                  </Label>
+                  <Slider value={[occupancy]} onValueChange={(v) => setOccupancy(v[0])} max={100} step={1} className="py-2" />
                 </div>
 
                 <div className="flex justify-end">
-                  <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
+                  <Button onClick={handleCalculate} className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">
                     Calculate
                   </Button>
                 </div>
@@ -488,12 +543,14 @@ const Index = () => {
                   <div className="rounded-xl bg-muted p-3">
                     <img src={iconMoney} alt="" loading="lazy" className="h-7 w-7" />
                     <p className="mt-2 text-[10px] text-muted-foreground">Est. Monthly Income Range</p>
-                    <p className="mt-0.5 text-sm font-bold text-foreground">$4,500 — $6,200</p>
+                    <p className="mt-0.5 text-sm font-bold text-foreground">
+                      ${calc.low.toLocaleString()} — ${calc.high.toLocaleString()}
+                    </p>
                   </div>
                   <div className="rounded-xl bg-muted p-3">
                     <img src={iconChart} alt="" loading="lazy" className="h-7 w-7" />
                     <p className="mt-2 text-[10px] text-muted-foreground">Est. Annual Yield</p>
-                    <p className="mt-0.5 text-sm font-bold text-foreground">8.5% — 11.2%</p>
+                    <p className="mt-0.5 text-sm font-bold text-foreground">{calc.yLow}% — {calc.yHigh}%</p>
                   </div>
                 </div>
 
@@ -528,12 +585,52 @@ const Index = () => {
             </div>
             {/* Mobile-only filter chips */}
             <div className="flex justify-center gap-2 md:hidden">
-              <button className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card">
-                Buy <ChevronDown className="h-3.5 w-3.5" />
-              </button>
-              <button className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card">
-                Filters <SlidersHorizontal className="h-3.5 w-3.5" />
-              </button>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card outline-none">
+                  Buy <ChevronDown className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="start" className="w-40">
+                  <DropdownMenuLabel>Listing Type</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {[
+                    { k: "buy", l: "Buy" },
+                    { k: "rent", l: "Rent" },
+                    { k: "lease", l: "Lease" },
+                  ].map((o) => (
+                    <DropdownMenuCheckboxItem
+                      key={o.k}
+                      checked={!!buyFilters[o.k]}
+                      onCheckedChange={(v) => setBuyFilters((p) => ({ ...p, [o.k]: !!v }))}
+                    >
+                      {o.l}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card outline-none">
+                  Filters <SlidersHorizontal className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-44">
+                  <DropdownMenuLabel>Bedrooms</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  {[
+                    { k: "1bed", l: "1 bed" },
+                    { k: "2bed", l: "2 beds" },
+                    { k: "3bed", l: "3 beds" },
+                    { k: "4bed", l: "4+ beds" },
+                  ].map((o) => (
+                    <DropdownMenuCheckboxItem
+                      key={o.k}
+                      checked={!!bedFilters[o.k]}
+                      onCheckedChange={(v) => setBedFilters((p) => ({ ...p, [o.k]: !!v }))}
+                    >
+                      {o.l}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
 
@@ -544,6 +641,8 @@ const Index = () => {
               <div className="flex h-10 flex-1 items-center gap-2 rounded-full bg-card px-4 shadow-card">
                 <Search className="h-4 w-4 text-muted-foreground" />
                 <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value.slice(0, 100))}
                   placeholder="Search keywords..."
                   className="h-full w-full bg-transparent text-sm placeholder:text-muted-foreground focus:outline-none"
                 />
@@ -585,34 +684,35 @@ const Index = () => {
           </div>
 
           {/* MOBILE: horizontal scroll */}
-          <div className="mt-5 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:hidden">
-            {[
-              { img: property1, title: "Bali Wellness Sanctuary", price: "$250/Night", loc: "Bali - Ubud - Indonesia", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0" },
-              { img: property2, title: "Sandstone Retreat", price: "$180/Night", loc: "Cycladic - Greece", size: "120 m2", beds: "3 beds", baths: "2 baths", rating: "4.8/5.0" },
-            ].map((p) => (
-              <Card key={p.title} className="min-w-[80%] snap-start overflow-hidden rounded-2xl border-0 bg-card shadow-card">
-                <div className="relative">
-                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-48 w-full object-cover" />
-                  <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
-                    <Heart className="h-4 w-4" />
-                  </button>
-                </div>
-                <div className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
-                    <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
+          <div className="mt-5 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:hidden">
+            {filteredMobileProps.length === 0 ? (
+              <p className="w-full py-8 text-center text-sm text-muted-foreground">No properties match your filters.</p>
+            ) : (
+              filteredMobileProps.map((p) => (
+                <Card key={p.title} className="min-w-[80%] snap-start overflow-hidden rounded-2xl border-0 bg-card shadow-card">
+                  <div className="relative">
+                    <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-48 w-full object-cover" />
+                    <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
+                      <Heart className="h-4 w-4" />
+                    </button>
                   </div>
-                  <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
-                  <div className="my-3 h-px bg-border" />
-                  <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
-                    <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
-                    <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
-                    <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
-                    <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                  <div className="p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
+                      <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
+                    </div>
+                    <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
+                    <div className="my-3 h-px bg-border" />
+                    <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
+                      <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
+                      <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
+                      <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
+                      <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                    </div>
                   </div>
-                </div>
-              </Card>
-            ))}
+                </Card>
+              ))
+            )}
           </div>
         </div>
       </section>
