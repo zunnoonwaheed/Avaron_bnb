@@ -763,9 +763,9 @@ const Index = () => {
       </section>
 
       {/* FOOTER */}
-      <footer className="px-5 pb-8 sm:px-8">
-        <div className="mx-auto max-w-7xl">
-          <div className="rounded-2xl bg-card p-6 shadow-card sm:p-10">
+      <footer>
+        <div className="bg-card p-6 shadow-card sm:p-10">
+          <div className="mx-auto max-w-7xl">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               <div>
                 <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
