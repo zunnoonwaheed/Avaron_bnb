@@ -12,7 +12,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Menu, TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, BadgeCheck, Globe, MessageSquare, CreditCard, Shield, ShieldCheck } from "lucide-react";
-import heroBedroom from "@/assets/hero-bedroom.png";
+import heroDesktop from "@/assets/hero-desktop.jpg";
+import heroMobile from "@/assets/hero-mobile.jpg";
 import bedroomTop from "@/assets/bedroom-top.jpg";
 import bedroomMirror from "@/assets/bedroom-mirror.jpg";
 import provenBedroom from "@/assets/proven-bedroom.jpg";
@@ -98,9 +99,14 @@ const Index = () => {
       <section className="relative">
         <div className="relative overflow-hidden">
           <img
-            src={heroBedroom}
+            src={heroMobile}
             alt="Luxury managed bedroom"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover sm:hidden"
+          />
+          <img
+            src={heroDesktop}
+            alt="Luxury managed bedroom"
+            className="absolute inset-0 hidden h-full w-full object-cover sm:block"
           />
           <div className="absolute inset-0 bg-hero-overlay" />
 
