@@ -80,11 +80,27 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    font-weight: 500;
   }
-  h1, h2, h3, h4 {
-    font-family: 'Playfair Display', 'Inter', serif;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif;
+    font-weight: 700;
     @apply tracking-tight;
+  }
+  /* Default section typography (mobile first): heading 20, subtext 14
+     Desktop: heading 28, body 20. Hero overrides inline. */
+  h2 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+  h3 {
+    font-size: 18px;
+    line-height: 1.25;
+  }
+  @media (min-width: 768px) {
+    h2 { font-size: 28px; }
+    h3 { font-size: 22px; }
   }
 }
 

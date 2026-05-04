@@ -131,7 +131,7 @@ const Index = () => {
 
           {/* HERO CONTENT */}
           <div className="relative z-10 flex flex-col items-center px-5 pb-12 pt-8 text-center text-primary-foreground sm:pb-24 sm:pt-24">
-            <h1 className="max-w-3xl font-display font-bold leading-tight text-2xl sm:text-5xl md:text-6xl animate-fade-in">
+            <h1 className="max-w-3xl font-display font-bold leading-tight text-[24px] sm:text-[36px] animate-fade-in">
               <span className="sm:hidden">
                 Earn More From Your <span className="text-gold">Property</span>
               </span>
@@ -142,7 +142,7 @@ const Index = () => {
                 <span className="text-primary-foreground">, Without Managing It Yourself</span>
               </span>
             </h1>
-            <p className="mt-3 max-w-xl text-sm opacity-90 sm:mt-6 sm:text-base">
+            <p className="mt-3 max-w-xl font-medium text-[18px] leading-snug opacity-90 sm:mt-6">
               <span className="sm:hidden">Up to 24% higher returns with full management</span>
               <span className="hidden sm:inline">
                 AvaronBnB handles everything, from guest management to property optimization.
