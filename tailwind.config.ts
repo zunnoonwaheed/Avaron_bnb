@@ -67,6 +67,8 @@ export default {
         display: ['Plus Jakarta Sans', 'DM Sans', 'system-ui', 'sans-serif'],
         sans: ['DM Sans', 'system-ui', 'sans-serif'],
         body: ['DM Sans', 'system-ui', 'sans-serif'],
+        /** Airbnb Cereal Bold (Figma: AirbnbCereal_W_Bd). Add `public/fonts/AirbnbCereal_W_Bd.woff2` for exact rendering. */
+        cereal: ['"Airbnb Cereal"', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": { from: { height: "0" }, to: { height: "var(--radix-accordion-content-height)" } },

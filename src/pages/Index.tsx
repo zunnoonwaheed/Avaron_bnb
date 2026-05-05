@@ -12,31 +12,50 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Menu, TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, BadgeCheck, Globe, MessageSquare, CreditCard, Shield, ShieldCheck } from "lucide-react";
-import heroDesktop from "@/assets/hero-desktop.jpg";
+import heroDesktop from "@/assets/hero-desktop.png";
 import heroMobile from "@/assets/hero-mobile.jpg";
 import bedroomTop from "@/assets/bedroom-top.jpg";
 import bedroomMirror from "@/assets/bedroom-mirror.jpg";
 import provenBedroom from "@/assets/proven-bedroom.jpg";
 import calcBedroom from "@/assets/calc-bedroom.jpg";
+import returnsBedroom from "@/assets/returns/returns-bedroom.png";
+import returnsKitchen from "@/assets/returns/returns-kitchen.png";
+import returnsIconMoney from "@/assets/returns/icon-money.png";
+import returnsIconYield from "@/assets/returns/icon-yield.png";
 import iconMagnify from "@/assets/icon-magnify.png";
 import iconChart from "@/assets/icon-chart.png";
 import iconPerson from "@/assets/icon-person.png";
 import iconHouse from "@/assets/icon-house.svg";
-import iconRocket from "@/assets/icon-rocket.png";
-import iconBuilding from "@/assets/icon-building.png";
-import iconMonitor from "@/assets/icon-monitor.png";
-import iconBulb from "@/assets/icon-bulb.png";
+import stepsFloatingBadge from "@/assets/steps/floating-badge.png";
+import wmIconBarChart from "@/assets/we-manage/bar-chart.svg";
+import wmIconNeoclassical from "@/assets/we-manage/neoclassical-building.svg";
+import wmIconDesktop from "@/assets/we-manage/desktop.svg";
+import wmIconLightBulb from "@/assets/we-manage/light-bulb.svg";
 import iconMoney from "@/assets/icon-moneybag.png";
-import property1 from "@/assets/property-1.jpg";
-import property2 from "@/assets/property-2.jpg";
-import property3 from "@/assets/property-3.jpg";
-import stepsKitchen from "@/assets/steps-kitchen.jpg";
+import property1 from "@/assets/listings/listing-1.png";
+import property2 from "@/assets/listings/listing-2.png";
+import property3 from "@/assets/listings/listing-3.png";
+import listingIconBed from "@/assets/listings/png/bed.png";
+import listingIconBath from "@/assets/listings/png/bath.png";
+import listingIconStar from "@/assets/listings/png/star.png";
+import listingOverlayBlur from "@/assets/listings/png/overlay.png";
+import listingIconSize from "@/assets/listings/png/size.png";
+import listingHeartOverlay from "@/assets/listings/png/overlay-heart.png";
+import stepsKitchen from "@/assets/steps/steps-kitchen.png";
 import testimonial1 from "@/assets/testimonial-1.jpg";
 import testimonial2 from "@/assets/testimonial-2.jpg";
 import testimonial3 from "@/assets/testimonial-3.jpg";
-import ctaBedroom from "@/assets/cta-bedroom.jpg";
+import ctaBedroom from "@/assets/cta/cta-bedroom-new.png";
+import ctaBedroomFramed from "@/assets/cta/background-border.png";
+import ctaPremiumBadge from "@/assets/cta/premium-badge.png";
+import footerSocialButtons from "@/assets/footer/legal-icons.png";
+import footerBottomRightIcons from "@/assets/footer/social-1.png";
 import logo from "@/assets/logo.svg";
-import { useMemo, useState } from "react";
+import figmaNeoclassicalBuilding from "@/assets/figma/neoclassical-beige-building.png";
+import figmaCharmingHouse from "@/assets/figma/charming-little-house.png";
+import { useEffect, useMemo, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -54,6 +73,45 @@ const SIZE_MULT: Record<string, number> = { "1bhk": 0.8, "2bhk": 1, "3bhk": 1.35
 const FURNISH_MULT: Record<string, number> = { unfurnished: 0.7, semi: 0.9, full: 1.15 };
 
 const Index = () => {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const ctx = gsap.context(() => {
+      const sections = Array.from(document.querySelectorAll<HTMLElement>("section, footer")).filter(
+        (el) => !el.hasAttribute("data-gsap-skip"),
+      );
+
+      sections.forEach((section) => {
+        const targets = section.querySelectorAll<HTMLElement>(
+          "h1,h2,h3,p,li,button,a,img,svg,.shadow-card,.shadow-soft,[class*='rounded-2xl']",
+        );
+        if (!targets.length) return;
+
+        gsap.set(targets, { willChange: "transform,opacity" });
+
+        gsap.fromTo(
+          targets,
+          { opacity: 0, y: 18 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.75,
+            ease: "power2.out",
+            stagger: { each: 0.035, from: "start" },
+            scrollTrigger: {
+              trigger: section,
+              start: "top 80%",
+              once: true,
+            },
+            clearProps: "willChange",
+          },
+        );
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const [region, setRegion] = useState<string>("karachi");
   const [propType, setPropType] = useState<string>("flat");
   const [propSize, setPropSize] = useState<string>("2bhk");
@@ -96,8 +154,8 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
-      <section className="relative">
-        <div className="relative overflow-hidden">
+      <section className="relative" data-gsap-skip>
+        <div className="relative overflow-hidden md:h-[750px]">
           <img
             src={heroMobile}
             alt="Luxury managed bedroom"
@@ -109,6 +167,19 @@ const Index = () => {
             className="absolute inset-0 hidden h-full w-full object-cover sm:block"
           />
           <div className="absolute inset-0 bg-hero-overlay" />
+          {/* Decorative hero icons (desktop only) */}
+          <img
+            src={figmaNeoclassicalBuilding}
+            alt=""
+            className="pointer-events-none absolute left-0 top-0 hidden h-[420px] w-auto opacity-[0.08] md:block"
+            aria-hidden="true"
+          />
+          <img
+            src={figmaCharmingHouse}
+            alt=""
+            className="pointer-events-none absolute bottom-0 right-0 hidden h-[360px] w-auto opacity-[0.08] md:block"
+            aria-hidden="true"
+          />
 
           {/* NAV */}
           <nav className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10">
@@ -118,7 +189,7 @@ const Index = () => {
               </button>
             </div>
             <a href="#" className="hidden items-center gap-2 md:flex">
-              <img src={logo} alt="AvaronBnB" className="h-9 w-auto brightness-0 invert" />
+              <img src={logo} alt="AvaronBnB" className="h-9 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]" />
             </a>
             <ul className="hidden items-center gap-8 text-sm font-medium text-primary-foreground md:flex">
               {navLinks.map((l) => (
@@ -137,18 +208,19 @@ const Index = () => {
 
           {/* HERO CONTENT */}
           <div className="relative z-10 flex flex-col items-center px-5 pb-12 pt-8 text-center text-primary-foreground sm:pb-24 sm:pt-24">
-            <h1 className="max-w-3xl font-display font-bold leading-tight text-[24px] sm:text-[36px] animate-fade-in">
+            <h1 className="max-w-[360px] sm:max-w-[1040px] font-display font-bold leading-[1.12] tracking-[-0.02em] text-[28px] sm:text-[44px] animate-fade-in">
               <span className="sm:hidden">
                 Earn More From Your <span className="text-gold">Property</span>
               </span>
               <span className="hidden sm:inline">
-                Turn Your Property Into a
-                <br />
-                <span className="text-gold">High-Yield Asset</span>
-                <span className="text-primary-foreground">, Without Managing It Yourself</span>
+                <span className="block">Turn Your Property Into a</span>
+                <span className="block whitespace-nowrap">
+                  <span className="text-gold">High-Yield Asset</span>
+                  <span className="text-primary-foreground">, Without Managing It Yourself</span>
+                </span>
               </span>
             </h1>
-            <p className="mt-3 max-w-xl font-medium text-[18px] leading-snug opacity-90 sm:mt-6">
+            <p className="mt-3 max-w-[420px] sm:max-w-[820px] font-medium text-[18px] leading-snug opacity-90 sm:mt-6">
               <span className="sm:hidden">Up to 24% higher returns with full management</span>
               <span className="hidden sm:inline">
                 AvaronBnB handles everything, from guest management to property optimization.
@@ -172,10 +244,10 @@ const Index = () => {
             </div>
 
             {/* Estimate bar */}
-            <div className="mt-6 w-full max-w-3xl rounded-full bg-primary-foreground/15 p-1.5 backdrop-blur-md sm:mt-10 sm:p-2">
-              <div className="flex items-center gap-1 sm:gap-2">
+            <div className="relative mt-6 w-full max-w-3xl rounded-full bg-primary-foreground/15 p-1.5 backdrop-blur-md sm:mt-10 sm:p-2">
+              <div className="relative flex items-center gap-1 sm:gap-2">
                 <div className="flex flex-1 items-center gap-2 px-3 sm:px-4">
-                  <img src={iconHouse} alt="" className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
+                  <img src={figmaCharmingHouse} alt="" className="h-4 w-4 shrink-0 sm:h-5 sm:w-5" />
                   <Input
                     placeholder="Enter property address for estimate..."
                     className="h-9 border-0 bg-transparent p-0 text-xs text-primary-foreground placeholder:text-primary-foreground/70 focus-visible:ring-0 sm:h-10 sm:text-sm"
@@ -185,7 +257,7 @@ const Index = () => {
                 <Select defaultValue="luxury">
                   <SelectTrigger className="hidden h-10 border-0 bg-transparent text-sm text-primary-foreground focus:ring-0 sm:flex sm:w-48">
                     <div className="flex items-center gap-2">
-                      <img src={iconHouse} alt="" className="h-4 w-4" />
+                      <img src={figmaNeoclassicalBuilding} alt="" className="h-4 w-4" />
                       <SelectValue />
                     </div>
                   </SelectTrigger>
@@ -216,115 +288,147 @@ const Index = () => {
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section className="px-4 py-16 sm:px-6 sm:py-20">
+      {/* FEATURES — “A Smarter Way to Own” (aligns with site max-width 1400px) */}
+      <section className="bg-background px-4 py-14 sm:px-6 sm:py-16 md:py-20">
         <div className="mx-auto max-w-[1400px]">
-          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
-            A Smarter Way to Own. A Better Way to Earn.
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base">
-            We combine expert property management with data-driven strategies to transform your property into a
-            consistently high-performing asset. You stay hands-off, we handle the rest.
-          </p>
+          <div className="flex flex-col border-0 bg-transparent p-0 shadow-none md:min-h-[869px] md:p-0 lg:p-0">
+            <header className="shrink-0 text-center md:text-left">
+              <h2 className="font-display text-[22px] font-bold leading-[1.2] tracking-tight text-[#0A1128] sm:text-2xl md:text-[28px] lg:text-[30px]">
+                A Smarter Way to Own. A Better Way to Earn.
+              </h2>
+              <p className="mx-auto mt-3 max-w-[520px] text-sm leading-relaxed text-[#6B7280] sm:text-[15px] md:mx-0 md:max-w-none md:w-full md:text-base md:leading-[1.55]">
+                <span className="md:hidden">
+                  Data-driven management transforms property into high-performing asset.
+                </span>
+                <span className="hidden md:inline">
+                  We combine expert property management with data-driven strategies to transform your property into a
+                  consistently high-performing asset. You stay hands-off, we handle the rest.
+                </span>
+              </p>
+            </header>
 
-          {/* Top row: image card + luxury guest experience */}
-          <div className="mt-10 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
-            {/* LEFT: Premium Property Positioning */}
-            <Card className="group relative overflow-hidden rounded-2xl border-0 shadow-card md:h-full">
-              <div className="relative h-[360px] md:h-full md:min-h-[340px]">
-                <img
-                  src={bedroomTop}
-                  alt="Premium Property"
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
-                <div className="relative flex h-full flex-col justify-end p-6 text-primary-foreground">
-                  <img src={iconMagnify} alt="" className="absolute left-6 top-6 h-10 w-10" />
-                  <h3 className="font-display text-xl font-bold">Premium Property Positioning</h3>
-                  <p className="mt-2 max-w-md text-sm opacity-90">
-                    We position your property with professional photography and pricing strategies to ensure it stands
-                    out and commands premium rates.
+            <div className="mt-8 flex min-h-0 flex-1 flex-col gap-4 md:mt-10 md:flex-none md:gap-5">
+              {/* Desktop: full content width (matches heading + stats); row heights from Figma. Mobile: column; Luxury hidden. */}
+              <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 md:grid-rows-[373px_188px] md:gap-x-6 md:gap-y-6">
+                <Card className="group relative flex min-h-[320px] min-w-0 flex-col overflow-hidden rounded-2xl border border-[#E5E7EB] bg-card p-0 shadow-none sm:min-h-[340px] md:row-start-1 md:col-start-1 md:h-[373px] md:min-h-[373px] md:w-full">
+                  <div className="relative min-h-[320px] flex-1 sm:min-h-[340px] md:absolute md:inset-0 md:min-h-0">
+                    <img
+                      src={bedroomTop}
+                      alt="Premium Property"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary via-primary/70 to-transparent" />
+                    <div className="relative flex min-h-[320px] flex-col justify-end p-6 text-primary-foreground sm:min-h-[340px] md:absolute md:inset-0 md:min-h-0 md:p-6">
+                      <img src={iconMagnify} alt="" className="mb-2 h-8 w-8 md:mb-2 md:h-9 md:w-9" />
+                      <h3 className="font-display text-lg font-bold leading-snug sm:text-xl md:text-[17px] md:leading-snug">
+                        Premium Property Positioning
+                      </h3>
+                      <p className="mt-1.5 max-w-[28rem] text-left text-sm leading-relaxed opacity-95 sm:text-[15px] md:mt-2 md:text-[13px] md:leading-snug">
+                        <span className="md:hidden">
+                          We showcase your home with photography, smart pricing, and premium presentation.
+                        </span>
+                        <span className="hidden md:inline">
+                          We position your property with professional photography and pricing strategies to ensure it
+                          stands out and commands premium rates.
+                        </span>
+                      </p>
+                      <Button className="mt-3 h-9 w-fit rounded-full border border-primary-foreground/25 bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25 md:mt-3">
+                        Talk to an Expert
+                      </Button>
+                    </div>
+                  </div>
+                </Card>
+
+                <Card className="hidden min-h-0 min-w-0 flex-col overflow-hidden rounded-2xl border border-[#E5E7EB] bg-card p-0 shadow-none md:row-start-1 md:col-start-2 md:flex md:h-[373px] md:min-h-[373px] md:w-full md:p-5">
+                  <img src={figmaCharmingHouse} alt="" className="h-8 w-8 shrink-0 object-contain md:h-9 md:w-9" />
+                  <h3 className="mt-2 font-display text-base font-bold leading-snug text-[#0A1128] md:mt-2 md:text-[17px]">
+                    Luxury Guest Experience
+                  </h3>
+                  <p className="mt-1.5 text-xs leading-snug text-[#6B7280] md:mt-1.5 md:text-[13px] md:leading-snug">
+                    We manage guest interactions, check-ins, concierge services, and issue resolution for exceptional
+                    reviews.
                   </p>
-                  <Button className="mt-4 w-fit rounded-full bg-primary-foreground/15 px-5 text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
-                    Talk to an Expert
-                  </Button>
+                  <div className="mt-3 min-h-0 flex-1 overflow-hidden rounded-lg md:mt-3">
+                    <img src={bedroomMirror} alt="" className="h-full w-full object-cover md:min-h-0" />
+                  </div>
+                </Card>
+
+                <Card className="min-w-0 rounded-2xl border border-[#E5E7EB] bg-card p-6 shadow-none md:row-start-2 md:col-start-1 md:flex md:h-[188px] md:min-h-[188px] md:max-h-[188px] md:w-full md:flex-col md:overflow-hidden md:p-5">
+                  <img src={iconChart} alt="" className="h-8 w-8 shrink-0 sm:h-9 sm:w-9 md:h-8 md:w-8" />
+                  <h3 className="mt-2 font-display text-base font-bold leading-tight text-[#0A1128] md:mt-2 md:text-[15px]">
+                    Revenue Optimization
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-snug text-[#6B7280] md:mt-1 md:text-[12px] md:leading-snug">
+                    <span className="md:hidden">
+                      Dynamic pricing adjusts in real time based on demand, season, and trends.
+                    </span>
+                    <span className="hidden md:inline">
+                      Smart pricing strategies that adapt in real-time to maximize occupancy and nightly rates.
+                    </span>
+                  </p>
+                </Card>
+
+                <Card className="min-w-0 rounded-2xl border border-[#E5E7EB] bg-card p-6 shadow-none md:row-start-2 md:col-start-2 md:flex md:h-[188px] md:min-h-[188px] md:max-h-[188px] md:w-full md:flex-col md:overflow-hidden md:p-5">
+                  <img src={iconPerson} alt="" className="h-8 w-8 shrink-0 sm:h-9 sm:w-9 md:h-8 md:w-8" />
+                  <h3 className="mt-2 font-display text-base font-bold leading-tight text-[#0A1128] md:mt-2 md:text-[15px]">
+                    End-to-End Property Management
+                  </h3>
+                  <p className="mt-1.5 text-sm leading-snug text-[#6B7280] md:mt-1 md:text-[12px] md:leading-snug">
+                    <span className="md:hidden">
+                      Maintenance, compliance &amp; turnovers handled. Your property is ready and legally sound.
+                    </span>
+                    <span className="hidden md:inline">
+                      We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
+                    </span>
+                  </p>
+                </Card>
+              </div>
+
+              {/* Stats + CTA */}
+              <Card className="w-full shrink-0 rounded-2xl border border-[#E5E7EB] bg-card p-6 shadow-none sm:p-7 md:px-8 md:py-7">
+                <div className="flex flex-col gap-8 md:flex-row md:items-center md:justify-between md:gap-6 lg:gap-8">
+                  <div className="flex w-full flex-col items-center gap-y-[48px] sm:flex-row sm:justify-center sm:gap-x-[48px] sm:gap-y-0 md:w-auto md:flex-none md:items-start md:justify-start md:gap-x-[80px] lg:gap-x-[96px]">
+                    <div className="text-center md:text-left">
+                      <p className="font-sans text-2xl font-semibold leading-none tracking-tight text-[#2A79E6]">24%</p>
+                      <p className="mt-1.5 text-xs font-medium leading-snug text-[#6B7280] sm:text-sm">Avg. Annual Yield</p>
+                    </div>
+                    <div className="text-center md:text-left">
+                      <p className="font-sans text-2xl font-semibold leading-none tracking-tight text-[#2A79E6]">$42M</p>
+                      <p className="mt-1.5 text-xs font-medium leading-snug text-[#6B7280] sm:text-sm">Assets Managed</p>
+                    </div>
+                    <div className="text-center md:text-left">
+                      <p className="font-sans text-2xl font-semibold leading-none tracking-tight text-[#2A79E6]">4.9/5</p>
+                      <p className="mt-1.5 text-xs font-medium leading-snug text-[#6B7280] sm:text-sm">Guest Satisfaction</p>
+                    </div>
+                  </div>
+                  <div className="flex w-full flex-col items-center gap-3 border-t border-[#E5E7EB] pt-6 md:w-auto md:max-w-[420px] md:shrink-0 md:items-start md:border-t-0 md:pt-0">
+                    <p className="max-w-[20rem] w-full text-center text-sm leading-snug text-[#6B7280] md:max-w-none md:w-auto md:text-left">
+                      Ready to see what your property is truly worth?
+                    </p>
+                    <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center sm:gap-3 md:w-auto md:justify-start">
+                      <Button className="h-10 w-full rounded-full bg-[#0A1128] px-5 text-sm font-semibold text-white hover:bg-[#0A1128]/90 sm:w-auto md:h-11 md:px-6">
+                        Book a Consultation
+                      </Button>
+                      <Button className="h-10 w-full rounded-full bg-[#D99E6A] px-5 text-sm font-semibold text-white hover:bg-[#D99E6A]/90 sm:w-auto md:h-11 md:px-6">
+                        See Our Results
+                      </Button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </Card>
-
-            {/* RIGHT: Luxury Guest Experience */}
-            <Card className="hidden overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card md:block">
-              <img src={iconHouse} alt="" className="h-8 w-8" />
-              <h3 className="mt-2 font-display text-base font-bold text-foreground">Luxury Guest Experience</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                We manage guest interactions, check-ins, concierge services, and issue resolution for exceptional reviews.
-              </p>
-              <img
-                src={bedroomMirror}
-                alt="Guest experience"
-                className="mt-3 h-40 w-full rounded-xl object-cover"
-              />
-            </Card>
-          </div>
-
-          {/* Bottom row: two cards side by side */}
-          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2">
-            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-              <img src={iconChart} alt="" className="h-9 w-9" />
-              <h3 className="mt-2 font-display text-base font-bold text-foreground">Revenue Optimization</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Smart pricing strategies that adapt in real-time to maximize occupancy and nightly rates.
-              </p>
-            </Card>
-
-            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-              <img src={iconPerson} alt="" className="h-9 w-9" />
-              <h3 className="mt-2 font-display text-base font-bold text-foreground">End-to-End Property Management</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                We handle all aspects of your property to keep it guest-ready, compliant, and performing well.
-              </p>
-            </Card>
-          </div>
-
-          {/* Stats / CTA */}
-          <Card className="mt-6 grid grid-cols-1 items-center gap-6 rounded-2xl border-0 bg-card p-6 shadow-card md:grid-cols-2">
-            <div className="grid grid-cols-1 gap-4 text-center sm:grid-cols-3">
-              <div>
-                <p className="font-display text-2xl font-bold text-accent">24%</p>
-                <p className="mt-1 text-xs font-medium text-foreground">Avg. Annual Yield</p>
-              </div>
-              <div>
-                <p className="font-display text-2xl font-bold text-accent">$42M</p>
-                <p className="mt-1 text-xs font-medium text-foreground">Assets Managed</p>
-              </div>
-              <div>
-                <p className="font-display text-2xl font-bold text-accent">4.9/5</p>
-                <p className="mt-1 text-xs font-medium text-foreground">Guest Satisfaction</p>
-              </div>
+              </Card>
             </div>
-            <div className="flex flex-col items-stretch gap-3 sm:items-start md:items-end">
-              <p className="text-center text-sm text-muted-foreground md:text-right">Ready to see what your property is truly worth?</p>
-              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Button className="w-full rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90 sm:w-auto">
-                  Book a Consultation
-                </Button>
-                <Button className="w-full rounded-full bg-accent px-6 text-accent-foreground hover:bg-accent/90 sm:w-auto">
-                  See Our Results
-                </Button>
-              </div>
-            </div>
-          </Card>
+          </div>
         </div>
       </section>
 
       {/* WE MANAGE EVERYTHING */}
       <section className="px-4 pb-16 sm:px-6 sm:pb-20">
         <div className="mx-auto max-w-[1400px]">
-          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+          <h2 className="text-center font-display text-2xl font-bold text-foreground sm:text-3xl md:text-left">
             <span className="sm:hidden">We Manage &amp; You Keep the Returns.</span>
             <span className="hidden sm:inline">We Manage Everything. You Keep the Returns.</span>
           </h2>
-          <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto mt-3 max-w-3xl text-center text-sm text-muted-foreground sm:text-base md:mx-0 md:max-w-none md:text-left">
             <span className="sm:hidden">Transparent profit-sharing model. Our success depends on yours.</span>
             <span className="hidden sm:inline">
               AvaronBnB operates on a transparent profit-sharing model, the more your property earns, the better it is
@@ -332,117 +436,142 @@ const Index = () => {
             </span>
           </p>
 
-          {/* DESKTOP grid */}
-          <div className="mt-8 hidden grid-cols-3 grid-rows-2 gap-4 md:grid">
-            {/* Row 1, Col 1 */}
-            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-              <p className="font-display text-2xl font-bold text-foreground">+35%</p>
-              <p className="mt-2 text-xs text-muted-foreground">
+          {/* DESKTOP grid — full width of heading column; ratio ~291:291:592; image row-span matches stacked left column height */}
+          <div className="mt-8 hidden min-w-0 w-full md:grid md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,2.034fr)] md:grid-rows-[179px_155px] md:gap-x-1.5 md:gap-y-4">
+            {/* Row 1, Col 1 — min height 179 */}
+            <Card className="flex h-full min-h-[179px] w-full min-w-0 flex-col overflow-hidden rounded-2xl border-0 bg-card p-4 shadow-card md:row-start-1 md:col-start-1">
+              <p className="font-display text-xl font-bold leading-none text-foreground">+35%</p>
+              <p className="mt-1.5 line-clamp-3 text-[11px] leading-snug text-muted-foreground">
                 Consistent Increase In Rental Occupancy Within The First 90 Days
               </p>
-              <p className="mt-3 flex items-center gap-1 text-xs font-medium text-emerald-600">
-                <TrendingUp className="h-3.5 w-3.5" /> +12% from last year
+              <p className="mt-auto flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+                <TrendingUp className="h-3 w-3 shrink-0" /> +12% from last year
               </p>
             </Card>
 
             {/* Row 1, Col 2 */}
-            <Card className="rounded-2xl border-0 bg-card p-5 shadow-card">
-              <p className="font-display text-2xl font-bold text-foreground">92%</p>
-              <p className="mt-2 text-xs text-muted-foreground">Managed properties have high guest satisfaction.</p>
-              <p className="mt-3 flex items-center gap-1 text-xs font-medium text-emerald-600">
-                <TrendingUp className="h-3.5 w-3.5" /> +5% from last month
+            <Card className="flex h-full min-h-[179px] w-full min-w-0 flex-col overflow-hidden rounded-2xl border-0 bg-card p-4 shadow-card md:row-start-1 md:col-start-2">
+              <p className="font-display text-xl font-bold leading-none text-foreground">92%</p>
+              <p className="mt-1.5 line-clamp-3 text-[11px] leading-snug text-muted-foreground">Managed properties have high guest satisfaction.</p>
+              <p className="mt-auto flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+                <TrendingUp className="h-3 w-3 shrink-0" /> +5% from last month
               </p>
             </Card>
 
-            {/* Tall image card spanning 2 rows */}
-            <Card className="relative col-start-3 row-span-2 row-start-1 overflow-hidden rounded-2xl border-0 shadow-card">
+            {/* Proven Performance — spans rows 1–2; height matches left column (179 + gap + 155) */}
+            <Card className="relative col-start-3 row-span-2 row-start-1 flex min-h-0 h-full min-w-0 w-full overflow-hidden rounded-2xl border-0 shadow-card">
               <img src={provenBedroom} alt="Proven Performance" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
-              <div className="relative flex h-full min-h-[280px] flex-col justify-end p-6 text-primary-foreground">
-                <h3 className="font-display text-lg font-bold">Proven Performance</h3>
-                <p className="mt-1.5 text-xs opacity-90">
+              <div className="relative flex h-full min-h-0 flex-col justify-end p-5 text-primary-foreground">
+                <h3 className="font-display text-base font-bold leading-tight">Proven Performance</h3>
+                <p className="mt-1 line-clamp-2 text-[11px] leading-snug opacity-90">
                   Our managed properties consistently outperform market averages — delivering higher occupancy and stronger returns.
                 </p>
-                <Button className="mt-3 w-fit rounded-full bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
+                <Button className="mt-2 h-8 w-fit rounded-full bg-primary-foreground/15 px-3 text-[11px] text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
                   View Performance
                 </Button>
               </div>
             </Card>
 
-            {/* Row 2: 150+ Properties spans 2 columns */}
-            <Card className="col-span-2 rounded-2xl border-0 bg-card p-5 shadow-card">
-              <p className="text-xs text-muted-foreground">Premium holiday homes managed across key destinations</p>
-              <div className="mt-1 flex items-center justify-between gap-3">
-                <div>
-                  <p className="font-display text-xl font-bold text-foreground">150+ Properties</p>
-                  <p className="mt-2 text-xs font-medium text-emerald-600">+20 new this quarter</p>
+            {/* 150+ Properties — spans cols 1–2, fixed row height 155 */}
+            <Card className="flex h-full min-h-[155px] w-full min-w-0 flex-col justify-center overflow-hidden rounded-2xl border-0 bg-card p-4 shadow-card md:col-span-2 md:row-start-2 md:col-start-1">
+              <p className="text-[11px] leading-snug text-muted-foreground">Premium holiday homes managed across key destinations</p>
+              <div className="mt-1 flex items-center justify-between gap-2">
+                <div className="min-w-0">
+                  <p className="font-display text-lg font-bold leading-tight text-foreground">150+ Properties</p>
+                  <p className="mt-0.5 text-[11px] font-medium text-emerald-600">+20 new this quarter</p>
                 </div>
-                <div className="flex -space-x-2">
-                  <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomMirror})` }} />
-                  <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomTop})` }} />
-                  <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${provenBedroom})` }} />
-                  <span className="flex h-8 items-center rounded-full bg-accent px-2 text-[10px] font-bold text-accent-foreground">+120</span>
+                <div className="flex shrink-0 -space-x-2">
+                  <div className="h-7 w-7 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomMirror})` }} />
+                  <div className="h-7 w-7 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomTop})` }} />
+                  <div className="h-7 w-7 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${provenBedroom})` }} />
+                  <span className="flex h-7 items-center rounded-full bg-accent px-1.5 text-[9px] font-bold text-accent-foreground">+120</span>
                 </div>
               </div>
             </Card>
           </div>
 
-          {/* MOBILE: horizontal scroll stats */}
-          <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:hidden">
-            <Card className="min-w-[70%] snap-start rounded-2xl border-0 bg-card p-4 shadow-card">
-              <p className="font-display text-xl font-bold text-foreground">+35%</p>
-              <p className="mt-2 text-xs text-muted-foreground">Consistent increase in rental income</p>
-              <p className="mt-2 flex items-center gap-1 text-xs font-medium text-emerald-600">
-                <TrendingUp className="h-3 w-3" /> +12% from last year
+          {/* MOBILE: stats — one card in view, rest scroll (snap) */}
+          <div className="mt-6 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 pr-4 [scrollbar-width:none] [-ms-overflow-style:none] md:hidden [&::-webkit-scrollbar]:hidden">
+            <Card className="flex h-auto min-h-[150px] w-[85vw] max-w-[21rem] shrink-0 snap-start flex-col rounded-2xl border-0 bg-card p-4 shadow-card">
+              <p className="font-display text-xl font-bold leading-none text-foreground">+35%</p>
+              <p className="mt-2 text-left text-[13px] leading-snug text-muted-foreground">Consistent increase in rental income</p>
+              <p className="mt-auto flex items-center gap-1 pt-2 text-xs font-medium text-emerald-600">
+                <TrendingUp className="h-3.5 w-3.5 shrink-0" /> +12% from last year
               </p>
             </Card>
-            <Card className="min-w-[70%] snap-start rounded-2xl border-0 bg-card p-4 shadow-card">
-              <p className="font-display text-xl font-bold text-foreground">92%</p>
-              <p className="mt-2 text-xs text-muted-foreground">Optimized guest satisfaction</p>
-              <p className="mt-2 flex items-center gap-1 text-xs font-medium text-emerald-600">
-                <TrendingUp className="h-3 w-3" /> +5% from last month
+            <Card className="flex h-auto min-h-[150px] w-[85vw] max-w-[21rem] shrink-0 snap-start flex-col rounded-2xl border-0 bg-card p-4 shadow-card">
+              <p className="font-display text-xl font-bold leading-none text-foreground">92%</p>
+              <p className="mt-2 text-left text-[13px] leading-snug text-muted-foreground">Optimized guest satisfaction</p>
+              <p className="mt-auto flex items-center gap-1 pt-2 text-xs font-medium text-emerald-600">
+                <TrendingUp className="h-3.5 w-3.5 shrink-0" /> +5% from last month
               </p>
             </Card>
           </div>
 
-          <Card className="relative mt-4 overflow-hidden rounded-2xl border-0 shadow-card md:hidden">
+          {/* MOBILE: 150+ strip (matches desktop content) */}
+          <Card className="mt-3 flex min-h-[120px] flex-col justify-center rounded-2xl border-0 bg-card p-4 shadow-card md:hidden">
+            <p className="text-left text-xs text-muted-foreground">Premium holiday homes managed across key destinations</p>
+            <div className="mt-2 flex items-center justify-between gap-2">
+              <div className="min-w-0 text-left">
+                <p className="font-display text-lg font-bold leading-tight text-foreground">150+ Properties</p>
+                <p className="mt-0.5 text-xs font-medium text-emerald-600">+20 new this quarter</p>
+              </div>
+              <div className="flex shrink-0 -space-x-2">
+                <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomMirror})` }} />
+                <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${bedroomTop})` }} />
+                <div className="h-8 w-8 rounded-full border-2 border-card bg-cover bg-center" style={{ backgroundImage: `url(${provenBedroom})` }} />
+                <span className="flex h-8 items-center rounded-full bg-accent px-2 text-[10px] font-bold text-accent-foreground">+120</span>
+              </div>
+            </div>
+          </Card>
+
+          <Card className="relative mt-3 w-full overflow-hidden rounded-2xl border-0 shadow-card md:hidden">
             <img src={provenBedroom} alt="Proven Performance" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent" />
-            <div className="relative flex h-full min-h-[220px] flex-col justify-end p-5 text-primary-foreground">
-              <h3 className="font-display text-base font-bold">Proven Performance</h3>
-              <p className="mt-1 text-xs opacity-90">Our properties outperform averages — higher occupancy and returns.</p>
-              <Button className="mt-3 w-fit rounded-full bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
+            <div className="relative flex min-h-[260px] flex-col justify-end p-5 text-primary-foreground">
+              <h3 className="text-left font-display text-base font-bold">Proven Performance</h3>
+              <p className="mt-1.5 text-left text-sm leading-snug opacity-90">
+                Our properties outperform averages — higher occupancy and returns.
+              </p>
+              <Button className="mt-4 h-9 w-fit rounded-full bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
                 View Performance
               </Button>
             </div>
           </Card>
 
-          {/* Bottom 4 feature cards desktop */}
-          <div className="mt-5 hidden grid-cols-4 gap-5 md:grid">
+          {/* Bottom 4 feature cards desktop — same content width as grid above; equal columns; min height 179 */}
+          <div className="mt-5 hidden min-w-0 w-full md:grid md:grid-cols-4 md:gap-x-1.5 md:gap-y-4">
             {[
-              { icon: iconRocket, title: "Earn Without the Effort", desc: "We handle pricing, guest communication, and occupancy for steady income." },
-              { icon: iconBuilding, title: "Nothing Is Too Small Or Big", desc: "We manage cleaning, maintenance, key handovers, and license renewals for you." },
-              { icon: iconMonitor, title: "Total Visibility. No Surprises.", desc: "Track earnings, occupancy, reviews, and maintenance logs in real time on your dashboard." },
-              { icon: iconBulb, title: "Elevate What You Have", desc: "Worried about your property's performance? We will enhance it for better returns." },
+              { icon: wmIconBarChart, title: "Earn Without the Effort", desc: "We handle pricing, guest communication, and occupancy for steady income." },
+              { icon: wmIconNeoclassical, title: "Nothing Is Too Small Or Big", desc: "We manage cleaning, maintenance, key handovers, and license renewals for you." },
+              { icon: wmIconDesktop, title: "Total Visibility. No Surprises.", desc: "Track earnings, occupancy, reviews, and maintenance logs in real time on your dashboard." },
+              { icon: wmIconLightBulb, title: "Elevate What You Have", desc: "Worried about your property's performance? We will enhance it for better returns." },
             ].map((f) => (
-              <Card key={f.title} className="rounded-2xl border-0 bg-card p-5 shadow-card">
-                <img src={f.icon} alt="" loading="lazy" className="h-9 w-9" />
-                <h3 className="mt-4 font-display text-sm font-bold text-foreground">{f.title}</h3>
-                <p className="mt-1.5 text-xs text-muted-foreground">{f.desc}</p>
+              <Card key={f.title} className="flex h-full min-h-[179px] w-full min-w-0 flex-col overflow-hidden rounded-2xl border-0 bg-card p-4 shadow-card">
+                <img src={f.icon} alt="" loading="lazy" className="h-8 w-8 shrink-0 object-contain" />
+                <h3 className="mt-2 font-cereal text-[18px] font-bold leading-snug tracking-tight text-foreground">{f.title}</h3>
+                <p className="mt-1 line-clamp-2 text-[11px] leading-snug text-muted-foreground">{f.desc}</p>
               </Card>
             ))}
           </div>
 
-          {/* Mobile horizontal scroll feature cards */}
-          <div className="mt-5 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-2 md:hidden">
+          {/* MOBILE: feature cards — one card in view, rest scroll (snap) */}
+          <div className="mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 pr-4 [scrollbar-width:none] [-ms-overflow-style:none] md:hidden [&::-webkit-scrollbar]:hidden">
             {[
-              { icon: iconRocket, title: "Earn Without the Effort", desc: "Pricing, guest comms, occupancy strategy, all handled. Consistent passive income, year-round." },
-              { icon: iconBuilding, title: "Full-Service Management", desc: "From listings to maintenance, we manage everything hands-off." },
+              { icon: wmIconBarChart, title: "Earn Without the Effort", desc: "Pricing, guest comms, occupancy strategy, all handled. Consistent passive income, year-round." },
+              { icon: wmIconNeoclassical, title: "Nothing Is Too Small Or Big", desc: "From listings to maintenance, cleaning, and renewals — we manage everything hands-off." },
+              { icon: wmIconDesktop, title: "Total Visibility. No Surprises.", desc: "Track earnings, occupancy, reviews, and maintenance logs in real time on your dashboard." },
+              { icon: wmIconLightBulb, title: "Elevate What You Have", desc: "Worried about your property's performance? We will enhance it for better returns." },
             ].map((f) => (
-              <Card key={f.title} className="min-w-[70%] snap-start rounded-2xl border-0 bg-card p-4 shadow-card">
-                <img src={f.icon} alt="" loading="lazy" className="h-8 w-8" />
-                <h3 className="mt-3 font-display text-sm font-bold text-foreground">{f.title}</h3>
-                <p className="mt-1.5 text-xs text-muted-foreground">{f.desc}</p>
+              <Card key={f.title} className="w-[85vw] max-w-[21rem] shrink-0 snap-start rounded-2xl border-0 bg-card p-4 shadow-card">
+                <div className="flex gap-3">
+                  <img src={f.icon} alt="" loading="lazy" className="h-10 w-10 shrink-0 object-contain" />
+                  <div className="min-w-0 flex-1 text-left">
+                    <h3 className="font-cereal text-[18px] font-bold leading-snug tracking-tight text-foreground">{f.title}</h3>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{f.desc}</p>
+                  </div>
+                </div>
               </Card>
             ))}
           </div>
@@ -452,29 +581,35 @@ const Index = () => {
       {/* BUILT FOR PREDICTABLE RETURNS */}
       <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
-          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl">
+          <h2 className="text-center font-display text-2xl font-bold text-foreground sm:text-left sm:text-3xl">
             <span className="sm:hidden">Real Numbers. Real Returns.</span>
             <span className="hidden sm:inline">Built for Predictable Returns</span>
           </h2>
-          <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base">
+          <p className="mx-auto mt-3 max-w-3xl text-center text-sm text-muted-foreground sm:mx-0 sm:text-left sm:text-base">
             <span className="sm:hidden">Consistent income and long-term growth, not unpredictable spikes.</span>
             <span className="hidden sm:inline">
               We structure and manage short-term rental investments designed to deliver consistent income and long-term growth.
             </span>
           </p>
 
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 md:items-stretch">
-            <Card className="overflow-hidden rounded-2xl border-0 p-0 shadow-card md:h-full">
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-[auto_minmax(0,1fr)] md:items-stretch md:gap-x-3">
+            <Card className="mx-auto aspect-square w-[366px] max-w-full overflow-hidden rounded-2xl border-0 p-0 shadow-card md:mx-0 md:aspect-auto md:h-[777px] md:w-[640px]">
               <img
-                src={calcBedroom}
-                alt="Furnished bedroom"
+                src={returnsKitchen}
+                alt="Returns calculator preview"
                 loading="lazy"
-                className="block h-full w-full object-cover"
+                className="block h-full w-full object-cover md:hidden"
+              />
+              <img
+                src={returnsBedroom}
+                alt="Returns calculator preview"
+                loading="lazy"
+                className="hidden h-full w-full object-cover md:block"
               />
             </Card>
 
-            <Card className="rounded-2xl border-0 bg-card p-6 shadow-card">
-              <h3 className="font-display text-lg font-bold text-foreground">
+            <Card className="w-full rounded-2xl border-0 bg-card p-6 shadow-card">
+              <h3 className="font-display text-lg font-bold text-foreground sm:text-xl">
                 <span className="sm:hidden">Returns Calculator</span>
                 <span className="hidden sm:inline">Estimate Your Property Income in Seconds</span>
               </h3>
@@ -547,14 +682,14 @@ const Index = () => {
 
                 <div className="grid grid-cols-2 gap-3 pt-2">
                   <div className="rounded-xl bg-muted p-3">
-                    <img src={iconMoney} alt="" loading="lazy" className="h-7 w-7" />
+                    <img src={returnsIconMoney} alt="" loading="lazy" className="h-7 w-7 object-contain" />
                     <p className="mt-2 text-[10px] text-muted-foreground">Est. Monthly Income Range</p>
                     <p className="mt-0.5 text-sm font-bold text-foreground">
                       ${calc.low.toLocaleString()} — ${calc.high.toLocaleString()}
                     </p>
                   </div>
                   <div className="rounded-xl bg-muted p-3">
-                    <img src={iconChart} alt="" loading="lazy" className="h-7 w-7" />
+                    <img src={returnsIconYield} alt="" loading="lazy" className="h-7 w-7 object-contain" />
                     <p className="mt-2 text-[10px] text-muted-foreground">Est. Annual Yield</p>
                     <p className="mt-0.5 text-sm font-bold text-foreground">{calc.yLow}% — {calc.yHigh}%</p>
                   </div>
@@ -590,7 +725,7 @@ const Index = () => {
               </p>
             </div>
             {/* Mobile-only filter chips */}
-            <div className="flex justify-center gap-2 md:hidden">
+            <div className="flex justify-end gap-2 md:hidden">
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5 text-xs font-medium text-foreground shadow-card outline-none">
                   Buy <ChevronDown className="h-3.5 w-3.5" />
@@ -658,31 +793,46 @@ const Index = () => {
           </div>
 
           {/* DESKTOP: 3-up grid */}
-          <div className="mt-8 hidden grid-cols-3 gap-5 md:grid">
+          <div className="mt-8 hidden grid-cols-3 gap-x-6 gap-y-5 md:grid">
             {[
               { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0" },
               { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", baths: "2 baths", rating: "5.0/5.0" },
               { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", baths: "1 bath", rating: "5.0/5.0" },
             ].map((p) => (
-              <Card key={p.title} className="overflow-hidden rounded-2xl border-0 bg-card shadow-card">
-                <div className="relative">
-                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-44 w-full object-cover" />
-                  <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
-                    <Heart className="h-4 w-4" />
+              <Card key={p.title} className="h-[382px] w-full overflow-hidden rounded-2xl border-0 bg-card shadow-card">
+                <div className="relative h-[230px] w-full overflow-hidden">
+                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-full w-full object-cover" />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/25 via-black/10 to-transparent" />
+                  <button aria-label="Save" className="absolute right-3 top-3 h-8 w-8">
+                    <img src={listingHeartOverlay} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
                   </button>
                 </div>
-                <div className="p-4">
+                <div className="relative p-4">
                   <div className="flex items-start justify-between gap-3">
                     <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
                     <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
                   </div>
                   <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
                   <div className="my-3 h-px bg-border" />
-                  <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
-                    <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
-                    <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
-                    <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
-                    <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                  <div className="rounded-xl bg-card">
+                    <div className="grid grid-cols-4 gap-2 p-2 text-center text-[11px] text-muted-foreground">
+                      <div className="flex flex-col items-center gap-1">
+                        <img src={listingIconSize} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                        {p.size}
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <img src={listingIconBed} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                        {p.beds}
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <img src={listingIconBath} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                        {p.baths}
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <img src={listingIconStar} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                        {p.rating}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </Card>
@@ -690,30 +840,45 @@ const Index = () => {
           </div>
 
           {/* MOBILE: horizontal scroll */}
-          <div className="mt-5 -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 md:hidden">
+          <div className="mt-5 -mx-4 flex snap-x snap-mandatory gap-2 overflow-x-auto px-4 pb-2 md:hidden [scroll-padding-left:16px] [scroll-padding-right:16px]">
             {filteredMobileProps.length === 0 ? (
               <p className="w-full py-8 text-center text-sm text-muted-foreground">No properties match your filters.</p>
             ) : (
               filteredMobileProps.map((p) => (
-                <Card key={p.title} className="min-w-[80%] snap-start overflow-hidden rounded-2xl border-0 bg-card shadow-card">
-                  <div className="relative">
-                    <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-48 w-full object-cover" />
-                    <button aria-label="Save" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full bg-card/90 text-muted-foreground shadow-card backdrop-blur">
-                      <Heart className="h-4 w-4" />
+                <Card key={p.title} className="h-[384px] w-[366px] shrink-0 snap-center overflow-hidden rounded-2xl border-0 bg-card shadow-card">
+                  <div className="relative h-[238px] w-full overflow-hidden">
+                    <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-full w-full object-cover" />
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/25 via-black/10 to-transparent" />
+                    <button aria-label="Save" className="absolute right-3 top-3 h-8 w-8">
+                      <img src={listingHeartOverlay} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
                     </button>
                   </div>
-                  <div className="p-4">
+                  <div className="relative p-4">
                     <div className="flex items-start justify-between gap-3">
                       <h3 className="font-display text-sm font-bold text-foreground">{p.title}</h3>
                       <span className="shrink-0 text-sm font-bold text-primary">{p.price}</span>
                     </div>
                     <p className="mt-0.5 text-xs text-muted-foreground">{p.loc}</p>
                     <div className="my-3 h-px bg-border" />
-                    <div className="grid grid-cols-4 gap-2 text-center text-[11px] text-muted-foreground">
-                      <div className="flex flex-col items-center gap-1"><Ruler className="h-3.5 w-3.5" /> {p.size}</div>
-                      <div className="flex flex-col items-center gap-1"><Bed className="h-3.5 w-3.5" /> {p.beds}</div>
-                      <div className="flex flex-col items-center gap-1"><Bath className="h-3.5 w-3.5" /> {p.baths}</div>
-                      <div className="flex flex-col items-center gap-1"><Star className="h-3.5 w-3.5" /> {p.rating}</div>
+                    <div className="rounded-xl bg-card">
+                      <div className="grid grid-cols-4 gap-2 p-2 text-center text-[11px] text-muted-foreground">
+                        <div className="flex flex-col items-center gap-1">
+                          <img src={listingIconSize} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                          {p.size}
+                        </div>
+                        <div className="flex flex-col items-center gap-1">
+                          <img src={listingIconBed} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                          {p.beds}
+                        </div>
+                        <div className="flex flex-col items-center gap-1">
+                          <img src={listingIconBath} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                          {p.baths}
+                        </div>
+                        <div className="flex flex-col items-center gap-1">
+                          <img src={listingIconStar} alt="" className="block h-[18px] w-[18px] shrink-0 object-contain opacity-100" />
+                          {p.rating}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </Card>
@@ -726,11 +891,11 @@ const Index = () => {
       {/* THREE SIMPLE STEPS */}
       <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
-          <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
+          <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-left sm:text-3xl">
             <span className="sm:hidden">3 Steps to Hands-Free Income</span>
             <span className="hidden sm:inline">Three Simple Steps to Hands-Free Property Income</span>
           </h2>
-          <p className="mt-3 max-w-3xl text-sm text-muted-foreground sm:text-base text-center sm:text-left">
+          <p className="mt-3 max-w-3xl text-sm text-muted-foreground text-center sm:text-left sm:text-base">
             <span className="sm:hidden">Simple. Transparent. Stress-free.</span>
             <span className="hidden sm:inline">
               From your first inquiry to ongoing monthly earnings — we make the entire process straightforward, transparent, and stress-free.
@@ -739,19 +904,19 @@ const Index = () => {
 
           {/* MOBILE: image first, then steps */}
           <div className="mt-6 md:hidden">
-            <img src={stepsKitchen} alt="Managed kitchen" loading="lazy" className="h-56 w-full rounded-2xl object-cover" />
-            <h3 className="mt-6 font-display text-base font-bold text-foreground">Get Started with AvaronBnB</h3>
-            <ul className="mt-4 space-y-3">
+            <img src={stepsKitchen} alt="Managed kitchen" loading="lazy" className="h-[260px] w-full rounded-2xl object-cover" />
+            <h3 className="mt-7 font-display text-xl font-bold text-foreground">Get Started with AvaronBnB</h3>
+            <ul className="mt-5 space-y-4">
               {["Book a Free Consultation", "We Handle Everything", "Sit Back and Earn", "Ready to Get Started?"].map((s) => (
                 <li key={s} className="flex items-center gap-3">
-                  <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
+                  <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
                     <Check className="h-3.5 w-3.5" />
                   </span>
-                  <span className="text-sm text-foreground">{s}</span>
+                  <span className="text-base text-foreground">{s}</span>
                 </li>
               ))}
             </ul>
-            <Button className="mt-6 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90">
+            <Button className="mt-7 h-14 w-full rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90">
               Start With a Free Consultation
             </Button>
           </div>
@@ -776,15 +941,12 @@ const Index = () => {
             </div>
             <div className="relative">
               <img src={stepsKitchen} alt="Fully managed kitchen" loading="lazy" className="h-[420px] w-full rounded-2xl object-cover" />
-              <div className="absolute left-4 top-1/2 w-64 -translate-y-1/2 rounded-2xl bg-card p-4 shadow-soft">
-                <div className="flex items-center gap-2">
-                  <BadgeCheck className="h-5 w-5 text-primary" />
-                  <p className="font-display text-sm font-bold text-foreground">Fully Managed. Completely Yours.</p>
-                </div>
-                <p className="mt-2 text-xs text-muted-foreground">
-                  You retain ownership and visibility. We manage it, ensuring peak performance daily.
-                </p>
-              </div>
+              <img
+                src={stepsFloatingBadge}
+                alt=""
+                aria-hidden="true"
+                className="pointer-events-none absolute -left-20 top-1/2 z-10 w-[300px] -translate-y-1/2 drop-shadow-[0_10px_24px_rgba(10,17,40,0.10)]"
+              />
             </div>
           </div>
         </div>
@@ -804,30 +966,68 @@ const Index = () => {
             </span>
           </p>
 
-          {/* Cards: horizontal scroll on both, with peek */}
-          <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-3 sm:-mx-8 sm:px-6">
-            {[
+          {(() => {
+            const testimonials = [
               { img: testimonial1, quote: "AvaronBnB helped me scale my portfolio from 2 to 15 properties in under a year. The automation is flawless.", name: "Gary Janzen", loc: "Washington" },
               { img: testimonial2, quote: "There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs.", name: "Michael & Sarah Lee", loc: "Colorado" },
               { img: testimonial3, quote: "Every moment spent at our lakeside lodge feels like a dream come true, thanks to the exceptional service provided.", name: "Emily Johnson", loc: "Maine" },
-              { img: testimonial1, quote: "Our revenue doubled after joining the AvaronBnB platform. Truly priceless support.", name: "Russ & Anna", loc: "Oregon" },
-            ].map((t, i) => (
-              <div key={i} className="relative min-w-[80%] snap-start overflow-hidden rounded-2xl shadow-card sm:min-w-[calc(33.333%-14px)]">
-                <img src={t.img} alt={t.name} loading="lazy" className="h-[340px] w-full object-cover sm:h-[380px]" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
-                <div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground">
-                  <div className="flex gap-0.5 text-accent">
-                    {Array.from({ length: 5 }).map((_, k) => (
-                      <Star key={k} className="h-3.5 w-3.5 fill-current" />
+              { img: testimonial2, quote: "Our revenue doubled after joining the AvaronBnB platform. Truly priceless support.", name: "Russ & Anna", loc: "Oregon" },
+            ];
+            const marquee = [...testimonials, ...testimonials];
+
+            return (
+              <>
+                {/* MOBILE: swipe */}
+                <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:hidden">
+                  {testimonials.map((t, i) => (
+                    <div
+                      key={i}
+                      className="relative h-[480px] min-w-[calc(100%-40px)] snap-center overflow-hidden rounded-2xl shadow-card sm:min-w-[420px]"
+                    >
+                      <img src={t.img} alt={t.name} loading="lazy" className="h-full w-full object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
+                      <div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground">
+                        <div className="flex gap-0.5 text-accent">
+                          {Array.from({ length: 5 }).map((_, k) => (
+                            <Star key={k} className="h-4 w-4 fill-current" />
+                          ))}
+                        </div>
+                        <p className="mt-2 text-sm leading-relaxed opacity-95">"{t.quote}"</p>
+                        <p className="mt-3 text-base font-bold">{t.name}</p>
+                        <p className="text-sm opacity-80">{t.loc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* DESKTOP: edge-to-edge continuous marquee */}
+                <div className="testimonial-marquee relative left-1/2 mt-8 hidden w-screen -translate-x-1/2 px-6 pb-2 md:block">
+                  <div className="testimonial-track gap-6">
+                    {marquee.map((t, i) => (
+                      <div key={`${t.name}-${i}`} className="relative h-[480px] w-[386.67px] shrink-0 overflow-hidden rounded-2xl shadow-card">
+                        <img src={t.img} alt={t.name} loading="lazy" className="h-full w-full object-cover" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
+                        <div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground">
+                          <div className="flex gap-0.5 text-accent">
+                            {Array.from({ length: 5 }).map((_, k) => (
+                              <Star key={k} className="h-4 w-4 fill-current" />
+                            ))}
+                          </div>
+                          <p className="mt-2 text-sm leading-relaxed opacity-95">"{t.quote}"</p>
+                          <p className="mt-3 text-base font-bold">{t.name}</p>
+                          <p className="text-sm opacity-80">{t.loc}</p>
+                        </div>
+                      </div>
                     ))}
                   </div>
-                  <p className="mt-2 text-xs leading-relaxed opacity-95">"{t.quote}"</p>
-                  <p className="mt-3 text-sm font-bold">{t.name}</p>
-                  <p className="text-[11px] opacity-80">{t.loc}</p>
+
+                  {/* Edge fade like Figma */}
+                  <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background via-background/55 to-transparent backdrop-blur-[1px]" />
+                  <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background via-background/55 to-transparent backdrop-blur-[1px]" />
                 </div>
-              </div>
-            ))}
-          </div>
+              </>
+            );
+          })()}
 
           <div className="mt-6 hidden items-center justify-between gap-4 md:flex">
             <p className="text-sm text-muted-foreground">Join 500+ property owners earning more with AvaronBnB</p>
@@ -839,52 +1039,60 @@ const Index = () => {
       {/* CTA — Let's Talk About Your Property */}
       <section className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
-          <Card className="overflow-hidden rounded-2xl border-0 bg-card p-5 shadow-card sm:p-8">
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-center md:gap-10">
+          <div className="relative overflow-hidden rounded-[28px] bg-white shadow-card">
+            <div className="relative grid grid-cols-1 gap-6 p-5 sm:p-8 md:grid-cols-2 md:items-center md:gap-10 md:p-10">
               <div className="order-2 md:order-1">
-                <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center md:text-left">
+                <h2 className="font-display text-[22px] font-bold leading-[1.15] text-foreground sm:text-3xl text-center md:text-left">
                   Let's Talk About Your Property.
                 </h2>
-                <p className="mt-3 text-sm text-muted-foreground text-center md:text-left">
+                <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground text-center md:text-left">
                   <span className="md:hidden">Free consultation. No contracts. No pressure. Just clarity on what your property can achieve.</span>
                   <span className="hidden md:inline">
                     Book a free, no-obligation consultation with our property management specialists. We'll walk you through everything — no contracts, no pressure, just clarity on what your property can achieve.
                   </span>
                 </p>
-                <div className="mt-5 flex flex-col gap-3 sm:flex-row md:mt-6">
-                  <Button className="h-11 rounded-full bg-primary px-6 text-sm text-primary-foreground hover:bg-primary/90">Get Property Evaluation</Button>
-                  <Button className="h-11 rounded-full bg-accent px-6 text-sm text-accent-foreground hover:bg-accent/90">Speak With an Expert</Button>
+                <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
+                  <Button className="h-12 rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground hover:bg-primary/90">Get Property Evaluation</Button>
+                  <Button className="h-12 rounded-full bg-accent px-7 text-sm font-semibold text-accent-foreground hover:bg-accent/90">Speak With an Expert</Button>
                 </div>
               </div>
               <div className="relative order-1 md:order-2">
-                <img src={ctaBedroom} alt="Premium bedroom" loading="lazy" className="h-56 w-full rounded-2xl object-cover sm:h-72 md:h-80" />
-                <div className="absolute bottom-3 right-3 flex items-center gap-1.5 rounded-full bg-card px-3 py-1.5 shadow-card">
-                  <Star className="h-3.5 w-3.5 fill-accent text-accent" />
-                  <span className="text-xs font-semibold text-foreground">Premium Choice</span>
-                </div>
+                <picture>
+                  <source media="(min-width: 768px)" srcSet={ctaBedroomFramed} />
+                  <img
+                    src={ctaBedroom}
+                    alt="Premium bedroom"
+                    loading="lazy"
+                    className="mx-auto h-[320px] w-[326px] rounded-[22px] object-cover sm:mx-0 sm:h-[320px] sm:w-full md:h-[300px] lg:h-[320px]"
+                  />
+                </picture>
+
+                {/* Mobile badge (use provided PNG) */}
+                <img
+                  src={ctaPremiumBadge}
+                  alt=""
+                  aria-hidden="true"
+                  className="pointer-events-none absolute bottom-6 right-6 h-[44px] w-auto md:hidden"
+                />
               </div>
             </div>
-          </Card>
+          </div>
         </div>
       </section>
 
       {/* FOOTER */}
-      <footer>
-        <div className="bg-card p-6 shadow-card sm:p-10">
-          <div className="mx-auto max-w-[1400px]">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+      <footer className="px-0 pb-0 sm:px-10 sm:pb-10">
+        <div className="w-full overflow-hidden rounded-none border border-border/60 bg-card shadow-card sm:rounded-2xl md:h-[378.55px]">
+          <div className="flex h-full flex-col justify-between p-6 sm:p-10 md:px-[40px] md:py-[40px]">
+              <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               <div>
                 <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Elevating short-term rentals through professional management and strategic investment insights.
                 </p>
-                <div className="mt-5 flex gap-2">
-                  <a href="#" aria-label="Website" className="grid h-8 w-8 place-items-center rounded-full border border-border text-muted-foreground hover:text-foreground">
-                    <Globe className="h-4 w-4" />
-                  </a>
-                  <a href="#" aria-label="Chat" className="grid h-8 w-8 place-items-center rounded-full border border-border text-muted-foreground hover:text-foreground">
-                    <MessageSquare className="h-4 w-4" />
-                  </a>
+                <div className="mt-5 flex items-center gap-3">
+                  {/* Figma icons */}
+                  <img src={footerSocialButtons} alt="" aria-hidden="true" className="h-10 w-auto" />
                 </div>
               </div>
 
@@ -909,23 +1117,19 @@ const Index = () => {
 
               <div>
                 <p className="text-sm font-semibold text-foreground">Newsletter</p>
-                <div className="mt-4 flex flex-col gap-3 md:items-end">
-                  <Input placeholder="Enter your email" className="h-10 rounded-full bg-background" />
-                  <Button className="h-10 w-full rounded-full bg-primary px-6 text-sm text-primary-foreground hover:bg-primary/90 md:w-auto">
+                <div className="mt-4 flex w-full items-center gap-3 md:flex-col md:items-end">
+                  <Input placeholder="Enter your email" className="h-10 flex-1 rounded-full bg-background md:w-full md:max-w-[280px]" />
+                  <Button className="h-10 shrink-0 rounded-full bg-primary px-6 text-sm text-primary-foreground hover:bg-primary/90 md:w-auto">
                     Subscribe
                   </Button>
                 </div>
               </div>
-            </div>
-
-            <div className="mt-8 flex flex-col items-start justify-between gap-4 border-t border-border pt-6 md:flex-row md:items-center">
-              <p className="text-xs text-muted-foreground">© 2024 AvaronBnB. Luxury Property Management & Investment. All rights reserved.</p>
-              <div className="flex gap-3 text-muted-foreground">
-                <CreditCard className="h-4 w-4" />
-                <Shield className="h-4 w-4" />
-                <ShieldCheck className="h-4 w-4" />
               </div>
-            </div>
+
+              <div className="mt-6 flex flex-col items-start justify-between gap-4 border-t border-border pt-4 md:mt-0 md:flex-row md:items-center">
+                <p className="text-xs text-muted-foreground">© 2024 AvaronBnB. Luxury Property Management & Investment. All rights reserved.</p>
+                <img src={footerBottomRightIcons} alt="" aria-hidden="true" className="h-5 w-auto" />
+              </div>
           </div>
         </div>
       </footer>
