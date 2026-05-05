@@ -73,6 +73,22 @@ const SIZE_MULT: Record<string, number> = { "1bhk": 0.8, "2bhk": 1, "3bhk": 1.35
 const FURNISH_MULT: Record<string, number> = { unfurnished: 0.7, semi: 0.9, full: 1.15 };
 
 const Index = () => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsMobileMenuOpen(false);
+  };
+
+  const navItems: Array<{ label: string; id: string }> = [
+    { label: "Home", id: "home" },
+    { label: "About Us", id: "about" },
+    { label: "Calculate ROI", id: "roi" },
+    { label: "How Does It Work?", id: "how" },
+  ];
+
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -154,7 +170,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* HERO */}
-      <section className="relative" data-gsap-skip>
+      <section id="home" className="relative" data-gsap-skip>
         <div className="relative overflow-hidden md:h-[750px]">
           <img
             src={heroMobile}
@@ -184,7 +200,11 @@ const Index = () => {
           {/* NAV */}
           <nav className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10">
             <div className="flex items-center gap-2 md:hidden">
-              <button className="rounded-full bg-primary/80 p-2.5 text-primary-foreground backdrop-blur" aria-label="Menu">
+              <button
+                className="p-2.5 text-primary-foreground"
+                aria-label="Menu"
+                onClick={() => setIsMobileMenuOpen((v) => !v)}
+              >
                 <Menu className="h-5 w-5" />
               </button>
             </div>
@@ -192,19 +212,54 @@ const Index = () => {
               <img src={logo} alt="AvaronBnB" className="h-9 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]" />
             </a>
             <ul className="hidden items-center gap-8 text-sm font-medium text-primary-foreground md:flex">
-              {navLinks.map((l) => (
-                <li key={l}>
-                  <a href="#" className="opacity-90 transition hover:opacity-100">
-                    {l}
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    className="opacity-90 transition hover:opacity-100"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      scrollToSection(item.id);
+                    }}
+                  >
+                    {item.label}
                   </a>
                 </li>
               ))}
             </ul>
-            <Button className="rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm">
+            <Button
+              className="rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm"
+              onClick={() => scrollToSection("contact")}
+            >
               <span className="md:hidden">Book Consultation</span>
               <span className="hidden md:inline">Contact Us</span>
             </Button>
           </nav>
+
+          {/* MOBILE MENU OVERLAY */}
+          {isMobileMenuOpen && (
+            <div className="absolute inset-x-0 top-[72px] z-20 px-5 sm:px-10 md:hidden">
+              <div className="rounded-2xl border border-primary-foreground/15 bg-primary/90 p-3 text-primary-foreground shadow-soft backdrop-blur">
+                <div className="flex flex-col gap-1">
+                  {navItems.map((item) => (
+                    <button
+                      key={item.id}
+                      className="rounded-xl px-3 py-2 text-left text-sm font-semibold hover:bg-primary-foreground/10"
+                      onClick={() => scrollToSection(item.id)}
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                  <button
+                    className="mt-1 rounded-xl px-3 py-2 text-left text-sm font-semibold hover:bg-primary-foreground/10"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* HERO CONTENT */}
           <div className="relative z-10 flex flex-col items-center px-5 pb-12 pt-8 text-center text-primary-foreground sm:pb-24 sm:pt-24">
@@ -229,7 +284,11 @@ const Index = () => {
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-              <Button size="lg" className="h-10 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:h-11 sm:px-7 sm:text-sm">
+              <Button
+                size="lg"
+                className="h-10 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:h-11 sm:px-7 sm:text-sm"
+                onClick={() => scrollToSection("contact")}
+              >
                 <span className="sm:hidden">Book a Free Call</span>
                 <span className="hidden sm:inline">Book a Free Consultation</span>
               </Button>
@@ -237,6 +296,7 @@ const Index = () => {
                 size="lg"
                 variant="outline"
                 className="h-10 rounded-full border-primary-foreground/40 bg-primary-foreground/10 px-5 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/20 hover:text-primary-foreground sm:h-11 sm:px-7 sm:text-sm"
+                onClick={() => scrollToSection("how")}
               >
                 <span className="sm:hidden">See How It Works</span>
                 <span className="hidden sm:inline">Browse Stays</span>
@@ -289,7 +349,7 @@ const Index = () => {
       </section>
 
       {/* FEATURES — “A Smarter Way to Own” (aligns with site max-width 1400px) */}
-      <section className="bg-background px-4 py-14 sm:px-6 sm:py-16 md:py-20">
+      <section id="about" className="bg-background px-4 py-14 sm:px-6 sm:py-16 md:py-20">
         <div className="mx-auto max-w-[1400px]">
           <div className="flex flex-col border-0 bg-transparent p-0 shadow-none md:min-h-[869px] md:p-0 lg:p-0">
             <header className="shrink-0 text-center md:text-left">
@@ -332,7 +392,10 @@ const Index = () => {
                           stands out and commands premium rates.
                         </span>
                       </p>
-                      <Button className="mt-3 h-9 w-fit rounded-full border border-primary-foreground/25 bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25 md:mt-3">
+                      <Button
+                        className="mt-3 h-9 w-fit rounded-full border border-primary-foreground/25 bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25 md:mt-3"
+                        onClick={() => scrollToSection("contact")}
+                      >
                         Talk to an Expert
                       </Button>
                     </div>
@@ -406,10 +469,16 @@ const Index = () => {
                       Ready to see what your property is truly worth?
                     </p>
                     <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center sm:gap-3 md:w-auto md:justify-start">
-                      <Button className="h-10 w-full rounded-full bg-[#0A1128] px-5 text-sm font-semibold text-white hover:bg-[#0A1128]/90 sm:w-auto md:h-11 md:px-6">
+                      <Button
+                        className="h-10 w-full rounded-full bg-[#0A1128] px-5 text-sm font-semibold text-white hover:bg-[#0A1128]/90 sm:w-auto md:h-11 md:px-6"
+                        onClick={() => scrollToSection("contact")}
+                      >
                         Book a Consultation
                       </Button>
-                      <Button className="h-10 w-full rounded-full bg-[#D99E6A] px-5 text-sm font-semibold text-white hover:bg-[#D99E6A]/90 sm:w-auto md:h-11 md:px-6">
+                      <Button
+                        className="h-10 w-full rounded-full bg-[#D99E6A] px-5 text-sm font-semibold text-white hover:bg-[#D99E6A]/90 sm:w-auto md:h-11 md:px-6"
+                        onClick={() => scrollToSection("testimonials")}
+                      >
                         See Our Results
                       </Button>
                     </div>
@@ -422,7 +491,7 @@ const Index = () => {
       </section>
 
       {/* WE MANAGE EVERYTHING */}
-      <section className="px-4 pb-16 sm:px-6 sm:pb-20">
+      <section id="management" className="px-4 pb-16 sm:px-6 sm:pb-20">
         <div className="mx-auto max-w-[1400px]">
           <h2 className="text-center font-display text-2xl font-bold text-foreground sm:text-3xl md:text-left">
             <span className="sm:hidden">We Manage &amp; You Keep the Returns.</span>
@@ -579,7 +648,7 @@ const Index = () => {
       </section>
 
       {/* BUILT FOR PREDICTABLE RETURNS */}
-      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
+      <section id="roi" className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
           <h2 className="text-center font-display text-2xl font-bold text-foreground sm:text-left sm:text-3xl">
             <span className="sm:hidden">Real Numbers. Real Returns.</span>
@@ -709,7 +778,7 @@ const Index = () => {
       </section>
 
       {/* LUXURY MANAGED — Property cards */}
-      <section className="px-4 pb-16 sm:px-6 sm:pb-20">
+      <section id="stays" className="px-4 pb-16 sm:px-6 sm:pb-20">
         <div className="mx-auto max-w-[1400px]">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
@@ -889,7 +958,7 @@ const Index = () => {
       </section>
 
       {/* THREE SIMPLE STEPS */}
-      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
+      <section id="how" className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground text-center sm:text-left sm:text-3xl">
             <span className="sm:hidden">3 Steps to Hands-Free Income</span>
@@ -916,7 +985,7 @@ const Index = () => {
                 </li>
               ))}
             </ul>
-            <Button className="mt-7 h-14 w-full rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90">
+            <Button className="mt-7 h-14 w-full rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90" onClick={() => scrollToSection("contact")}>
               Start With a Free Consultation
             </Button>
           </div>
@@ -935,7 +1004,7 @@ const Index = () => {
                   </li>
                 ))}
               </ul>
-              <Button className="mt-8 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90 sm:max-w-md">
+              <Button className="mt-8 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90 sm:max-w-md" onClick={() => scrollToSection("contact")}>
                 Start With a Free Consultation
               </Button>
             </div>
@@ -953,7 +1022,7 @@ const Index = () => {
       </section>
 
       {/* TESTIMONIALS */}
-      <section className="px-4 pb-16 sm:px-6 sm:pb-20">
+      <section id="testimonials" className="px-4 pb-16 sm:px-6 sm:pb-20">
         <div className="mx-auto max-w-[1400px]">
           <h2 className="font-display text-2xl font-bold text-foreground sm:text-3xl text-center sm:text-left">
             <span className="sm:hidden">What Our Owners Are Saying</span>
@@ -1031,13 +1100,15 @@ const Index = () => {
 
           <div className="mt-6 hidden items-center justify-between gap-4 md:flex">
             <p className="text-sm text-muted-foreground">Join 500+ property owners earning more with AvaronBnB</p>
-            <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90">View All Case Studies</Button>
+            <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90" onClick={() => scrollToSection("testimonials")}>
+              View All Case Studies
+            </Button>
           </div>
         </div>
       </section>
 
       {/* CTA — Let's Talk About Your Property */}
-      <section className="px-4 pb-20 sm:px-6 sm:pb-24">
+      <section id="contact" className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
           <div className="relative overflow-hidden rounded-[28px] bg-white shadow-card">
             <div className="relative grid grid-cols-1 gap-6 p-5 sm:p-8 md:grid-cols-2 md:items-center md:gap-10 md:p-10">
@@ -1052,8 +1123,12 @@ const Index = () => {
                   </span>
                 </p>
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
-                  <Button className="h-12 rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground hover:bg-primary/90">Get Property Evaluation</Button>
-                  <Button className="h-12 rounded-full bg-accent px-7 text-sm font-semibold text-accent-foreground hover:bg-accent/90">Speak With an Expert</Button>
+                  <Button className="h-12 rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground hover:bg-primary/90" onClick={() => scrollToSection("contact")}>
+                    Get Property Evaluation
+                  </Button>
+                  <Button className="h-12 rounded-full bg-accent px-7 text-sm font-semibold text-white hover:bg-accent/90" onClick={() => scrollToSection("contact")}>
+                    Speak With an Expert
+                  </Button>
                 </div>
               </div>
               <div className="relative order-1 md:order-2">
@@ -1084,7 +1159,7 @@ const Index = () => {
       <footer className="px-0 pb-0 sm:px-10 sm:pb-10">
         <div className="w-full overflow-hidden rounded-none border border-border/60 bg-card shadow-card sm:rounded-2xl md:h-[378.55px]">
           <div className="flex h-full flex-col justify-between p-6 sm:p-10 md:px-[40px] md:py-[40px]">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
               <div>
                 <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
                 <p className="mt-3 text-sm text-muted-foreground">
@@ -1099,19 +1174,96 @@ const Index = () => {
               <div>
                 <p className="text-sm font-semibold text-foreground">Services</p>
                 <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  <li><a href="#" className="hover:text-foreground">Management</a></li>
-                  <li><a href="#" className="hover:text-foreground">Investment</a></li>
-                  <li><a href="#" className="hover:text-foreground">Properties</a></li>
-                  <li><a href="#" className="hover:text-foreground">About</a></li>
+                  <li>
+                    <a
+                      href="#management"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("management");
+                      }}
+                    >
+                      Management
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#roi"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("roi");
+                      }}
+                    >
+                      Investment
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#stays"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("stays");
+                      }}
+                    >
+                      Properties
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#about"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("about");
+                      }}
+                    >
+                      About
+                    </a>
+                  </li>
                 </ul>
               </div>
 
               <div>
                 <p className="text-sm font-semibold text-foreground">Company</p>
                 <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  <li><a href="#" className="hover:text-foreground">Privacy Policy</a></li>
-                  <li><a href="#" className="hover:text-foreground">Terms of Service</a></li>
-                  <li><a href="#" className="hover:text-foreground">Cookie Policy</a></li>
+                  <li>
+                    <a
+                      href="#contact"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("contact");
+                      }}
+                    >
+                      Privacy Policy
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#contact"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("contact");
+                      }}
+                    >
+                      Terms of Service
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="#contact"
+                      className="hover:text-foreground"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection("contact");
+                      }}
+                    >
+                      Cookie Policy
+                    </a>
+                  </li>
                 </ul>
               </div>
 
@@ -1124,12 +1276,12 @@ const Index = () => {
                   </Button>
                 </div>
               </div>
-              </div>
+            </div>
 
-              <div className="mt-6 flex flex-col items-start justify-between gap-4 border-t border-border pt-4 md:mt-0 md:flex-row md:items-center">
-                <p className="text-xs text-muted-foreground">© 2024 AvaronBnB. Luxury Property Management & Investment. All rights reserved.</p>
-                <img src={footerBottomRightIcons} alt="" aria-hidden="true" className="h-5 w-auto" />
-              </div>
+            <div className="mt-6 flex flex-col items-start justify-between gap-4 border-t border-border pt-4 md:mt-0 md:flex-row md:items-center">
+              <p className="text-xs text-muted-foreground">© 2024 AvaronBnB. Luxury Property Management & Investment. All rights reserved.</p>
+              <img src={footerBottomRightIcons} alt="" aria-hidden="true" className="h-5 w-auto" />
+            </div>
           </div>
         </div>
       </footer>
