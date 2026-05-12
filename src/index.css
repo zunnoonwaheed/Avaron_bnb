@@ -126,30 +126,4 @@
   .shadow-card {
     box-shadow: var(--shadow-card);
   }
-
-  /* Testimonials: infinite marquee on desktop */
-  .testimonial-marquee {
-    overflow: hidden;
-  }
-  .testimonial-track {
-    display: flex;
-    width: max-content;
-    animation: testimonial-marquee 42s linear infinite;
-    will-change: transform;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .testimonial-track {
-      animation: none;
-      transform: none;
-    }
-  }
-}
-
-@keyframes testimonial-marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }

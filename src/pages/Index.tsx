@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Menu, TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, BadgeCheck, Globe, MessageSquare, CreditCard, Shield, ShieldCheck } from "lucide-react";
+import { TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, Phone } from "lucide-react";
 import heroDesktop from "@/assets/hero-desktop.png";
 import heroMobile from "@/assets/hero-mobile.jpg";
 import bedroomTop from "@/assets/bedroom-top.jpg";
@@ -42,18 +42,17 @@ import listingOverlayBlur from "@/assets/listings/png/overlay.png";
 import listingIconSize from "@/assets/listings/png/size.png";
 import listingHeartOverlay from "@/assets/listings/png/overlay-heart.png";
 import stepsKitchen from "@/assets/steps/steps-kitchen.png";
-import testimonial1 from "@/assets/testimonial-1.jpg";
-import testimonial2 from "@/assets/testimonial-2.jpg";
-import testimonial3 from "@/assets/testimonial-3.jpg";
+import reviewRoom1 from "@/assets/testimonials/review-room-1.png";
+import reviewLounge from "@/assets/testimonials/review-lounge.png";
+import reviewRoom2 from "@/assets/testimonials/review-room-2.png";
 import ctaBedroom from "@/assets/cta/cta-bedroom-new.png";
 import ctaBedroomFramed from "@/assets/cta/background-border.png";
 import ctaPremiumBadge from "@/assets/cta/premium-badge.png";
-import footerSocialButtons from "@/assets/footer/legal-icons.png";
-import footerBottomRightIcons from "@/assets/footer/social-1.png";
 import logo from "@/assets/logo.svg";
 import figmaNeoclassicalBuilding from "@/assets/figma/neoclassical-beige-building.png";
 import figmaCharmingHouse from "@/assets/figma/charming-little-house.png";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -65,21 +64,45 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-const navLinks = ["Home", "About Us", "Calculate ROI", "How Does It Work?"];
-
 const REGION_RATE: Record<string, number> = { karachi: 1200, lahore: 1100, islamabad: 1400 };
 const TYPE_MULT: Record<string, number> = { flat: 1, portion: 0.85, house: 1.4 };
 const SIZE_MULT: Record<string, number> = { "1bhk": 0.8, "2bhk": 1, "3bhk": 1.35, penthouse: 1.9 };
 const FURNISH_MULT: Record<string, number> = { unfurnished: 0.7, semi: 0.9, full: 1.15 };
 
-const Index = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+/** Public line — WhatsApp chat and voice calls use the same number. */
+const WHATSAPP_E164 = "923107372777";
+const WHATSAPP_CHAT_URL = `https://wa.me/${WHATSAPP_E164}`;
+const PHONE_TEL_HREF = "tel:+923107372777";
+const PHONE_DISPLAY = "+92 310 7372777";
 
+const FOOTER_EXPLORE_LINKS: Array<{ label: string; id: string }> = [
+  { label: "Home", id: "home" },
+  { label: "Management", id: "management" },
+  { label: "Properties", id: "stays" },
+  { label: "Testimonials", id: "testimonials" },
+];
+
+const FOOTER_NAVIGATE_LINKS: Array<{ label: string; id?: string; externalHref?: string }> = [
+  { label: "About Us", id: "about" },
+  { label: "Calculate ROI", id: "roi" },
+  { label: "How It Works", id: "how" },
+  { label: "Contact Us", externalHref: WHATSAPP_CHAT_URL },
+];
+
+function WhatsAppGlyph({ className }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.295-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.435 9.884-9.881 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
+  );
+}
+
+const Index = () => {
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (!el) return;
-    el.scrollIntoView({ behavior: "smooth", block: "start" });
-    setIsMobileMenuOpen(false);
+    const top = el.getBoundingClientRect().top + window.scrollY - 16;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
   };
 
   const navItems: Array<{ label: string; id: string }> = [
@@ -150,6 +173,7 @@ const Index = () => {
   const [buyFilters, setBuyFilters] = useState<Record<string, boolean>>({ buy: true, rent: false, lease: false });
   const [bedFilters, setBedFilters] = useState<Record<string, boolean>>({ "1bed": false, "2bed": true, "3bed": true, "4bed": false });
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [newsletterEmail, setNewsletterEmail] = useState("");
 
   const allProperties = useMemo(() => [
     { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", bedKey: "3bed", baths: "1 bath", rating: "4.9/5.0" },
@@ -198,25 +222,51 @@ const Index = () => {
           />
 
           {/* NAV */}
-          <nav className="relative z-10 flex items-center justify-between px-5 py-5 sm:px-10">
-            <div className="flex items-center gap-2 md:hidden">
-              <button
-                className="p-2.5 text-primary-foreground"
-                aria-label="Menu"
-                onClick={() => setIsMobileMenuOpen((v) => !v)}
+          <nav className="relative z-10 flex flex-col gap-3 px-5 py-5 sm:px-10 md:flex-row md:items-center md:justify-between md:gap-6">
+            <div className="flex w-full items-center justify-between gap-4 md:contents">
+              <a
+                href="#home"
+                className="flex shrink-0 items-center gap-2"
+                onClick={(e) => {
+                  e.preventDefault();
+                  scrollToSection("home");
+                }}
               >
-                <Menu className="h-5 w-5" />
-              </button>
+                <img
+                  src={logo}
+                  alt="AvaronBnB"
+                  className="h-8 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)] md:h-9"
+                />
+              </a>
+              <ul className="hidden flex-1 items-center justify-center gap-8 text-sm font-medium text-primary-foreground md:flex">
+                {navItems.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`#${item.id}`}
+                      className="opacity-90 transition hover:opacity-100"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        scrollToSection(item.id);
+                      }}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <Button asChild className="shrink-0 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm">
+                <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                  <span className="md:hidden">Book Consultation</span>
+                  <span className="hidden md:inline">Contact Us</span>
+                </a>
+              </Button>
             </div>
-            <a href="#" className="hidden items-center gap-2 md:flex">
-              <img src={logo} alt="AvaronBnB" className="h-9 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)]" />
-            </a>
-            <ul className="hidden items-center gap-8 text-sm font-medium text-primary-foreground md:flex">
+            <ul className="flex flex-wrap justify-center gap-x-3 gap-y-1 border-t border-primary-foreground/15 pt-3 text-[11px] font-semibold tracking-wide text-primary-foreground/95 md:hidden">
               {navItems.map((item) => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
-                    className="opacity-90 transition hover:opacity-100"
+                    className="opacity-95 transition-opacity hover:opacity-100"
                     onClick={(e) => {
                       e.preventDefault();
                       scrollToSection(item.id);
@@ -227,39 +277,7 @@ const Index = () => {
                 </li>
               ))}
             </ul>
-            <Button
-              className="rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:px-6 sm:text-sm"
-              onClick={() => scrollToSection("contact")}
-            >
-              <span className="md:hidden">Book Consultation</span>
-              <span className="hidden md:inline">Contact Us</span>
-            </Button>
           </nav>
-
-          {/* MOBILE MENU OVERLAY */}
-          {isMobileMenuOpen && (
-            <div className="absolute inset-x-0 top-[72px] z-20 px-5 sm:px-10 md:hidden">
-              <div className="rounded-2xl border border-primary-foreground/15 bg-primary/90 p-3 text-primary-foreground shadow-soft backdrop-blur">
-                <div className="flex flex-col gap-1">
-                  {navItems.map((item) => (
-                    <button
-                      key={item.id}
-                      className="rounded-xl px-3 py-2 text-left text-sm font-semibold hover:bg-primary-foreground/10"
-                      onClick={() => scrollToSection(item.id)}
-                    >
-                      {item.label}
-                    </button>
-                  ))}
-                  <button
-                    className="mt-1 rounded-xl px-3 py-2 text-left text-sm font-semibold hover:bg-primary-foreground/10"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
 
           {/* HERO CONTENT */}
           <div className="relative z-10 flex flex-col items-center px-5 pb-12 pt-8 text-center text-primary-foreground sm:pb-24 sm:pt-24">
@@ -284,13 +302,11 @@ const Index = () => {
             </p>
 
             <div className="mt-5 flex flex-wrap items-center justify-center gap-2 sm:mt-8 sm:gap-3">
-              <Button
-                size="lg"
-                className="h-10 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:h-11 sm:px-7 sm:text-sm"
-                onClick={() => scrollToSection("contact")}
-              >
-                <span className="sm:hidden">Book a Free Call</span>
-                <span className="hidden sm:inline">Book a Free Consultation</span>
+              <Button asChild size="lg" className="h-10 rounded-full bg-primary px-5 text-xs text-primary-foreground hover:bg-primary/90 sm:h-11 sm:px-7 sm:text-sm">
+                <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                  <span className="sm:hidden">Book a Free Call</span>
+                  <span className="hidden sm:inline">Book a Free Consultation</span>
+                </a>
               </Button>
               <Button
                 size="lg"
@@ -327,9 +343,11 @@ const Index = () => {
                     <SelectItem value="condo">Condo</SelectItem>
                   </SelectContent>
                 </Select>
-                <Button className="h-9 shrink-0 rounded-full bg-primary px-4 text-xs text-primary-foreground hover:bg-primary/90 sm:h-10 sm:px-6 sm:text-sm">
-                  <span className="sm:hidden">Estimate</span>
-                  <span className="hidden sm:inline">Estimate Earnings</span>
+                <Button asChild className="h-9 shrink-0 rounded-full bg-primary px-4 text-xs text-primary-foreground hover:bg-primary/90 sm:h-10 sm:px-6 sm:text-sm">
+                  <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                    <span className="sm:hidden">Estimate</span>
+                    <span className="hidden sm:inline">Estimate Earnings</span>
+                  </a>
                 </Button>
               </div>
             </div>
@@ -392,11 +410,10 @@ const Index = () => {
                           stands out and commands premium rates.
                         </span>
                       </p>
-                      <Button
-                        className="mt-3 h-9 w-fit rounded-full border border-primary-foreground/25 bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25 md:mt-3"
-                        onClick={() => scrollToSection("contact")}
-                      >
-                        Talk to an Expert
+                      <Button asChild className="mt-3 h-9 w-fit rounded-full border border-primary-foreground/25 bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25 md:mt-3">
+                        <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                          Talk to an Expert
+                        </a>
                       </Button>
                     </div>
                   </div>
@@ -469,11 +486,10 @@ const Index = () => {
                       Ready to see what your property is truly worth?
                     </p>
                     <div className="flex w-full flex-col gap-2.5 sm:flex-row sm:justify-center sm:gap-3 md:w-auto md:justify-start">
-                      <Button
-                        className="h-10 w-full rounded-full bg-[#0A1128] px-5 text-sm font-semibold text-white hover:bg-[#0A1128]/90 sm:w-auto md:h-11 md:px-6"
-                        onClick={() => scrollToSection("contact")}
-                      >
-                        Book a Consultation
+                      <Button asChild className="h-10 w-full rounded-full bg-[#0A1128] px-5 text-sm font-semibold text-white hover:bg-[#0A1128]/90 sm:w-auto md:h-11 md:px-6">
+                        <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                          Book a Consultation
+                        </a>
                       </Button>
                       <Button
                         className="h-10 w-full rounded-full bg-[#D99E6A] px-5 text-sm font-semibold text-white hover:bg-[#D99E6A]/90 sm:w-auto md:h-11 md:px-6"
@@ -536,7 +552,11 @@ const Index = () => {
                 <p className="mt-1 line-clamp-2 text-[11px] leading-snug opacity-90">
                   Our managed properties consistently outperform market averages — delivering higher occupancy and stronger returns.
                 </p>
-                <Button className="mt-2 h-8 w-fit rounded-full bg-primary-foreground/15 px-3 text-[11px] text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
+                <Button
+                  type="button"
+                  className="mt-2 h-8 w-fit rounded-full bg-primary-foreground/15 px-3 text-[11px] text-primary-foreground backdrop-blur hover:bg-primary-foreground/25"
+                  onClick={() => scrollToSection("roi")}
+                >
                   View Performance
                 </Button>
               </div>
@@ -603,7 +623,11 @@ const Index = () => {
               <p className="mt-1.5 text-left text-sm leading-snug opacity-90">
                 Our properties outperform averages — higher occupancy and returns.
               </p>
-              <Button className="mt-4 h-9 w-fit rounded-full bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25">
+              <Button
+                type="button"
+                className="mt-4 h-9 w-fit rounded-full bg-primary-foreground/15 px-4 text-xs text-primary-foreground backdrop-blur hover:bg-primary-foreground/25"
+                onClick={() => scrollToSection("roi")}
+              >
                 View Performance
               </Button>
             </div>
@@ -985,8 +1009,10 @@ const Index = () => {
                 </li>
               ))}
             </ul>
-            <Button className="mt-7 h-14 w-full rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90" onClick={() => scrollToSection("contact")}>
-              Start With a Free Consultation
+            <Button asChild className="mt-7 h-14 w-full rounded-full bg-primary text-base font-semibold text-primary-foreground hover:bg-primary/90">
+              <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                Start With a Free Consultation
+              </a>
             </Button>
           </div>
 
@@ -1004,8 +1030,10 @@ const Index = () => {
                   </li>
                 ))}
               </ul>
-              <Button className="mt-8 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90 sm:max-w-md" onClick={() => scrollToSection("contact")}>
-                Start With a Free Consultation
+              <Button asChild className="mt-8 h-12 w-full rounded-full bg-primary text-sm text-primary-foreground hover:bg-primary/90 sm:max-w-md">
+                <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                  Start With a Free Consultation
+                </a>
               </Button>
             </div>
             <div className="relative">
@@ -1035,85 +1063,72 @@ const Index = () => {
             </span>
           </p>
 
-          {(() => {
-            const testimonials = [
-              { img: testimonial1, quote: "AvaronBnB helped me scale my portfolio from 2 to 15 properties in under a year. The automation is flawless.", name: "Gary Janzen", loc: "Washington" },
-              { img: testimonial2, quote: "There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs.", name: "Michael & Sarah Lee", loc: "Colorado" },
-              { img: testimonial3, quote: "Every moment spent at our lakeside lodge feels like a dream come true, thanks to the exceptional service provided.", name: "Emily Johnson", loc: "Maine" },
-              { img: testimonial2, quote: "Our revenue doubled after joining the AvaronBnB platform. Truly priceless support.", name: "Russ & Anna", loc: "Oregon" },
-            ];
-            const marquee = [...testimonials, ...testimonials];
-
-            return (
-              <>
-                {/* MOBILE: swipe */}
-                <div className="mt-8 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pb-3 md:hidden">
-                  {testimonials.map((t, i) => (
-                    <div
-                      key={i}
-                      className="relative h-[480px] min-w-[calc(100%-40px)] snap-center overflow-hidden rounded-2xl shadow-card sm:min-w-[420px]"
-                    >
-                      <img src={t.img} alt={t.name} loading="lazy" className="h-full w-full object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground">
-                        <div className="flex gap-0.5 text-accent">
-                          {Array.from({ length: 5 }).map((_, k) => (
-                            <Star key={k} className="h-4 w-4 fill-current" />
-                          ))}
-                        </div>
-                        <p className="mt-2 text-sm leading-relaxed opacity-95">"{t.quote}"</p>
-                        <p className="mt-3 text-base font-bold">{t.name}</p>
-                        <p className="text-sm opacity-80">{t.loc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* DESKTOP: edge-to-edge continuous marquee */}
-                <div className="testimonial-marquee relative left-1/2 mt-8 hidden w-screen -translate-x-1/2 px-6 pb-2 md:block">
-                  <div className="testimonial-track gap-6">
-                    {marquee.map((t, i) => (
-                      <div key={`${t.name}-${i}`} className="relative h-[480px] w-[386.67px] shrink-0 overflow-hidden rounded-2xl shadow-card">
-                        <img src={t.img} alt={t.name} loading="lazy" className="h-full w-full object-cover" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/40 to-transparent" />
-                        <div className="absolute inset-x-0 bottom-0 p-5 text-primary-foreground">
-                          <div className="flex gap-0.5 text-accent">
-                            {Array.from({ length: 5 }).map((_, k) => (
-                              <Star key={k} className="h-4 w-4 fill-current" />
-                            ))}
-                          </div>
-                          <p className="mt-2 text-sm leading-relaxed opacity-95">"{t.quote}"</p>
-                          <p className="mt-3 text-base font-bold">{t.name}</p>
-                          <p className="text-sm opacity-80">{t.loc}</p>
-                        </div>
-                      </div>
+          <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-3 md:gap-6">
+            {[
+              {
+                img: reviewLounge,
+                quote:
+                  "There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs.",
+                name: "Michael & Sarah Lee",
+                loc: "Colorado",
+              },
+              {
+                img: reviewRoom1,
+                quote:
+                  "Every moment spent at our lakeside lodge feels like a dream come true, thanks to the exceptional service provided.",
+                name: "Emily Johnson",
+                loc: "Maine",
+              },
+              {
+                img: reviewRoom2,
+                quote: "AvaronBnB helped me scale my portfolio from 2 to 15 properties in under a year. The automation is flawless.",
+                name: "Gary Janzen",
+                loc: "Washington",
+              },
+            ].map((t) => (
+              <div
+                key={t.name}
+                className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card"
+              >
+                <img
+                  src={t.img}
+                  alt=""
+                  className="h-full w-full object-cover object-[center_22%]"
+                  loading="lazy"
+                />
+                {/* Readability: fade only on lower ~45% so copy starts ~two-thirds down like Figma */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+                <div className="absolute inset-x-0 top-[66%] bottom-0 flex flex-col px-5 pb-5 pt-1 text-left text-primary-foreground">
+                  <div className="flex gap-0.5 text-accent">
+                    {Array.from({ length: 5 }).map((_, k) => (
+                      <Star key={k} className="h-4 w-4 fill-current" />
                     ))}
                   </div>
-
-                  {/* Edge fade like Figma */}
-                  <div className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-background via-background/55 to-transparent backdrop-blur-[1px]" />
-                  <div className="pointer-events-none absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-background via-background/55 to-transparent backdrop-blur-[1px]" />
+                  <p className="mt-2 text-sm leading-relaxed opacity-95">"{t.quote}"</p>
+                  <p className="mt-3 text-base font-bold">{t.name}</p>
+                  <p className="text-sm opacity-80">{t.loc}</p>
                 </div>
-              </>
-            );
-          })()}
-
-          <div className="mt-6 hidden items-center justify-between gap-4 md:flex">
-            <p className="text-sm text-muted-foreground">Join 500+ property owners earning more with AvaronBnB</p>
-            <Button className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90" onClick={() => scrollToSection("testimonials")}>
-              View All Case Studies
-            </Button>
+              </div>
+            ))}
           </div>
+
+          <p className="mt-6 hidden text-sm text-muted-foreground md:block">
+            Join 500+ property owners earning more with AvaronBnB
+          </p>
         </div>
       </section>
 
       {/* CTA — Let's Talk About Your Property */}
       <section id="contact" className="px-4 pb-20 sm:px-6 sm:pb-24">
         <div className="mx-auto max-w-[1400px]">
-          <div className="relative overflow-hidden rounded-[28px] bg-white shadow-card">
+          <div id="cta" className="relative scroll-mt-24 overflow-hidden rounded-[28px] bg-white shadow-card">
             <div className="relative grid grid-cols-1 gap-6 p-5 sm:p-8 md:grid-cols-2 md:items-center md:gap-10 md:p-10">
               <div className="order-2 md:order-1">
-                <h2 className="font-display text-[22px] font-bold leading-[1.15] text-foreground sm:text-3xl text-center md:text-left">
+                <h2
+                  id="cta-heading"
+                  tabIndex={-1}
+                  className="font-display text-[22px] font-bold leading-[1.15] text-foreground sm:text-3xl text-center md:text-left outline-none"
+                >
                   Let's Talk About Your Property.
                 </h2>
                 <p className="mt-3 text-[15px] leading-relaxed text-muted-foreground text-center md:text-left">
@@ -1122,12 +1137,18 @@ const Index = () => {
                     Book a free, no-obligation consultation with our property management specialists. We'll walk you through everything — no contracts, no pressure, just clarity on what your property can achieve.
                   </span>
                 </p>
-                <div className="mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
-                  <Button className="h-12 rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground hover:bg-primary/90" onClick={() => scrollToSection("contact")}>
+                <div className="relative z-10 mt-6 flex flex-col gap-3 sm:flex-row md:mt-7">
+                  <Button
+                    type="button"
+                    className="h-12 rounded-full bg-primary px-7 text-sm font-semibold text-primary-foreground hover:bg-primary/90"
+                    onClick={() => scrollToSection("roi")}
+                  >
                     Get Property Evaluation
                   </Button>
-                  <Button className="h-12 rounded-full bg-accent px-7 text-sm font-semibold text-white hover:bg-accent/90" onClick={() => scrollToSection("contact")}>
-                    Speak With an Expert
+                  <Button asChild className="h-12 rounded-full bg-accent px-7 text-sm font-semibold text-white hover:bg-accent/90">
+                    <a href={WHATSAPP_CHAT_URL} target="_blank" rel="noopener noreferrer">
+                      Speak With an Expert
+                    </a>
                   </Button>
                 </div>
               </div>
@@ -1157,130 +1178,124 @@ const Index = () => {
 
       {/* FOOTER */}
       <footer className="px-0 pb-0 sm:px-10 sm:pb-10">
-        <div className="w-full overflow-hidden rounded-none border border-border/60 bg-card shadow-card sm:rounded-2xl md:h-[378.55px]">
-          <div className="flex h-full flex-col justify-between p-6 sm:p-10 md:px-[40px] md:py-[40px]">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
+        <div className="w-full overflow-hidden rounded-none border border-border/60 bg-card shadow-card sm:rounded-2xl md:min-h-[320px]">
+          <div className="flex flex-col p-6 sm:p-10 md:px-[40px] md:py-[40px]">
+            <div className="grid grid-cols-1 gap-8 pb-12 md:grid-cols-4 md:pb-16">
               <div>
                 <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Elevating short-term rentals through professional management and strategic investment insights.
                 </p>
-                <div className="mt-5 flex items-center gap-3">
-                  {/* Figma icons */}
-                  <img src={footerSocialButtons} alt="" aria-hidden="true" className="h-10 w-auto" />
+                <div className="mt-5 flex flex-wrap items-center gap-3">
+                  <a
+                    href={WHATSAPP_CHAT_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+                    aria-label="Chat on WhatsApp"
+                  >
+                    <WhatsAppGlyph className="h-[18px] w-[18px]" />
+                  </a>
+                  <a
+                    href={PHONE_TEL_HREF}
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-border bg-background text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+                    aria-label={`Call ${PHONE_DISPLAY}`}
+                  >
+                    <Phone className="h-[18px] w-[18px]" aria-hidden />
+                  </a>
                 </div>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-foreground">Services</p>
-                <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  <li>
-                    <a
-                      href="#management"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("management");
-                      }}
-                    >
-                      Management
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#roi"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("roi");
-                      }}
-                    >
-                      Investment
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#stays"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("stays");
-                      }}
-                    >
-                      Properties
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#about"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("about");
-                      }}
-                    >
-                      About
-                    </a>
-                  </li>
+                <p className="text-sm font-semibold text-foreground">Explore</p>
+                <ul className="mt-4 space-y-1.5 text-sm">
+                  {FOOTER_EXPLORE_LINKS.map(({ label, id }) => (
+                    <li key={id}>
+                      <a
+                        href={`#${id}`}
+                        className="inline-flex w-full max-w-[220px] rounded-md py-1.5 text-muted-foreground transition-colors hover:text-foreground sm:max-w-none"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          scrollToSection(id);
+                        }}
+                      >
+                        {label}
+                      </a>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               <div>
-                <p className="text-sm font-semibold text-foreground">Company</p>
-                <ul className="mt-4 space-y-3 text-sm text-muted-foreground">
-                  <li>
-                    <a
-                      href="#contact"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("contact");
-                      }}
-                    >
-                      Privacy Policy
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#contact"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("contact");
-                      }}
-                    >
-                      Terms of Service
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="#contact"
-                      className="hover:text-foreground"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        scrollToSection("contact");
-                      }}
-                    >
-                      Cookie Policy
-                    </a>
-                  </li>
+                <p className="text-sm font-semibold text-foreground">Navigate</p>
+                <ul className="mt-4 space-y-1.5 text-sm">
+                  {FOOTER_NAVIGATE_LINKS.map((item) => {
+                    const key = item.id ?? item.externalHref ?? item.label;
+                    if (item.externalHref) {
+                      return (
+                        <li key={key}>
+                          <a
+                            href={item.externalHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex w-full max-w-[220px] rounded-md py-1.5 text-muted-foreground transition-colors hover:text-foreground sm:max-w-none"
+                          >
+                            {item.label}
+                          </a>
+                        </li>
+                      );
+                    }
+                    return (
+                      <li key={item.id}>
+                        <a
+                          href={`#${item.id}`}
+                          className="inline-flex w-full max-w-[220px] rounded-md py-1.5 text-muted-foreground transition-colors hover:text-foreground sm:max-w-none"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            scrollToSection(item.id!);
+                          }}
+                        >
+                          {item.label}
+                        </a>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
               <div>
                 <p className="text-sm font-semibold text-foreground">Newsletter</p>
-                <div className="mt-4 flex w-full items-center gap-3 md:flex-col md:items-end">
-                  <Input placeholder="Enter your email" className="h-10 flex-1 rounded-full bg-background md:w-full md:max-w-[280px]" />
-                  <Button className="h-10 shrink-0 rounded-full bg-primary px-6 text-sm text-primary-foreground hover:bg-primary/90 md:w-auto">
+                <div className="mt-4 flex w-full max-w-[320px] flex-col gap-3">
+                  <Input
+                    type="email"
+                    inputMode="email"
+                    autoComplete="email"
+                    placeholder="Enter your email"
+                    value={newsletterEmail}
+                    onChange={(e) => setNewsletterEmail(e.target.value)}
+                    className="h-10 w-full rounded-full border-border bg-muted/40 px-4 text-sm placeholder:text-muted-foreground"
+                  />
+                  <Button
+                    type="button"
+                    className="h-10 w-full rounded-full bg-primary px-6 text-sm font-semibold text-primary-foreground hover:bg-primary/90 sm:w-auto sm:self-start"
+                    onClick={() => {
+                      if (!newsletterEmail.trim()) {
+                        toast.error("Please enter your email.");
+                        return;
+                      }
+                      toast.success("Thanks — we'll be in touch.");
+                      setNewsletterEmail("");
+                      scrollToSection("contact");
+                    }}
+                  >
                     Subscribe
                   </Button>
                 </div>
               </div>
             </div>
 
-            <div className="mt-6 flex flex-col items-start justify-between gap-4 border-t border-border pt-4 md:mt-0 md:flex-row md:items-center">
+            <div className="border-t border-border pt-5 md:pt-6">
               <p className="text-xs text-muted-foreground">© 2024 AvaronBnB. Luxury Property Management & Investment. All rights reserved.</p>
-              <img src={footerBottomRightIcons} alt="" aria-hidden="true" className="h-5 w-auto" />
             </div>
           </div>
         </div>
