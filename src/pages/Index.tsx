@@ -12,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, Phone } from "lucide-react";
+import { cn } from "@/lib/utils";
 import heroDesktop from "@/assets/hero-desktop.png";
 import heroMobile from "@/assets/hero-mobile.jpg";
 import bedroomTop from "@/assets/bedroom-top.jpg";
@@ -49,9 +50,10 @@ import ctaBedroom from "@/assets/cta/cta-bedroom-new.png";
 import ctaBedroomFramed from "@/assets/cta/background-border.png";
 import ctaPremiumBadge from "@/assets/cta/premium-badge.png";
 import logo from "@/assets/logo.svg";
+import footerNMark from "@/assets/footer-n-mark.png";
 import figmaNeoclassicalBuilding from "@/assets/figma/neoclassical-beige-building.png";
 import figmaCharmingHouse from "@/assets/figma/charming-little-house.png";
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -63,6 +65,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+/** Dark interiors for slides 2–3 (slide 1 stays shipped hero art). Slide-2 URL verified 200; slide 3 is bundled so it never 404s. */
+const HERO_DARK_INTERIOR_2 =
+  "https://images.unsplash.com/photo-1631679706909-1844bbd07221?auto=format&fit=crop&w=3200&q=90";
+
+const HERO_SLIDES: Array<{ mobile: string; desktop: string }> = [
+  { mobile: heroMobile, desktop: heroDesktop },
+  { mobile: HERO_DARK_INTERIOR_2, desktop: HERO_DARK_INTERIOR_2 },
+  { mobile: calcBedroom, desktop: calcBedroom },
+];
 
 const REGION_RATE: Record<string, number> = { karachi: 1200, lahore: 1100, islamabad: 1400 };
 const TYPE_MULT: Record<string, number> = { flat: 1, portion: 0.85, house: 1.4 };
@@ -174,6 +186,16 @@ const Index = () => {
   const [bedFilters, setBedFilters] = useState<Record<string, boolean>>({ "1bed": false, "2bed": true, "3bed": true, "4bed": false });
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [newsletterEmail, setNewsletterEmail] = useState("");
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    if (mq.matches) return;
+    const id = window.setInterval(() => {
+      setHeroSlideIndex((i) => (i + 1) % HERO_SLIDES.length);
+    }, 6500);
+    return () => clearInterval(id);
+  }, []);
 
   const allProperties = useMemo(() => [
     { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", bedKey: "3bed", baths: "1 bath", rating: "4.9/5.0" },
@@ -196,28 +218,45 @@ const Index = () => {
       {/* HERO */}
       <section id="home" className="relative" data-gsap-skip>
         <div className="relative overflow-hidden md:h-[750px]">
-          <img
-            src={heroMobile}
-            alt="Luxury managed bedroom"
-            className="absolute inset-0 h-full w-full object-cover sm:hidden"
-          />
-          <img
-            src={heroDesktop}
-            alt="Luxury managed bedroom"
-            className="absolute inset-0 hidden h-full w-full object-cover sm:block"
-          />
-          <div className="absolute inset-0 bg-hero-overlay" />
+          <div className="absolute inset-0" aria-hidden="true">
+            {HERO_SLIDES.map((slide, i) => (
+              <Fragment key={i}>
+                <img
+                  src={slide.mobile}
+                  alt=""
+                  loading={i < 2 ? "eager" : "lazy"}
+                  decoding="async"
+                  className={cn(
+                    "absolute inset-0 h-full min-h-full w-full object-cover transition-opacity duration-1000 ease-out sm:hidden",
+                    i === heroSlideIndex ? "z-[1] opacity-100" : "z-0 opacity-0",
+                  )}
+                />
+                <img
+                  src={slide.desktop}
+                  alt=""
+                  loading={i < 2 ? "eager" : "lazy"}
+                  decoding="async"
+                  className={cn(
+                    "absolute inset-0 hidden h-full w-full object-cover transition-opacity duration-1000 ease-out sm:block",
+                    i === heroSlideIndex ? "z-[1] opacity-100" : "z-0 opacity-0",
+                  )}
+                />
+              </Fragment>
+            ))}
+          </div>
+          <div className="absolute inset-0 z-[2] bg-black/20" aria-hidden="true" />
+          <div className="absolute inset-0 bg-hero-overlay z-[2]" aria-hidden="true" />
           {/* Decorative hero icons (desktop only) */}
           <img
             src={figmaNeoclassicalBuilding}
             alt=""
-            className="pointer-events-none absolute left-0 top-0 hidden h-[420px] w-auto opacity-[0.08] md:block"
+            className="pointer-events-none absolute left-0 top-0 z-[3] hidden h-[420px] w-auto opacity-[0.08] md:block"
             aria-hidden="true"
           />
           <img
             src={figmaCharmingHouse}
             alt=""
-            className="pointer-events-none absolute bottom-0 right-0 hidden h-[360px] w-auto opacity-[0.08] md:block"
+            className="pointer-events-none absolute bottom-0 right-0 z-[3] hidden h-[360px] w-auto opacity-[0.08] md:block"
             aria-hidden="true"
           />
 
@@ -356,11 +395,26 @@ const Index = () => {
               <span className="text-primary-foreground/80">Real-time market data integration for 2024 projections.</span>
             </p>
 
-            {/* dots */}
-            <div className="mt-6 flex gap-2 sm:mt-10">
-              <span className="h-2 w-2 rounded-full bg-primary" />
-              <span className="h-2 w-2 rounded-full bg-primary-foreground/40" />
-              <span className="h-2 w-2 rounded-full bg-primary-foreground/40" />
+            {/* Hero slideshow — same copy on every slide; click a dot to jump */}
+            <div
+              className="mt-6 flex justify-center gap-2 sm:mt-10"
+              role="tablist"
+              aria-label="Hero background slides"
+            >
+              {HERO_SLIDES.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === heroSlideIndex}
+                  aria-label={`Show slide ${i + 1} of ${HERO_SLIDES.length}`}
+                  className={cn(
+                    "h-2 w-2 rounded-full transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-foreground/70 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent",
+                    i === heroSlideIndex ? "bg-primary" : "bg-primary-foreground/40 hover:bg-primary-foreground/55",
+                  )}
+                  onClick={() => setHeroSlideIndex(i)}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -796,7 +850,15 @@ const Index = () => {
           </div>
 
           <p className="mt-6 text-center text-sm italic text-muted-foreground">
-            Not sure where to start? <a href="#" className="font-semibold not-italic text-primary underline">Talk to an Advisor</a>
+            Not sure where to start?{" "}
+            <a
+              href={WHATSAPP_CHAT_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold not-italic text-primary underline"
+            >
+              Talk to an Advisor
+            </a>
           </p>
         </div>
       </section>
@@ -1182,7 +1244,23 @@ const Index = () => {
           <div className="flex flex-col p-6 sm:p-10 md:px-[40px] md:py-[40px]">
             <div className="grid grid-cols-1 gap-8 pb-12 md:grid-cols-4 md:pb-16">
               <div>
-                <p className="font-display text-xl font-bold text-foreground">AvaronBnB</p>
+                <a
+                  href="#home"
+                  className="inline-flex transition-opacity hover:opacity-90"
+                  aria-label="AvaronBnB home"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    scrollToSection("home");
+                  }}
+                >
+                  <img
+                    src={footerNMark}
+                    alt="AvaronBnB"
+                    className="h-14 w-auto sm:h-16 md:h-20"
+                    decoding="async"
+                    loading="lazy"
+                  />
+                </a>
                 <p className="mt-3 text-sm text-muted-foreground">
                   Elevating short-term rentals through professional management and strategic investment insights.
                 </p>
