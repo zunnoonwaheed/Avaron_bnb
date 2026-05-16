@@ -46,6 +46,7 @@ import stepsKitchen from "@/assets/steps/steps-kitchen.png";
 import reviewRoom1 from "@/assets/testimonials/review-room-1.png";
 import reviewLounge from "@/assets/testimonials/review-lounge.png";
 import reviewRoom2 from "@/assets/testimonials/review-room-2.png";
+import reviewKarachiFamily from "@/assets/testimonials/review-karachi-family.jpeg";
 import ctaBedroom from "@/assets/cta/cta-bedroom-new.png";
 import ctaBedroomFramed from "@/assets/cta/background-border.png";
 import ctaPremiumBadge from "@/assets/cta/premium-badge.png";
@@ -1125,8 +1126,14 @@ const Index = () => {
             </span>
           </p>
 
-          <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-3 md:gap-6">
+          <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 md:gap-6">
             {[
+              {
+                img: reviewKarachiFamily,
+                quote: "Fully furnished and well-maintained. Management was proactive and staff resolved everything immediately.",
+                name: "Family from Spain",
+                loc: "Karachi",
+              },
               {
                 img: reviewLounge,
                 quote:
