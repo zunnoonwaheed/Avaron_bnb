@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, Phone } from "lucide-react";
+import { TrendingUp, ChevronDown, Heart, Bath, Bed, Star, Ruler, Check, Search, SlidersHorizontal, Phone, Volume2, VolumeX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import heroDesktop from "@/assets/hero-desktop.png";
 import heroMobile from "@/assets/hero-mobile.jpg";
@@ -188,6 +188,8 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+  const [video1Muted, setVideo1Muted] = useState(true);
+  const [video2Muted, setVideo2Muted] = useState(true);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -199,9 +201,9 @@ const Index = () => {
   }, []);
 
   const allProperties = useMemo(() => [
-    { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", bedKey: "3bed", baths: "1 bath", rating: "4.9/5.0" },
-    { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", bedKey: "4bed", baths: "2 baths", rating: "5.0/5.0" },
-    { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", bedKey: "2bed", baths: "1 bath", rating: "5.0/5.0" },
+    { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", bedKey: "3bed", baths: "1 bath", rating: "4.9/5.0", link: "https://www.airbnb.com/rooms/1094841146006637031?guests=1&adults=1&s=67&unique_share_id=c4155403-d9ea-43e4-81a3-39a90b89d40d&source_impression_id=p3_1779445078_P3OABBPCXJVpCpml" },
+    { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", bedKey: "4bed", baths: "2 baths", rating: "5.0/5.0", link: "https://www.airbnb.com/rooms/1607315480180243850?guests=1&adults=1&s=67&unique_share_id=0c101b5f-d72c-43cf-84e2-60ce7091c6d3&source_impression_id=p3_1779445080_P3I4fbjJM9BpfKKG" },
+    { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", bedKey: "2bed", baths: "1 bath", rating: "5.0/5.0", link: "https://www.airbnb.com/rooms/35062371?guests=1&adults=1&s=67&unique_share_id=ec5323cd-7695-4bcb-ba83-23915cd9fce1&source_impression_id=p3_1779445079_P30JuKD2IH2mvSxV" },
   ], []);
 
   const filteredMobileProps = useMemo(() => {
@@ -229,7 +231,7 @@ const Index = () => {
                   decoding="async"
                   className={cn(
                     "absolute inset-0 h-full min-h-full w-full object-cover transition-opacity duration-1000 ease-out sm:hidden",
-                    i === heroSlideIndex ? "z-[1] opacity-100" : "z-0 opacity-0",
+                    i === heroSlideIndex ? "z-[1] opacity-100" : "z-0 hidden opacity-0",
                   )}
                 />
                 <img
@@ -238,8 +240,10 @@ const Index = () => {
                   loading={i < 2 ? "eager" : "lazy"}
                   decoding="async"
                   className={cn(
-                    "absolute inset-0 hidden h-full w-full object-cover transition-opacity duration-1000 ease-out sm:block",
-                    i === heroSlideIndex ? "z-[1] opacity-100" : "z-0 opacity-0",
+                    "absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-out",
+                    i === heroSlideIndex
+                      ? "z-[1] hidden opacity-100 sm:block"
+                      : "z-0 hidden opacity-0",
                   )}
                 />
               </Fragment>
@@ -247,19 +251,6 @@ const Index = () => {
           </div>
           <div className="absolute inset-0 z-[2] bg-black/20" aria-hidden="true" />
           <div className="absolute inset-0 bg-hero-overlay z-[2]" aria-hidden="true" />
-          {/* Decorative hero icons (desktop only) */}
-          <img
-            src={figmaNeoclassicalBuilding}
-            alt=""
-            className="pointer-events-none absolute left-0 top-0 z-[3] hidden h-[420px] w-auto opacity-[0.08] md:block"
-            aria-hidden="true"
-          />
-          <img
-            src={figmaCharmingHouse}
-            alt=""
-            className="pointer-events-none absolute bottom-0 right-0 z-[3] hidden h-[360px] w-auto opacity-[0.08] md:block"
-            aria-hidden="true"
-          />
 
           {/* NAV */}
           <nav className="relative z-10 flex flex-col gap-3 px-5 py-5 sm:px-10 md:flex-row md:items-center md:justify-between md:gap-6">
@@ -951,17 +942,27 @@ const Index = () => {
           {/* DESKTOP: 3-up grid */}
           <div className="mt-8 hidden grid-cols-3 gap-x-6 gap-y-5 md:grid">
             {[
-              { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0" },
-              { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", baths: "2 baths", rating: "5.0/5.0" },
-              { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", baths: "1 bath", rating: "5.0/5.0" },
+              { img: property1, title: "3BHK Luxury Skyline Apartment", price: "$25/Night", loc: "Karachi - Sindh", size: "150 m2", beds: "3 beds", baths: "1 bath", rating: "4.9/5.0", link: "https://www.airbnb.com/rooms/1094841146006637031?guests=1&adults=1&s=67&unique_share_id=c4155403-d9ea-43e4-81a3-39a90b89d40d&source_impression_id=p3_1779445078_P3OABBPCXJVpCpml" },
+              { img: property2, title: "4BHK Comfort Apartment", price: "$45/Night", loc: "Karachi - Sindh", size: "250 m2", beds: "4 beds", baths: "2 baths", rating: "5.0/5.0", link: "https://www.airbnb.com/rooms/1607315480180243850?guests=1&adults=1&s=67&unique_share_id=0c101b5f-d72c-43cf-84e2-60ce7091c6d3&source_impression_id=p3_1779445080_P3I4fbjJM9BpfKKG" },
+              { img: property3, title: "2BHK Executive City Apartment", price: "$50/Night", loc: "Karachi - Sindh", size: "80 m2", beds: "2 beds", baths: "1 bath", rating: "5.0/5.0", link: "https://www.airbnb.com/rooms/35062371?guests=1&adults=1&s=67&unique_share_id=ec5323cd-7695-4bcb-ba83-23915cd9fce1&source_impression_id=p3_1779445079_P30JuKD2IH2mvSxV" },
             ].map((p) => (
               <Card key={p.title} className="h-[382px] w-full overflow-hidden rounded-2xl border-0 bg-card shadow-card">
-                <div className="relative h-[230px] w-full overflow-hidden">
-                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-full w-full object-cover" />
+                <div className="relative h-[230px] w-full overflow-hidden group">
+                  <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/25 via-black/10 to-transparent" />
-                  <button aria-label="Save" className="absolute right-3 top-3 h-8 w-8">
+                  <button aria-label="Save" className="absolute right-3 top-3 h-8 w-8 z-10">
                     <img src={listingHeartOverlay} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
                   </button>
+                  <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-primary hover:bg-white/90 transition-colors"
+                    >
+                      View Listing
+                    </a>
+                  </div>
                 </div>
                 <div className="relative p-4">
                   <div className="flex items-start justify-between gap-3">
@@ -1002,12 +1003,22 @@ const Index = () => {
             ) : (
               filteredMobileProps.map((p) => (
                 <Card key={p.title} className="h-[384px] w-[366px] shrink-0 snap-center overflow-hidden rounded-2xl border-0 bg-card shadow-card">
-                  <div className="relative h-[238px] w-full overflow-hidden">
-                    <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-full w-full object-cover" />
+                  <div className="relative h-[238px] w-full overflow-hidden group">
+                    <img src={p.img} alt={p.title} loading="lazy" width={800} height={640} className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105" />
                     <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/25 via-black/10 to-transparent" />
-                    <button aria-label="Save" className="absolute right-3 top-3 h-8 w-8">
+                    <button aria-label="Save" className="absolute right-3 top-3 h-8 w-8 z-10">
                       <img src={listingHeartOverlay} alt="" aria-hidden="true" className="h-8 w-8 object-contain" />
                     </button>
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                      <a
+                        href={p.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="rounded-full bg-white px-6 py-2.5 text-sm font-semibold text-primary hover:bg-white/90 transition-colors"
+                      >
+                        View Listing
+                      </a>
+                    </div>
                   </div>
                   <div className="relative p-4">
                     <div className="flex items-start justify-between gap-3">
@@ -1127,58 +1138,117 @@ const Index = () => {
           </p>
 
           <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 md:gap-6">
-            {[
-              {
-                img: reviewKarachiFamily,
-                quote: "Fully furnished and well-maintained. Management was proactive and staff resolved everything immediately.",
-                name: "Family from Spain",
-                loc: "Karachi",
-              },
-              {
-                img: reviewLounge,
-                quote:
-                  "There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs.",
-                name: "Michael & Sarah Lee",
-                loc: "Colorado",
-              },
-              {
-                img: reviewRoom1,
-                quote:
-                  "Every moment spent at our lakeside lodge feels like a dream come true, thanks to the exceptional service provided.",
-                name: "Emily Johnson",
-                loc: "Maine",
-              },
-              {
-                img: reviewRoom2,
-                quote: "AvaronBnB helped me scale my portfolio from 2 to 15 properties in under a year. The automation is flawless.",
-                name: "Gary Janzen",
-                loc: "Washington",
-              },
-            ].map((t) => (
-              <div
-                key={t.name}
-                className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card"
+            {/* Video 1 */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted={video1Muted}
+                loop
+                playsInline
               >
-                <img
-                  src={t.img}
-                  alt=""
-                  className="h-full w-full object-cover object-[center_22%]"
-                  loading="lazy"
-                />
-                {/* Readability: fade only on lower ~45% so copy starts ~two-thirds down like Figma */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[48%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
-                <div className="absolute inset-x-0 top-[66%] bottom-0 flex flex-col px-5 pb-5 pt-1 text-left text-primary-foreground">
-                  <div className="flex gap-0.5 text-accent">
-                    {Array.from({ length: 5 }).map((_, k) => (
-                      <Star key={k} className="h-4 w-4 fill-current" />
-                    ))}
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed opacity-95">"{t.quote}"</p>
-                  <p className="mt-3 text-base font-bold">{t.name}</p>
-                  <p className="text-sm opacity-80">{t.loc}</p>
+                <source src="/testimonial-video-1.mp4" type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground pointer-events-none">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
                 </div>
+                <p className="mt-2 text-sm leading-snug opacity-95">"The property was spotless and impeccably maintained. They provided excellent housekeeping service, and my four-day stay was absolutely wonderful."</p>
+                <p className="mt-3 text-base font-bold">Family from Karachi</p>
+                <p className="text-sm opacity-80">Pakistan</p>
               </div>
-            ))}
+              <button
+                onClick={() => setVideo1Muted(!video1Muted)}
+                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
+                aria-label={video1Muted ? "Unmute video" : "Mute video"}
+              >
+                {video1Muted ? (
+                  <VolumeX className="h-5 w-5" />
+                ) : (
+                  <Volume2 className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
+            {/* Review 1: Family from Spain */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <img
+                src={reviewKarachiFamily}
+                alt=""
+                className="h-full w-full object-cover object-[center_22%]"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-2 text-sm leading-snug opacity-95">"Fully furnished and well-maintained. Management was proactive and staff resolved everything immediately."</p>
+                <p className="mt-3 text-base font-bold">Family from Spain</p>
+                <p className="text-sm opacity-80">Karachi</p>
+              </div>
+            </div>
+
+            {/* Video 2 */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted={video2Muted}
+                loop
+                playsInline
+              >
+                <source src="/testimonial-video-2.mp4" type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground pointer-events-none">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-2 text-sm leading-snug opacity-95">"Excellent service in every aspect! I will definitely return. I've been a loyal guest for 3 years and the experience never disappoints."</p>
+                <p className="mt-3 text-base font-bold">Family from USA</p>
+                <p className="text-sm opacity-80">New York</p>
+              </div>
+              <button
+                onClick={() => setVideo2Muted(!video2Muted)}
+                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
+                aria-label={video2Muted ? "Unmute video" : "Mute video"}
+              >
+                {video2Muted ? (
+                  <VolumeX className="h-5 w-5" />
+                ) : (
+                  <Volume2 className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
+            {/* Review 2: Michael & Sarah Lee */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <img
+                src={reviewLounge}
+                alt=""
+                className="h-full w-full object-cover object-[center_22%]"
+                loading="lazy"
+              />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-2 text-sm leading-snug opacity-95">"There's nothing like the tranquility of our mountain cabins, expertly cared for by attentive staff who understand our needs."</p>
+                <p className="mt-3 text-base font-bold">Michael & Sarah Lee</p>
+                <p className="text-sm opacity-80">Colorado</p>
+              </div>
+            </div>
           </div>
 
           <p className="mt-6 hidden text-sm text-muted-foreground md:block">
