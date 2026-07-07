@@ -1293,7 +1293,7 @@ const Index = () => {
                     <Star key={k} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="mt-3 text-base font-bold"> Abdullah Aslam</p>
+                <p className="mt-3 text-base font-bold"> Asfar</p>
                 <p className="text-sm opacity-80">Texas, USA</p>
               </div>
               <button
