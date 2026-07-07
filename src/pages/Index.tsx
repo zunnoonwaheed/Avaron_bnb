@@ -1294,8 +1294,8 @@ const Index = () => {
                     <Star key={k} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="mt-3 text-base font-bold"> Asfar</p>
-                <p className="text-sm opacity-80">Texas, USA</p>
+                <p className="mt-3 text-base font-bold"> Hider</p>
+                <p className="text-sm opacity-80">USA</p>
               </div>
               <button
                 onClick={() => setVideo4Muted(!video4Muted)}
@@ -1328,8 +1328,8 @@ const Index = () => {
                     <Star key={k} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="mt-3 text-base font-bold">Saad</p>
-                <p className="text-sm opacity-80">Portugal</p>
+                <p className="mt-3 text-base font-bold">Asfar</p>
+                <p className="text-sm opacity-80">USA</p>
               </div>
               <button
                 onClick={() => setVideo5Muted(!video5Muted)}
@@ -1362,8 +1362,8 @@ const Index = () => {
                     <Star key={k} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
-                <p className="mt-3 text-base font-bold">AvaronBnB Owner</p>
-                <p className="text-sm opacity-80">Video testimonial</p>
+                <p className="mt-3 text-base font-bold">Ahmed Ali</p>
+                <p className="text-sm opacity-80">USA</p>
               </div>
               <button
                 onClick={() => setVideo3Muted(!video3Muted)}
