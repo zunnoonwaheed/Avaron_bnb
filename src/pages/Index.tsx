@@ -191,7 +191,6 @@ const Index = () => {
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [video1Muted, setVideo1Muted] = useState(true);
   const [video2Muted, setVideo2Muted] = useState(true);
-  const [video3Muted, setVideo3Muted] = useState(true);
   const [video4Muted, setVideo4Muted] = useState(true);
   const [video5Muted, setVideo5Muted] = useState(true);
 
@@ -1274,40 +1273,6 @@ const Index = () => {
                 <p className="mt-3 text-base font-bold">Michael & Sarah Lee</p>
                 <p className="text-sm opacity-80">Colorado</p>
               </div>
-            </div>
-
-            {/* Video 3 */}
-            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
-              <video
-                className="h-full w-full object-cover"
-                autoPlay
-                muted={video3Muted}
-                loop
-                playsInline
-              >
-                <source src="/Testimonial-1.mp4" type="video/mp4" />
-              </video>
-              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground pointer-events-none">
-                <div className="flex gap-0.5 text-accent">
-                  {Array.from({ length: 5 }).map((_, k) => (
-                    <Star key={k} className="h-4 w-4 fill-current" />
-                  ))}
-                </div>
-                <p className="mt-3 text-base font-bold">AvaronBnB Owner</p>
-                <p className="text-sm opacity-80">Video testimonial</p>
-              </div>
-              <button
-                onClick={() => setVideo3Muted(!video3Muted)}
-                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
-                aria-label={video3Muted ? "Unmute video" : "Mute video"}
-              >
-                {video3Muted ? (
-                  <VolumeX className="h-5 w-5" />
-                ) : (
-                  <Volume2 className="h-5 w-5" />
-                )}
-              </button>
             </div>
 
             {/* Video 4 */}
