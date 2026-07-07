@@ -50,8 +50,8 @@ import reviewKarachiFamily from "@/assets/testimonials/review-karachi-family.jpe
 import ctaBedroom from "@/assets/cta/cta-bedroom-new.png";
 import ctaBedroomFramed from "@/assets/cta/background-border.png";
 import ctaPremiumBadge from "@/assets/cta/premium-badge.png";
-import logo from "@/assets/logo.svg";
-import footerNMark from "@/assets/footer-n-mark.png";
+import headerLogo from "@/assets/Avaron - BNB - white 69 x 44.svg";
+import footerLogo from "@/assets/Avaron - Footer.png";
 import figmaNeoclassicalBuilding from "@/assets/figma/neoclassical-beige-building.png";
 import figmaCharmingHouse from "@/assets/figma/charming-little-house.png";
 import { Fragment, useEffect, useMemo, useState } from "react";
@@ -190,6 +190,9 @@ const Index = () => {
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
   const [video1Muted, setVideo1Muted] = useState(true);
   const [video2Muted, setVideo2Muted] = useState(true);
+  const [video3Muted, setVideo3Muted] = useState(true);
+  const [video4Muted, setVideo4Muted] = useState(true);
+  const [video5Muted, setVideo5Muted] = useState(true);
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -264,7 +267,7 @@ const Index = () => {
                 }}
               >
                 <img
-                  src={logo}
+                  src={headerLogo}
                   alt="AvaronBnB"
                   className="h-8 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.35)] md:h-9"
                 />
@@ -1249,6 +1252,108 @@ const Index = () => {
                 <p className="text-sm opacity-80">Colorado</p>
               </div>
             </div>
+
+            {/* Video 3 */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted={video3Muted}
+                loop
+                playsInline
+              >
+                <source src="/Testimonial-1.mp4" type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground pointer-events-none">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-3 text-base font-bold">AvaronBnB Owner</p>
+                <p className="text-sm opacity-80">Video testimonial</p>
+              </div>
+              <button
+                onClick={() => setVideo3Muted(!video3Muted)}
+                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
+                aria-label={video3Muted ? "Unmute video" : "Mute video"}
+              >
+                {video3Muted ? (
+                  <VolumeX className="h-5 w-5" />
+                ) : (
+                  <Volume2 className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
+            {/* Video 4 */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted={video4Muted}
+                loop
+                playsInline
+              >
+                <source src="/Testimonial-2.mp4" type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground pointer-events-none">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-3 text-base font-bold">AvaronBnB Owner</p>
+                <p className="text-sm opacity-80">Video testimonial</p>
+              </div>
+              <button
+                onClick={() => setVideo4Muted(!video4Muted)}
+                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
+                aria-label={video4Muted ? "Unmute video" : "Mute video"}
+              >
+                {video4Muted ? (
+                  <VolumeX className="h-5 w-5" />
+                ) : (
+                  <Volume2 className="h-5 w-5" />
+                )}
+              </button>
+            </div>
+
+            {/* Video 5 */}
+            <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
+              <video
+                className="h-full w-full object-cover"
+                autoPlay
+                muted={video5Muted}
+                loop
+                playsInline
+              >
+                <source src="/Testimonial-3.mp4" type="video/mp4" />
+              </video>
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[55%] bg-gradient-to-t from-primary/95 via-primary/70 to-transparent" />
+              <div className="absolute inset-x-0 bottom-0 flex flex-col justify-end px-5 pb-5 pt-6 text-left text-primary-foreground pointer-events-none">
+                <div className="flex gap-0.5 text-accent">
+                  {Array.from({ length: 5 }).map((_, k) => (
+                    <Star key={k} className="h-4 w-4 fill-current" />
+                  ))}
+                </div>
+                <p className="mt-3 text-base font-bold">AvaronBnB Owner</p>
+                <p className="text-sm opacity-80">Video testimonial</p>
+              </div>
+              <button
+                onClick={() => setVideo5Muted(!video5Muted)}
+                className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
+                aria-label={video5Muted ? "Unmute video" : "Mute video"}
+              >
+                {video5Muted ? (
+                  <VolumeX className="h-5 w-5" />
+                ) : (
+                  <Volume2 className="h-5 w-5" />
+                )}
+              </button>
+            </div>
           </div>
 
           <p className="mt-6 hidden text-sm text-muted-foreground md:block">
@@ -1331,7 +1436,7 @@ const Index = () => {
                   }}
                 >
                   <img
-                    src={footerNMark}
+                    src={footerLogo}
                     alt="AvaronBnB"
                     className="h-14 w-auto sm:h-16 md:h-20"
                     decoding="async"
