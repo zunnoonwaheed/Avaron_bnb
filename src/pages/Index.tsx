@@ -1163,7 +1163,7 @@ const Index = () => {
             </span>
           </p>
 
-          <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4 md:gap-6">
+          <div className="mt-8 grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 md:gap-6">
             {/* Video 1 */}
             <div className="relative h-[480px] w-full min-w-0 overflow-hidden rounded-2xl shadow-card">
               <video
