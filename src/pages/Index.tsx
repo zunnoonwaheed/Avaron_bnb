@@ -54,6 +54,7 @@ import headerLogo from "@/assets/Avaron - BNB - white 69 x 44.svg";
 import footerLogo from "@/assets/Avaron - Footer.png";
 import figmaNeoclassicalBuilding from "@/assets/figma/neoclassical-beige-building.png";
 import figmaCharmingHouse from "@/assets/figma/charming-little-house.png";
+import dashboardMockup from "@/assets/figma/frame-27.svg";
 import { Fragment, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
 import gsap from "gsap";
@@ -716,6 +717,28 @@ const Index = () => {
                 </div>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DASHBOARD PREVIEW */}
+      <section className="px-4 py-14 sm:px-6 sm:py-16 md:py-20 bg-accent/5">
+        <div className="mx-auto max-w-[1400px]">
+          <h2 className="text-center font-display text-2xl font-bold text-foreground sm:text-3xl mb-3">
+            Total Visibility. No Surprises.
+          </h2>
+          <p className="text-center text-sm text-muted-foreground sm:text-base max-w-2xl mx-auto mb-10">
+            Track earnings, occupancy, reviews, and maintenance logs in real time on your personal dashboard.
+          </p>
+          <div className="flex justify-center">
+            <div className="w-full max-w-md sm:max-w-lg md:max-w-xl">
+              <img
+                src={dashboardMockup}
+                alt="Dashboard preview showing property earnings and occupancy metrics"
+                loading="lazy"
+                className="w-full h-auto rounded-2xl shadow-lg"
+              />
+            </div>
           </div>
         </div>
       </section>
