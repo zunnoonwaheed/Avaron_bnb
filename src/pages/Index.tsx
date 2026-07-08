@@ -103,6 +103,8 @@ const FOOTER_NAVIGATE_LINKS: Array<{ label: string; id?: string; externalHref?: 
   { label: "Contact Us", externalHref: WHATSAPP_CHAT_URL },
 ];
 
+type TestimonialVideoId = "video1" | "video2" | "video4" | "video5";
+
 function WhatsAppGlyph({ className }: { className?: string }) {
   return (
     <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -189,11 +191,10 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
-  const [video1Muted, setVideo1Muted] = useState(true);
-  const [video2Muted, setVideo2Muted] = useState(true);
-  const [video3Muted, setVideo3Muted] = useState(true);
-  const [video4Muted, setVideo4Muted] = useState(true);
-  const [video5Muted, setVideo5Muted] = useState(true);
+  const [unmutedTestimonialVideo, setUnmutedTestimonialVideo] = useState<TestimonialVideoId | null>(null);
+  const toggleTestimonialVideoMute = (videoId: TestimonialVideoId) => {
+    setUnmutedTestimonialVideo((currentVideoId) => (currentVideoId === videoId ? null : videoId));
+  };
 
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -1169,7 +1170,7 @@ const Index = () => {
               <video
                 className="h-full w-full object-cover"
                 autoPlay
-                muted={video1Muted}
+                muted={unmutedTestimonialVideo !== "video1"}
                 loop
                 playsInline
               >
@@ -1187,14 +1188,14 @@ const Index = () => {
                 <p className="text-sm opacity-80">Pakistan</p>
               </div>
               <button
-                onClick={() => setVideo1Muted(!video1Muted)}
+                onClick={() => toggleTestimonialVideoMute("video1")}
                 className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
-                aria-label={video1Muted ? "Unmute video" : "Mute video"}
+                aria-label={unmutedTestimonialVideo === "video1" ? "Mute video" : "Unmute video"}
               >
-                {video1Muted ? (
-                  <VolumeX className="h-5 w-5" />
-                ) : (
+                {unmutedTestimonialVideo === "video1" ? (
                   <Volume2 className="h-5 w-5" />
+                ) : (
+                  <VolumeX className="h-5 w-5" />
                 )}
               </button>
             </div>
@@ -1225,7 +1226,7 @@ const Index = () => {
               <video
                 className="h-full w-full object-cover"
                 autoPlay
-                muted={video2Muted}
+                muted={unmutedTestimonialVideo !== "video2"}
                 loop
                 playsInline
               >
@@ -1243,14 +1244,14 @@ const Index = () => {
                 <p className="text-sm opacity-80">New York</p>
               </div>
               <button
-                onClick={() => setVideo2Muted(!video2Muted)}
+                onClick={() => toggleTestimonialVideoMute("video2")}
                 className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
-                aria-label={video2Muted ? "Unmute video" : "Mute video"}
+                aria-label={unmutedTestimonialVideo === "video2" ? "Mute video" : "Unmute video"}
               >
-                {video2Muted ? (
-                  <VolumeX className="h-5 w-5" />
-                ) : (
+                {unmutedTestimonialVideo === "video2" ? (
                   <Volume2 className="h-5 w-5" />
+                ) : (
+                  <VolumeX className="h-5 w-5" />
                 )}
               </button>
             </div>
@@ -1281,7 +1282,7 @@ const Index = () => {
               <video
                 className="h-full w-full object-cover"
                 autoPlay
-                muted={video4Muted}
+                muted={unmutedTestimonialVideo !== "video4"}
                 loop
                 playsInline
               >
@@ -1299,14 +1300,14 @@ const Index = () => {
                 <p className="text-sm opacity-80">NewYork, USA</p>
               </div>
               <button
-                onClick={() => setVideo4Muted(!video4Muted)}
+                onClick={() => toggleTestimonialVideoMute("video4")}
                 className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
-                aria-label={video4Muted ? "Unmute video" : "Mute video"}
+                aria-label={unmutedTestimonialVideo === "video4" ? "Mute video" : "Unmute video"}
               >
-                {video4Muted ? (
-                  <VolumeX className="h-5 w-5" />
-                ) : (
+                {unmutedTestimonialVideo === "video4" ? (
                   <Volume2 className="h-5 w-5" />
+                ) : (
+                  <VolumeX className="h-5 w-5" />
                 )}
               </button>
             </div>
@@ -1316,7 +1317,7 @@ const Index = () => {
               <video
                 className="h-full w-full object-cover"
                 autoPlay
-                muted={video5Muted}
+                muted={unmutedTestimonialVideo !== "video5"}
                 loop
                 playsInline
               >
@@ -1334,14 +1335,14 @@ const Index = () => {
                 <p className="text-sm opacity-80">USA</p>
               </div>
               <button
-                onClick={() => setVideo5Muted(!video5Muted)}
+                onClick={() => toggleTestimonialVideoMute("video5")}
                 className="absolute top-4 right-4 z-10 flex h-10 w-10 items-center justify-center rounded-full bg-black/50 text-white backdrop-blur-sm transition-all hover:bg-black/70 pointer-events-auto"
-                aria-label={video5Muted ? "Unmute video" : "Mute video"}
+                aria-label={unmutedTestimonialVideo === "video5" ? "Mute video" : "Unmute video"}
               >
-                {video5Muted ? (
-                  <VolumeX className="h-5 w-5" />
-                ) : (
+                {unmutedTestimonialVideo === "video5" ? (
                   <Volume2 className="h-5 w-5" />
+                ) : (
+                  <VolumeX className="h-5 w-5" />
                 )}
               </button>
             </div>
