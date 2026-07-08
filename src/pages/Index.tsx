@@ -1294,8 +1294,9 @@ const Index = () => {
                     <Star key={k} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
+                <p className="mt-2 text-sm leading-snug opacity-95">"They are just increadable in all aspects. They respon immediately even for the smallest issue. Highly Recomended"</p>
                 <p className="mt-3 text-base font-bold"> Haider</p>
-                <p className="text-sm opacity-80">USA</p>
+                <p className="text-sm opacity-80">NewYork, USA</p>
               </div>
               <button
                 onClick={() => setVideo4Muted(!video4Muted)}
@@ -1328,6 +1329,7 @@ const Index = () => {
                     <Star key={k} className="h-4 w-4 fill-current" />
                   ))}
                 </div>
+                <p className="mt-2 text-sm leading-snug opacity-95">"It is as close to the home away from the home as it can be. It's very clean. Staff manages everything properly."</p>
                 <p className="mt-3 text-base font-bold">Asfar</p>
                 <p className="text-sm opacity-80">USA</p>
               </div>
